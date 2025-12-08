@@ -1,0 +1,452 @@
+.tax-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.75rem;
+  position: relative;
+  font-family: var(--brand-font-family);
+}
+
+.tax-form__header {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.5rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid rgba(26, 31, 44, 0.08);
+}
+
+.tax-form__year-row {
+  display: flex;
+  align-items: center;
+}
+
+.tax-form__year-select {
+  min-width: 100px;
+}
+
+.tax-form__year-select .MuiInputBase-root {
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.tax-form__header p {
+  margin: 0;
+  color: var(--brand-text-muted);
+  font-size: 0.875rem;
+  letter-spacing: 0.015em;
+}
+
+.tax-form__header h2 {
+  margin: 0;
+  font-size: 1.35rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  color: var(--brand-primary);
+}
+
+.tax-form__partner-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.tax-form__partner-toggle {
+  align-self: flex-start;
+}
+
+.tax-form__fields {
+  display: flex;
+  flex-direction: column;
+  gap: 1.45rem;
+}
+
+.tax-form__accordion {
+  border: 1px solid rgba(26, 31, 44, 0.08);
+  border-radius: 16px !important;
+  background: var(--brand-surface);
+  box-shadow: 0px 3px 6px rgba(15, 23, 42, 0.08), 0px 2px 4px rgba(15, 23, 42, 0.04);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.tax-form__accordion::before {
+  display: none;
+}
+
+.tax-form__accordion:hover {
+  border-color: rgba(0, 123, 199, 0.45);
+  box-shadow: 0px 6px 12px rgba(15, 23, 42, 0.12), 0px 3px 6px rgba(15, 23, 42, 0.08);
+  transform: translateY(-1px);
+}
+
+.tax-form__accordion.Mui-expanded {
+  border-color: rgba(0, 48, 130, 0.65);
+  box-shadow: 0px 10px 24px rgba(15, 23, 42, 0.16), 0px 4px 12px rgba(15, 23, 42, 0.08);
+}
+
+.tax-form__accordion-summary {
+  padding: 1.15rem 1.35rem;
+}
+
+.tax-form__accordion-summary .MuiAccordionSummary-content,
+.tax-form__accordion-summary .MuiAccordionSummary-content.Mui-expanded {
+  margin: 0;
+}
+
+.tax-form__summary-content {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
+  width: 100%;
+  gap: 1rem;
+}
+
+.tax-form__summary-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.tax-form__summary-heading {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.tax-form__summary-count {
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+  border: 1px solid rgba(0, 48, 130, 0.16);
+  background: rgba(0, 123, 199, 0.08);
+  color: var(--brand-primary);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+
+.tax-form__summary-values {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.tax-form__summary-amount {
+  display: block;
+  font-weight: 600;
+  color: var(--brand-primary);
+  font-size: 1rem;
+  letter-spacing: 0.01em;
+}
+
+.tax-form__accordion-details {
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+  padding: 1.4rem 1.6rem 1.75rem;
+  border-top: 1px solid rgba(26, 31, 44, 0.08);
+  background: var(--brand-surface-alt);
+}
+
+.tax-form__section-summary {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.tax-form__section-summary > * {
+  display: block;
+}
+
+.tax-form__section-actions {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.tax-form__section-actions .MuiButton-root {
+  align-self: flex-start;
+  border-radius: 999px;
+  text-transform: none;
+  font-weight: 600;
+}
+
+.tax-form__summary-list {
+  margin: 0;
+  padding-left: 1.1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  color: var(--brand-text);
+  font-size: 0.875rem;
+}
+
+.tax-form__summary-list li {
+  list-style: disc;
+}
+
+.tax-form__summary-empty {
+  font-size: 0.85rem;
+  color: var(--brand-text-soft);
+}
+
+.tax-form__trigger {
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: none;
+  background: #2563eb;
+  color: #ffffff;
+  font-size: 1.5rem;
+  font-weight: 600;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.tax-form__trigger:hover,
+.tax-form__trigger:focus-visible {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 16px rgba(37, 99, 235, 0.25);
+  outline: none;
+}
+
+.tax-form__modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  z-index: 1000;
+}
+
+.tax-form__modal {
+  background: var(--brand-surface);
+  border-radius: 20px;
+  padding: 1.75rem;
+  max-width: 420px;
+  width: min(100%, 420px);
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  box-shadow: 0px 16px 40px rgba(15, 23, 42, 0.16), 0px 6px 20px rgba(15, 23, 42, 0.12);
+}
+
+.tax-form__modal-header h3 {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--brand-primary);
+}
+
+.tax-form__modal-header p {
+  margin: 0.35rem 0 0;
+  font-size: 0.875rem;
+  color: var(--brand-text-muted);
+}
+
+
+
+.tax-form__modal-group {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.tax-form__modal-list {
+  padding: 0;
+  margin: 0;
+  max-height: 220px;
+  overflow-y: auto;
+}
+
+.tax-form__modal-list ul {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.tax-form__modal-list li {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 0.75rem;
+  font-size: 0.95rem;
+  color: var(--brand-text);
+}
+
+.tax-form__modal-remove {
+  border: none;
+  background: transparent;
+  color: #ef4444;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.tax-form__modal-remove:hover,
+.tax-form__modal-remove:focus-visible {
+  text-decoration: underline;
+  outline: none;
+}
+
+.tax-form__modal-empty {
+  margin: 0;
+  color: var(--brand-text-soft);
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+.tax-form__modal-add {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0.75rem;
+  align-items: end;
+}
+
+.tax-form__modal-field {
+  width: 100%;
+}
+
+.tax-form__modal-field--amount {
+  min-width: 0;
+}
+
+.tax-form__modal-add .MuiButton-root {
+  justify-self: start;
+  white-space: nowrap;
+}
+
+@media (min-width: 600px) {
+  .tax-form__modal-add {
+    grid-template-columns: minmax(0, 1fr) 170px auto;
+    align-items: end;
+  }
+
+  .tax-form__modal-field--amount {
+    width: 100%;
+  }
+}
+
+.tax-form__modal-actions {
+  margin-top: 0.5rem;
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+}
+
+.tax-form__modal-button {
+  border: none;
+  background: transparent;
+  color: var(--brand-primary);
+  font-weight: 600;
+  padding: 0.55rem 1.1rem;
+  border-radius: 999px;
+  cursor: pointer;
+}
+
+.tax-form__modal-button:hover,
+.tax-form__modal-button:focus-visible {
+  background: rgba(0, 48, 130, 0.08);
+  outline: none;
+}
+
+/* Modal title with stats */
+.tax-form__modal-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.tax-form__modal-stats {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-shrink: 0;
+}
+
+.tax-form__modal-count {
+  padding: 0.25rem 0.6rem;
+  border-radius: 999px;
+  border: 1px solid rgba(0, 48, 130, 0.16);
+  background: rgba(0, 123, 199, 0.08);
+  color: var(--brand-primary);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+
+.tax-form__modal-total {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--brand-primary);
+  letter-spacing: 0.01em;
+}
+
+/* Modal add section */
+.tax-form__modal-add-section {
+  padding-top: 1rem;
+  border-top: 1px solid rgba(26, 31, 44, 0.08);
+}
+
+.tax-form__modal-add-title {
+  margin-bottom: 0.75rem;
+  color: var(--brand-primary);
+  font-weight: 600;
+}
+
+.tax-form__modal-add-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: flex-start;
+}
+
+.tax-form__modal-add-row .tax-form__modal-field--name {
+  flex: 1 1 180px;
+  min-width: 140px;
+}
+
+.tax-form__modal-add-row .tax-form__modal-field--amount {
+  flex: 0 1 130px;
+  min-width: 100px;
+}
+
+.tax-form__modal-add-row .MuiButton-root {
+  flex-shrink: 0;
+  align-self: flex-start;
+  margin-top: 0;
+}
+
+/* Editing state for list items */
+.tax-form__modal-list-item--editing {
+  background: rgba(0, 123, 199, 0.06);
+  border-radius: 8px;
+}
+
+/* Error state text helper */
+.MuiFormHelperText-root.Mui-error {
+  color: #d32f2f;
+}
+
+/* Improved list item layout for edit/delete buttons */
+.tax-form__modal-list .MuiListItem-root {
+  padding: 0.25rem 0;
+  padding-right: 80px;
+}
+
+.tax-form__modal-list .MuiListItemSecondaryAction-root {
+  right: 0;
+}

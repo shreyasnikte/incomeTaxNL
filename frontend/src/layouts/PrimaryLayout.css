@@ -1,0 +1,44 @@
+.app-shell {
+  display: grid;
+  min-height: 100vh;
+  grid-template-rows: auto 1fr auto;
+  background: var(--brand-background);
+  color: var(--brand-text);
+  font-family: var(--brand-font-family);
+}
+
+.app-header {
+  padding: 0.6rem 1.5rem;
+  text-align: center;
+  background: var(--brand-primary);
+  color: #ffffff;
+  box-shadow: 0px 4px 12px rgba(0, 48, 130, 0.15);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.app-header h1 {
+  margin: 0;
+  font-size: 1.2rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.app-header p {
+  margin: 0;
+  font-size: 0.8rem;
+  opacity: 0.9;
+  letter-spacing: 0.01em;
+}
+
+.app-main {
+  padding: 2rem 1.5rem;
+  display: flex;
+  justify-content: center;
+}
+
+.app-footer {
+  padding: 1rem 1.5rem;
+  text-align: center;
+  font-size: 0.85rem;
+  color: var(--brand-text-soft);
+}

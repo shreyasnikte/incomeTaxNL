@@ -1,0 +1,25 @@
+.config-menu__trigger {
+  color: var(--brand-text-muted);
+  transition: color 0.2s ease;
+}
+
+.config-menu__trigger:hover {
+  color: var(--brand-primary);
+}
+
+.config-menu__title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.config-menu__section-title {
+  color: var(--brand-primary);
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+}
+
+.config-menu__section-description {
+  display: block;
+  margin-bottom: 0.5rem;
+}

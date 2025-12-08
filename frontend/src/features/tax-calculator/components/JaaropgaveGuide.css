@@ -1,0 +1,61 @@
+.jaaropgave-guide__trigger {
+  text-transform: none;
+  font-weight: 500;
+  font-size: 0.75rem;
+  padding: 0.25rem 0.5rem;
+  min-width: 0;
+  color: var(--brand-text-muted);
+}
+
+.jaaropgave-guide__trigger:hover {
+  color: var(--brand-primary);
+  background: rgba(0, 123, 199, 0.06);
+}
+
+.jaaropgave-guide__title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.jaaropgave-guide__content {
+  max-height: 70vh;
+}
+
+.jaaropgave-guide__accordion {
+  border: 1px solid rgba(26, 31, 44, 0.08);
+  border-radius: 12px !important;
+  margin-bottom: 0.5rem;
+  box-shadow: none;
+}
+
+.jaaropgave-guide__accordion::before {
+  display: none;
+}
+
+.jaaropgave-guide__accordion.Mui-expanded {
+  border-color: rgba(0, 48, 130, 0.25);
+}
+
+.jaaropgave-guide__icon {
+  display: flex;
+  align-items: center;
+  color: var(--brand-primary);
+}
+
+.jaaropgave-guide__list {
+  margin: 0;
+  padding-left: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.jaaropgave-guide__list li {
+  list-style: disc;
+  color: var(--brand-text);
+}
+
+.jaaropgave-guide__list li::marker {
+  color: var(--brand-primary);
+}

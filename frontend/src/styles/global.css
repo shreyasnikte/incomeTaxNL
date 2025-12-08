@@ -1,0 +1,106 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Flex:wght@300;400;500;600;700&display=swap');
+
+* {
+  box-sizing: border-box;
+}
+
+:root {
+  --brand-primary: #003082;
+  --brand-primary-light: #0054a6;
+  --brand-secondary: #007bc7;
+  --brand-accent: #f9b625;
+  --brand-background: #eef3f9;
+  --brand-surface: #ffffff;
+  --brand-surface-alt: #f6f8fc;
+  --brand-border: #d1d9e6;
+  --brand-shadow: rgba(0, 48, 130, 0.08);
+  --brand-text: #1a1f2c;
+  --brand-text-muted: #4b5a6b;
+  --brand-text-soft: #6d7a8b;
+  --brand-font-family: 'Roboto Flex', 'Roboto', 'Inter', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100%;
+  background-color: var(--brand-background);
+  color: var(--brand-text);
+  font-family: var(--brand-font-family);
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+a {
+  color: var(--brand-secondary);
+  text-decoration: none;
+}
+
+a:hover,
+a:focus {
+  text-decoration: underline;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+  line-height: inherit;
+}
+
+p {
+  margin: 0 0 1rem;
+  line-height: 1.6;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0 0 0.75rem;
+  font-weight: 600;
+}
+
+.MuiButton-containedPrimary {
+  background-color: var(--brand-primary) !important;
+  color: var(--brand-surface) !important;
+  box-shadow: none !important;
+}
+
+.MuiButton-containedPrimary:hover,
+.MuiButton-containedPrimary:focus-visible {
+  background-color: var(--brand-primary-light) !important;
+}
+
+.MuiButton-outlinedPrimary {
+  border-color: var(--brand-primary) !important;
+  color: var(--brand-primary) !important;
+}
+
+.MuiIconButton-colorPrimary {
+  color: var(--brand-primary) !important;
+}
+
+.MuiToggleButton-root {
+  border: 1px solid var(--brand-border) !important;
+  color: var(--brand-text) !important;
+  padding: 0.45rem 1.2rem !important;
+}
+
+.MuiToggleButton-root.Mui-selected {
+  background-color: rgba(0, 48, 130, 0.12) !important;
+  color: var(--brand-primary) !important;
+  border-color: var(--brand-primary) !important;
+}
+
+.MuiToggleButton-root.Mui-selected:hover {
+  background-color: rgba(0, 48, 130, 0.18) !important;
+}
