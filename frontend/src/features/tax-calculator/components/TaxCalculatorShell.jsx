@@ -228,23 +228,6 @@ function TaxCalculatorShell() {
       <header className="calculator-shell__header">
         <div className="calculator-shell__title-row">
           {/* Title removed as requested */}
-          {boxType === 'box1' ? (
-            <button
-              className="calculator-shell__switch-btn"
-              onClick={() => setBoxType('box3')}
-              aria-label="Switch to Box 3 calculator"
-            >
-              Switch to Capital Gains Calculator (Box 3)
-            </button>
-          ) : (
-            <button
-              className="calculator-shell__switch-btn"
-              onClick={() => setBoxType('box1')}
-              aria-label="Switch to Box 1 calculator"
-            >
-              Switch to Salary Calculator (Box 1)
-            </button>
-          )}
         </div>
         <div className="calculator-shell__tool-desc">
           {/* Description removed as requested */}
@@ -293,6 +276,25 @@ function TaxCalculatorShell() {
           </Suspense>
         </div>
       </div>
+      <footer className="calculator-shell__footer">
+        {boxType === 'box1' ? (
+          <button
+            className="calculator-shell__switch-btn"
+            onClick={() => setBoxType('box3')}
+            aria-label="Switch to Box 3 calculator"
+          >
+            Switch to Capital Gains Calculator (Box 3)
+          </button>
+        ) : (
+          <button
+            className="calculator-shell__switch-btn"
+            onClick={() => setBoxType('box1')}
+            aria-label="Switch to Box 1 calculator"
+          >
+            Switch to Salary Calculator (Box 1)
+          </button>
+        )}
+      </footer>
     </section>
   )
 }

@@ -33,6 +33,7 @@ import './Box1InputForm.css'
 
 function Box1InputForm({ values, onChange, year, onYearChange, onReset }) {
   const [showResetConfirm, setShowResetConfirm] = useState(false)
+  const [showAdvanced, setShowAdvanced] = useState(false)
 
   const handleInputChange = useCallback((field, value) => {
     onChange(field, value)
@@ -78,176 +79,195 @@ function Box1InputForm({ values, onChange, year, onYearChange, onReset }) {
         {/* Description removed as requested */}
       </header>
 
+      {/* Income, Period, and Advanced Options Switch Row */}
+      <div
+        className="box1-form__income-row"
+        style={{ marginBottom: showAdvanced ? '1.5rem' : '0.5rem' }}
+      >
+        <TextField
+          label={getIncomeLabel()}
+          type="number"
+          value={values.grossIncome}
+          onChange={handleNumberChange('grossIncome')}
+          placeholder="e.g. 50000"
+          className="box1-form__income-input"
+          InputProps={{
+            startAdornment: <InputAdornment position="start">€</InputAdornment>,
+          }}
+        />
+        <TextField
+          select
+          size="small"
+          label="Period"
+          value={values.period}
+          onChange={handleSelectChange('period')}
+          className="box1-form__period-select"
+          aria-label="Income period"
+        >
+          {INCOME_PERIODS.map((p) => (
+            <MenuItem key={p.value} value={p.value}>
+              {p.label}
+            </MenuItem>
+          ))}
+        </TextField>
+        {/* Advanced Options Switch */}
+        <FormControlLabel
+          control={
+            <Switch
+              checked={showAdvanced}
+              onChange={() => setShowAdvanced((prev) => !prev)}
+              color="primary"
+            />
+          }
+          label="Advanced options"
+          className="box1-form__advanced-switch"
+        />
+      </div>
 
-      <Stack spacing={3} component={Box} className="box1-form__fields">
-        {/* Income, Period, and Year Row */}
-        <div className="box1-form__income-row">
-          <TextField
-            label={getIncomeLabel()}
-            type="number"
-            value={values.grossIncome}
-            onChange={handleNumberChange('grossIncome')}
-            placeholder="e.g. 50000"
-            className="box1-form__income-input"
-            InputProps={{
-              startAdornment: <InputAdornment position="start">€</InputAdornment>,
-            }}
-          />
-          <TextField
-            select
-            size="small"
-            label="Period"
-            value={values.period}
-            onChange={handleSelectChange('period')}
-            className="box1-form__period-select"
-            aria-label="Income period"
-          >
-            {INCOME_PERIODS.map((p) => (
-              <MenuItem key={p.value} value={p.value}>
-                {p.label}
-              </MenuItem>
-            ))}
-          </TextField>
-          <TextField
-            select
-            size="small"
-            label="Tax year"
-            value={year}
-            onChange={(e) => onYearChange(Number(e.target.value))}
-            className="box1-form__year-select"
-            aria-label="Tax year"
-          >
-            {BOX1_AVAILABLE_YEARS.map((y) => (
-              <MenuItem key={y} value={y}>
-                {y}
-              </MenuItem>
-            ))}
-          </TextField>
-        </div>
+      {/* Collapse for showing advanced options, including tax year */}
+      <Collapse in={showAdvanced}>
+        <Stack spacing={3} component={Box} className="box1-form__fields">
+          <div className="box1-form__year-row">
+            <TextField
+              select
+              size="small"
+              label="Tax year"
+              value={year}
+              onChange={(e) => onYearChange(Number(e.target.value))}
+              className="box1-form__year-select"
+              aria-label="Tax year"
+            >
+              {BOX1_AVAILABLE_YEARS.map((y) => (
+                <MenuItem key={y} value={y}>
+                  {y}
+                </MenuItem>
+              ))}
+            </TextField>
+          </div>
+          {values.period === 'hourly' && (
+            <TextField
+              label="Hours per week"
+              type="number"
+              value={values.hoursPerWeek}
+              onChange={handleNumberChange('hoursPerWeek')}
+              placeholder="40"
+              fullWidth
+              InputProps={{
+                endAdornment: <InputAdornment position="end">hrs</InputAdornment>,
+              }}
+              helperText="Used to calculate annual income from hourly rate"
+            />
+          )}
 
-        {values.period === 'hourly' && (
-          <TextField
-            label="Hours per week"
-            type="number"
-            value={values.hoursPerWeek}
-            onChange={handleNumberChange('hoursPerWeek')}
-            placeholder="40"
-            fullWidth
-            InputProps={{
-              endAdornment: <InputAdornment position="end">hrs</InputAdornment>,
-            }}
-            helperText="Used to calculate annual income from hourly rate"
-          />
-        )}
-
-        <Box className="box1-form__toggles">
-          <FormControlLabel
-            control={
-              <Switch
-                checked={values.holidayAllowanceIncluded}
-                onChange={handleToggleChange('holidayAllowanceIncluded')}
-              />
-            }
-            label={
-              <Stack direction="row" alignItems="center" spacing={0.5}>
-                <span>Holiday allowance included</span>
-                <Tooltip title="If enabled, your gross income already includes the 8% holiday allowance. If disabled, it will be added separately.">
-                  <InfoOutlinedIcon fontSize="small" color="action" />
-                </Tooltip>
-              </Stack>
-            }
-          />
-
-          <FormControlLabel
-            control={
-              <Switch
-                checked={values.older}
-                onChange={handleToggleChange('older')}
-              />
-            }
-            label={
-              <Stack direction="row" alignItems="center" spacing={0.5}>
-                <span>66 years or older</span>
-                <Tooltip title="Check if you are at or above state pension age (AOW). Different tax rates and no AOW premium apply.">
-                  <InfoOutlinedIcon fontSize="small" color="action" />
-                </Tooltip>
-              </Stack>
-            }
-          />
-
-          {/* 30% Ruling Section */}
-          <div className="box1-form__ruling-section">
+          <Box className="box1-form__toggles">
             <FormControlLabel
               control={
                 <Switch
-                  checked={values.ruling30Enabled}
-                  onChange={handleToggleChange('ruling30Enabled')}
+                  checked={values.holidayAllowanceIncluded}
+                  onChange={handleToggleChange('holidayAllowanceIncluded')}
                 />
               }
               label={
                 <Stack direction="row" alignItems="center" spacing={0.5}>
-                  <span>30% ruling</span>
-                  <Tooltip title="Tax-free allowance for skilled migrants. 30% of your salary becomes tax-free. Different income thresholds apply based on category.">
+                  <span>Holiday allowance included</span>
+                  <Tooltip title="If enabled, your gross income already includes the 8% holiday allowance. If disabled, it will be added separately.">
                     <InfoOutlinedIcon fontSize="small" color="action" />
                   </Tooltip>
                 </Stack>
               }
             />
-            <Collapse in={values.ruling30Enabled}>
-              <FormControl component="fieldset" className="box1-form__ruling-options">
-                <FormLabel component="legend" className="box1-form__ruling-legend">
-                  Category
-                </FormLabel>
-                <RadioGroup
-                  value={values.ruling30Category}
-                  onChange={handleSelectChange('ruling30Category')}
-                  className="box1-form__ruling-radio-group"
-                >
-                  {RULING_30_CATEGORIES.map((cat) => (
-                    <FormControlLabel
-                      key={cat.value}
-                      value={cat.value}
-                      control={<Radio size="small" />}
-                      label={cat.label}
-                      className="box1-form__ruling-radio-label"
-                    />
-                  ))}
-                </RadioGroup>
-              </FormControl>
-            </Collapse>
-          </div>
 
-          <FormControlLabel
-            control={
-              <Switch
-                checked={values.socialSecurity}
-                onChange={handleToggleChange('socialSecurity')}
+            <FormControlLabel
+              control={
+                <Switch
+                  checked={values.older}
+                  onChange={handleToggleChange('older')}
+                />
+              }
+              label={
+                <Stack direction="row" alignItems="center" spacing={0.5}>
+                  <span>66 years or older</span>
+                  <Tooltip title="Check if you are at or above state pension age (AOW). Different tax rates and no AOW premium apply.">
+                    <InfoOutlinedIcon fontSize="small" color="action" />
+                  </Tooltip>
+                </Stack>
+              }
+            />
+
+            {/* 30% Ruling Section */}
+            <div className="box1-form__ruling-section">
+              <FormControlLabel
+                control={
+                  <Switch
+                    checked={values.ruling30Enabled}
+                    onChange={handleToggleChange('ruling30Enabled')}
+                  />
+                }
+                label={
+                  <Stack direction="row" alignItems="center" spacing={0.5}>
+                    <span>30% ruling</span>
+                    <Tooltip title="Tax-free allowance for skilled migrants. 30% of your salary becomes tax-free. Different income thresholds apply based on category.">
+                      <InfoOutlinedIcon fontSize="small" color="action" />
+                    </Tooltip>
+                  </Stack>
+                }
               />
-            }
-            label={
-              <Stack direction="row" alignItems="center" spacing={0.5}>
-                <span>Social security</span>
-                <Tooltip title="Include Dutch social security contributions (AOW, ANW, WLZ). Most employees pay these unless exempt.">
-                  <InfoOutlinedIcon fontSize="small" color="action" />
-                </Tooltip>
-              </Stack>
-            }
-          />
-        </Box>
-      </Stack>
+              <Collapse in={values.ruling30Enabled}>
+                <FormControl component="fieldset" className="box1-form__ruling-options">
+                  <FormLabel component="legend" className="box1-form__ruling-legend">
+                    Category
+                  </FormLabel>
+                  <RadioGroup
+                    value={values.ruling30Category}
+                    onChange={handleSelectChange('ruling30Category')}
+                    className="box1-form__ruling-radio-group"
+                  >
+                    {RULING_30_CATEGORIES.map((cat) => (
+                      <FormControlLabel
+                        key={cat.value}
+                        value={cat.value}
+                        control={<Radio size="small" />}
+                        label={cat.label}
+                        className="box1-form__ruling-radio-label"
+                      />
+                    ))}
+                  </RadioGroup>
+                </FormControl>
+              </Collapse>
+            </div>
 
-      <Box className="box1-form__reset-section">
-        <Button
-          size="small"
-          color="error"
-          onClick={() => setShowResetConfirm(true)}
-          className="box1-form__reset-button"
-          startIcon={<RestartAltIcon fontSize="small" />}
-          aria-label="Reset all values"
-        >
-          Reset
-        </Button>
-      </Box>
+            <FormControlLabel
+              control={
+                <Switch
+                  checked={values.socialSecurity}
+                  onChange={handleToggleChange('socialSecurity')}
+                />
+              }
+              label={
+                <Stack direction="row" alignItems="center" spacing={0.5}>
+                  <span>Social security</span>
+                  <Tooltip title="Include Dutch social security contributions (AOW, ANW, WLZ). Most employees pay these unless exempt.">
+                    <InfoOutlinedIcon fontSize="small" color="action" />
+                  </Tooltip>
+                </Stack>
+              }
+            />
+          </Box>
+        </Stack>
+
+        <Box className="box1-form__reset-section">
+          <Button
+            size="small"
+            color="error"
+            onClick={() => setShowResetConfirm(true)}
+            className="box1-form__reset-button"
+            startIcon={<RestartAltIcon fontSize="small" />}
+            aria-label="Reset all values"
+          >
+            Reset
+          </Button>
+        </Box>
+      </Collapse>
 
       {/* Reset confirmation dialog */}
       <Dialog open={showResetConfirm} onClose={() => setShowResetConfirm(false)} maxWidth="xs">
