@@ -32,6 +32,14 @@ body {
   line-height: 1.5;
 }
 
+/* Disable horizontal scrolling on mobile */
+@media (max-width: 600px) {
+  html, body {
+    overflow-x: hidden !important;
+    width: 100vw;
+  }
+}
+
 #root {
   min-height: 100vh;
 }
