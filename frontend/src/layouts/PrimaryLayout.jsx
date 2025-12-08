@@ -44,7 +44,7 @@ function PrimaryLayout({ children }) {
           <div className="privacy-modal" onClick={e => e.stopPropagation()} role="dialog" aria-modal="true" aria-label="Privacy Information">
             <button className="privacy-modal__close" onClick={() => setShowPrivacy(false)} aria-label="Close privacy information">×</button>
             <h2>Privacy-first by design</h2>
-            <p><strong>Your financial data stays private.</strong> TaxNL is a free and open source, privacy-first tool to estimate Dutch Box 1 and Box 3 taxes. Any data you enter is only stored locally in your browser. All calculations run 100% locally in your browser — your personal financial data is never sent, stored, or collected by this app for any reason.</p>
+            <p><strong>Your financial data is your business.</strong> TaxNL is a privacy-focused free and open source tool to estimate Dutch Box 1 and Box 3 taxes. Any data you enter is only stored locally in your browser. All calculations run 100% locally in your browser — your personal financial data is never sent, stored, or collected by this app for any reason.</p>
             <ul>
               <li>No risk of leaks, hacks, or misuse: your sensitive information never leaves your device.</li>
               <li>No tracking, no uploads, no analytics: you stay in control of your data.</li>

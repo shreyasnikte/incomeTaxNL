@@ -2,7 +2,7 @@
 # TaxNL
 
 
-**Your financial data stays private.** TaxNL is a free and open source, privacy-first tool to estimate Dutch Box 1 and Box 3 taxes. Any data you enter is only stored locally in your browser. All calculations run 100% locally in your browser — your personal financial data is never sent, stored, or collected by this app for any reason.
+**Your financial data is your business.** TaxNL is a privacy-focused free and open source tool to estimate Dutch Box 1 and Box 3 taxes. Any data you enter is only stored locally in your browser. All calculations run 100% locally in your browser — your personal financial data is never sent, stored, or collected by this app for any reason.
 
 **Why local-only?**
 - No risk of leaks, hacks, or misuse: your sensitive information never leaves your device.
