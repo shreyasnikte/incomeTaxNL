@@ -42,3 +42,27 @@
   flex-direction: column;
   gap: 1rem;
 }
+
+.calculator-panel--results {
+  background: var(--brand-surface-alt);
+  border: 1px dashed rgba(0, 48, 130, 0.2);
+  box-shadow: none;
+}
+
+/* Placeholder for lazy-loaded config menu button */
+.config-menu-placeholder {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(0, 48, 130, 0.08);
+}
+
+/* Placeholder for lazy-loaded results panel */
+.results-panel-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 200px;
+  color: var(--brand-text-muted);
+  font-size: 0.9rem;
+}

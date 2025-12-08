@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useMemo, useState, lazy, Suspense } from 'react'
 import PropTypes from 'prop-types'
 import {
   Box,
@@ -25,15 +25,12 @@ import AddCircleIcon from '@mui/icons-material/AddCircle'
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline'
 import EditIcon from '@mui/icons-material/Edit'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
-import JaaropgaveGuide from './JaaropgaveGuide.jsx'
 import { AVAILABLE_YEARS } from '../constants/box3Defaults.js'
+import { formatEuro } from '../../../utils/formatters.js'
 import './TaxInputForm.css'
 
-const euroFormat = new Intl.NumberFormat('nl-NL', {
-  style: 'currency',
-  currency: 'EUR',
-  minimumFractionDigits: 2,
-})
+// Lazy load modal-based guide component
+const JaaropgaveGuide = lazy(() => import('./JaaropgaveGuide.jsx'))
 
 const FIELD_CONFIG = [
   {
@@ -127,14 +124,14 @@ function TaxInputForm({ values, onChange, year, onYearChange }) {
       const plural = field.detailLabelPlural || `${singular}s`
       const label = list.length === 1 ? singular : plural
       return {
-        amount: euroFormat.format(total),
+        amount: formatEuro(total),
         detail: `${list.length} ${label}`,
       }
     }
 
     const numericValue = Number(values[fieldName]) || 0
     return {
-      amount: euroFormat.format(numericValue),
+      amount: formatEuro(numericValue),
       detail: '',
     }
   }
@@ -157,7 +154,7 @@ function TaxInputForm({ values, onChange, year, onYearChange }) {
         {list.map((entry, index) => (
           <li key={`${fieldName}-${index}`}>
             {entry.name ? `${entry.name}: ` : `${fallbackLabel}: `}
-            {euroFormat.format(Number(entry.amount) || 0)}
+            {formatEuro(Number(entry.amount) || 0)}
           </li>
         ))}
       </ul>
@@ -369,8 +366,10 @@ function TaxInputForm({ values, onChange, year, onYearChange }) {
     <form className="tax-form" onSubmit={(event) => event.preventDefault()} noValidate>
       <header className="tax-form__header">
         <h2>Financial inputs</h2>
-        <p>Map your money story—balances, debts, and all—without any data leaving your browser.</p>
-        <JaaropgaveGuide />
+        <p>Understand your Box 3 income story — balances, debts, and all—without any data leaving your browser.</p>
+        <Suspense fallback={null}>
+          <JaaropgaveGuide />
+        </Suspense>
       </header>
 
       <div className="tax-form__year-row">
@@ -484,7 +483,7 @@ function TaxInputForm({ values, onChange, year, onYearChange }) {
                   {modalTotals.count} {modalTotals.count === 1 ? activeField?.detailLabel : activeField?.detailLabelPlural}
                 </span>
                 <span className="tax-form__modal-total">
-                  {euroFormat.format(modalTotals.total)}
+                  {formatEuro(modalTotals.total)}
                 </span>
               </div>
             </DialogTitle>
@@ -525,7 +524,7 @@ function TaxInputForm({ values, onChange, year, onYearChange }) {
                                 ? entry.name
                                 : `Unnamed ${activeField?.detailLabel ?? 'entry'}`
                             }
-                            secondary={`Amount: ${euroFormat.format(Number(entry.amount) || 0)}`}
+                            secondary={`Amount: ${formatEuro(Number(entry.amount) || 0)}`}
                             primaryTypographyProps={{
                               variant: 'body1',
                               fontWeight: entry.name ? 600 : 500,

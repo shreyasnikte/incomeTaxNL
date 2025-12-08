@@ -1,20 +1,15 @@
-import { useState } from 'react'
+import { useState, useMemo, memo } from 'react'
 import PropTypes from 'prop-types'
+import { formatEuro } from '../../../utils/formatters.js'
 import './TaxResultPanel.css'
 
-const euroFormat = new Intl.NumberFormat('nl-NL', {
-  style: 'currency',
-  currency: 'EUR',
-  minimumFractionDigits: 2,
-})
-
-function InfoIcon({ text }) {
+const InfoIcon = memo(function InfoIcon({ text }) {
   return (
     <span className="tax-result__info" data-tooltip={text} role="img" aria-label={text} tabIndex={0}>
       i
     </span>
   )
-}
+})
 
 InfoIcon.propTypes = {
   text: PropTypes.string.isRequired,
@@ -22,15 +17,30 @@ InfoIcon.propTypes = {
 
 function TaxResultPanel({ inputs, summary, config }) {
   const [isBreakdownOpen, setIsBreakdownOpen] = useState(false)
-  const totalAssets = inputs.bankBalance + inputs.investmentAssets
-  const netWorth = totalAssets - inputs.debts
+
+  // Memoize derived calculations
+  const derivedValues = useMemo(() => {
+    const totalAssets = inputs.bankBalance + inputs.investmentAssets
+    const netWorth = totalAssets - inputs.debts
+    const allowanceMultiplier = inputs.hasTaxPartner ? 2 : 1
+    const taxFreeAllowanceApplied =
+      (config?.thresholds?.taxFreeAssetsPerIndividual ?? 0) * allowanceMultiplier
+    const debtsThresholdApplied =
+      (config?.thresholds?.debtsThresholdPerIndividual ?? 0) * allowanceMultiplier
+    const derivedBox3Rate =
+      summary.taxableBase > 0 ? summary.estimatedTax / summary.taxableBase : null
+
+    return {
+      totalAssets,
+      netWorth,
+      taxFreeAllowanceApplied,
+      debtsThresholdApplied,
+      derivedBox3Rate,
+    }
+  }, [inputs, summary, config])
+
+  const { totalAssets, netWorth, taxFreeAllowanceApplied, derivedBox3Rate } = derivedValues
   const partnerLabel = inputs.hasTaxPartner ? 'With tax partner' : 'Without tax partner'
-  const allowanceMultiplier = inputs.hasTaxPartner ? 2 : 1
-  const taxFreeAllowanceApplied =
-    (config?.thresholds?.taxFreeAssetsPerIndividual ?? 0) * allowanceMultiplier
-  const debtsThresholdApplied =
-    (config?.thresholds?.debtsThresholdPerIndividual ?? 0) * allowanceMultiplier
-  const derivedBox3Rate = summary.taxableBase > 0 ? summary.estimatedTax / summary.taxableBase : null
 
   const primaryHighlight = {
     label: 'Estimated tax',
@@ -78,7 +88,10 @@ function TaxResultPanel({ inputs, summary, config }) {
   return (
     <div className="tax-result">
       <header className="tax-result__header">
-        <h2>Results</h2>
+        <div className="tax-result__title-row">
+          <h2>Results</h2>
+          <span className="tax-result__live-badge">● Real-time</span>
+        </div>
         <div className="tax-result__meta">
           <span className="tax-result__badge">Tax year {config?.year ?? 2025}</span>
           <span className="tax-result__badge tax-result__badge--neutral">{partnerLabel}</span>
@@ -93,29 +106,25 @@ function TaxResultPanel({ inputs, summary, config }) {
               <InfoIcon text={primaryHighlight.info} />
             </div>
             <span className="tax-result__highlight-value">
-              {euroFormat.format(primaryHighlight.value)}
+              {formatEuro(primaryHighlight.value)}
             </span>
             <span className="tax-result__highlight-sub">{primaryHighlight.sublabel}</span>
           </article>
         </div>
 
         <div className="tax-result__supporting">
-          {supportingHighlights.map((block, index) => (
+          {supportingHighlights.map((block) => (
             <article className="tax-result__highlight" key={block.label}>
               <div className="tax-result__highlight-header">
                 <span className="tax-result__highlight-label">{block.label}</span>
                 <InfoIcon text={block.info} />
               </div>
-              <span className="tax-result__highlight-value">{euroFormat.format(block.value)}</span>
+              <span className="tax-result__highlight-value">{formatEuro(block.value)}</span>
               <span className="tax-result__highlight-sub">{block.sublabel}</span>
             </article>
           ))}
         </div>
       </section>
-
-      <p className="tax-result__note">
-        Numbers update instantly in your browser using the latest Box 3 assumptions.
-      </p>
 
       <dl className="tax-result__list" aria-label="Detailed figures">
         {detailedRows.map((row) => (
@@ -127,7 +136,7 @@ function TaxResultPanel({ inputs, summary, config }) {
               <dt>{row.label}</dt>
               <InfoIcon text={row.info} />
             </div>
-            <dd>{euroFormat.format(row.value)}</dd>
+            <dd>{formatEuro(row.value)}</dd>
           </div>
         ))}
       </dl>
@@ -153,27 +162,27 @@ function TaxResultPanel({ inputs, summary, config }) {
               <ol className="tax-result__explain-list">
                 <li>
                   <span className="tax-result__math">
-                    Total assets = bank savings + investments = {euroFormat.format(inputs.bankBalance)} +{' '}
-                    {euroFormat.format(inputs.investmentAssets)} = <strong>{euroFormat.format(totalAssets)}</strong>
+                    Total assets = bank savings + investments = {formatEuro(inputs.bankBalance)} +{' '}
+                    {formatEuro(inputs.investmentAssets)} = <strong>{formatEuro(totalAssets)}</strong>
                   </span>
                 </li>
                 <li>
                   <span className="tax-result__math">
-                    Net assets = total assets − debts = {euroFormat.format(totalAssets)} −{' '}
-                    {euroFormat.format(inputs.debts)} = <strong>{euroFormat.format(netWorth)}</strong>
+                    Net assets = total assets − debts = {formatEuro(totalAssets)} −{' '}
+                    {formatEuro(inputs.debts)} = <strong>{formatEuro(netWorth)}</strong>
                   </span>
                 </li>
                 <li>
                   <span className="tax-result__math">
-                    Taxable base = net assets − allowance = {euroFormat.format(netWorth)} −{' '}
-                    {euroFormat.format(taxFreeAllowanceApplied)} = <strong>{euroFormat.format(summary.taxableBase)}</strong>
+                    Taxable base = net assets − allowance = {formatEuro(netWorth)} −{' '}
+                    {formatEuro(taxFreeAllowanceApplied)} = <strong>{formatEuro(summary.taxableBase)}</strong>
                   </span>
                 </li>
                 <li>
                   <span className="tax-result__math">
                     Estimated tax = Box 3 rate × taxable base ≈{' '}
                     {derivedBox3Rate !== null ? `${(derivedBox3Rate * 100).toFixed(2)}%` : 'current rate'} ×{' '}
-                    {euroFormat.format(summary.taxableBase)} = <strong>{euroFormat.format(summary.estimatedTax)}</strong>
+                    {formatEuro(summary.taxableBase)} = <strong>{formatEuro(summary.estimatedTax)}</strong>
                   </span>
                 </li>
               </ol>
