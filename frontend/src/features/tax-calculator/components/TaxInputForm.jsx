@@ -25,6 +25,7 @@ import AddCircleIcon from '@mui/icons-material/AddCircle'
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline'
 import EditIcon from '@mui/icons-material/Edit'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
+import RestartAltIcon from '@mui/icons-material/RestartAlt'
 import { AVAILABLE_YEARS } from '../constants/box3Defaults.js'
 import { formatEuro } from '../../../utils/formatters.js'
 import './TaxInputForm.css'
@@ -73,12 +74,13 @@ const monetaryEntryPropType = PropTypes.shape({
   amount: PropTypes.number.isRequired,
 })
 
-function TaxInputForm({ values, onChange, year, onYearChange }) {
+function TaxInputForm({ values, onChange, year, onYearChange, onReset }) {
   const [modalState, setModalState] = useState(null)
   const [expandedPanel, setExpandedPanel] = useState(null)
   const [editingIndex, setEditingIndex] = useState(null)
   const [amountError, setAmountError] = useState('')
   const [showCloseWarning, setShowCloseWarning] = useState(false)
+  const [showResetConfirm, setShowResetConfirm] = useState(false)
 
   const fieldLookup = useMemo(() => {
     const map = new Map()
@@ -473,6 +475,44 @@ function TaxInputForm({ values, onChange, year, onYearChange }) {
         </ToggleButtonGroup>
       </Box>
 
+      <Box className="tax-form__reset-section">
+        <Button
+          size="small"
+          color="error"
+          onClick={() => setShowResetConfirm(true)}
+          className="tax-form__reset-button"
+          startIcon={<RestartAltIcon fontSize="small" />}
+          aria-label="Reset all values"
+        >
+          Reset
+        </Button>
+      </Box>
+
+      {/* Reset confirmation dialog */}
+      <Dialog open={showResetConfirm} onClose={() => setShowResetConfirm(false)} maxWidth="xs">
+        <DialogTitle>Reset all values?</DialogTitle>
+        <DialogContent>
+          <Typography variant="body2">
+            This will clear all your entered data including bank accounts, investments, and debts. This action cannot be undone.
+          </Typography>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setShowResetConfirm(false)} color="inherit">
+            Cancel
+          </Button>
+          <Button
+            onClick={() => {
+              onReset()
+              setShowResetConfirm(false)
+            }}
+            variant="contained"
+            color="error"
+          >
+            Reset
+          </Button>
+        </DialogActions>
+      </Dialog>
+
       {modalState && (
         <>
           <Dialog open onClose={() => closeDialog()} fullWidth maxWidth="sm">
@@ -637,6 +677,7 @@ TaxInputForm.propTypes = {
   onChange: PropTypes.func.isRequired,
   year: PropTypes.number.isRequired,
   onYearChange: PropTypes.func.isRequired,
+  onReset: PropTypes.func.isRequired,
 }
 
 export default TaxInputForm

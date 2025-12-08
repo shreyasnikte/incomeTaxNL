@@ -50,6 +50,19 @@
   gap: 0.5rem;
 }
 
+.tax-form__reset-section {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: -1.25rem;
+}
+
+.tax-form__reset-button {
+  text-transform: none;
+  font-size: 0.8rem;
+  font-weight: 500;
+  padding: 0.2rem 0.6rem;
+}
+
 .tax-form__partner-toggle {
   align-self: flex-start;
 }
