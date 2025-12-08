@@ -1,21 +1,33 @@
 // Year-keyed Box 3 tax defaults
 export const BOX3_DEFAULTS_BY_YEAR = {
-  2024: {
+  2023: {
     thresholds: {
       taxFreeAssetsPerIndividual: 57000,
       debtsThresholdPerIndividual: 3400,
     },
+    taxRate:  32 / 100,
+    assumedReturnRates: {
+      bankBalance: 0.92 / 100,
+      investmentAssets: 6.17 / 100,
+      debts: 2.46 / 100,
+    },
+  },
+  2024: {
+    thresholds: {
+      taxFreeAssetsPerIndividual: 57000,
+      debtsThresholdPerIndividual: 3700,
+    },
     taxRate: 36 / 100,
     assumedReturnRates: {
-      bankBalance: 1.03 / 100,
+      bankBalance: 1.44 / 100,
       investmentAssets: 6.04 / 100,
-      debts: 2.47 / 100,
+      debts: 2.61 / 100,
     },
   },
   2025: {
     thresholds: {
-      taxFreeAssetsPerIndividual: 57000,
-      debtsThresholdPerIndividual: 3400,
+      taxFreeAssetsPerIndividual: 57684,
+      debtsThresholdPerIndividual: 3800,
     },
     taxRate: 32 / 100,
     assumedReturnRates: {
