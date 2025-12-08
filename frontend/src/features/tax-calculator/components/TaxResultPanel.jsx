@@ -27,19 +27,45 @@ function TaxResultPanel({ inputs, summary, config }) {
       (config?.thresholds?.taxFreeAssetsPerIndividual ?? 0) * allowanceMultiplier
     const debtsThresholdApplied =
       (config?.thresholds?.debtsThresholdPerIndividual ?? 0) * allowanceMultiplier
-    const derivedBox3Rate =
-      summary.taxableBase > 0 ? summary.estimatedTax / summary.taxableBase : null
+
+    // Extract values from breakdown for display
+    const incomeFromSavingsAndInvestments = 
+      summary.breakdown.find(item => item.description === 'Income from savings and investments')?.amount ?? 0
+    const taxableReturns = 
+      summary.breakdown.find(item => item.description === 'Taxable returns')?.amount ?? 0
+    const capitalYieldTaxBase = 
+      summary.breakdown.find(item => item.description === 'Capital yield tax base')?.amount ?? 0
+    
+    // Calculate share in capital yield tax base
+    const shareInCapitalYieldTaxBase = 
+      capitalYieldTaxBase > 0 ? summary.taxableBase / capitalYieldTaxBase : 0
+
+    // Get actual tax rate from config
+    const actualTaxRate = config?.taxRate ?? 0
 
     return {
       totalAssets,
       netWorth,
       taxFreeAllowanceApplied,
       debtsThresholdApplied,
-      derivedBox3Rate,
+      incomeFromSavingsAndInvestments,
+      taxableReturns,
+      capitalYieldTaxBase,
+      shareInCapitalYieldTaxBase,
+      actualTaxRate,
     }
   }, [inputs, summary, config])
 
-  const { totalAssets, netWorth, taxFreeAllowanceApplied, derivedBox3Rate } = derivedValues
+  const { 
+    totalAssets, 
+    netWorth, 
+    taxFreeAllowanceApplied, 
+    incomeFromSavingsAndInvestments,
+    taxableReturns,
+    capitalYieldTaxBase,
+    shareInCapitalYieldTaxBase,
+    actualTaxRate,
+  } = derivedValues
   const partnerLabel = inputs.hasTaxPartner ? 'With tax partner' : 'Without tax partner'
 
   const primaryHighlight = {
@@ -168,21 +194,32 @@ function TaxResultPanel({ inputs, summary, config }) {
                 </li>
                 <li>
                   <span className="tax-result__math">
-                    Net assets = total assets − debts = {formatEuro(totalAssets)} −{' '}
-                    {formatEuro(inputs.debts)} = <strong>{formatEuro(netWorth)}</strong>
+                    Capital yield tax base = total assets − deductible debts = {formatEuro(totalAssets)} −{' '}
+                    {formatEuro(totalAssets - capitalYieldTaxBase)} = <strong>{formatEuro(capitalYieldTaxBase)}</strong>
                   </span>
                 </li>
                 <li>
                   <span className="tax-result__math">
-                    Taxable base = net assets − allowance = {formatEuro(netWorth)} −{' '}
+                    Basis for savings & investments = capital yield tax base − allowance = {formatEuro(capitalYieldTaxBase)} −{' '}
                     {formatEuro(taxFreeAllowanceApplied)} = <strong>{formatEuro(summary.taxableBase)}</strong>
                   </span>
                 </li>
                 <li>
                   <span className="tax-result__math">
-                    Estimated tax = Box 3 rate × taxable base ≈{' '}
-                    {derivedBox3Rate !== null ? `${(derivedBox3Rate * 100).toFixed(2)}%` : 'current rate'} ×{' '}
-                    {formatEuro(summary.taxableBase)} = <strong>{formatEuro(summary.estimatedTax)}</strong>
+                    Share in capital yield tax base = basis / capital yield tax base = {formatEuro(summary.taxableBase)} /{' '}
+                    {formatEuro(capitalYieldTaxBase)} = <strong>{(shareInCapitalYieldTaxBase * 100).toFixed(2)}%</strong>
+                  </span>
+                </li>
+                <li>
+                  <span className="tax-result__math">
+                    Income from savings & investments = taxable returns × share = {formatEuro(taxableReturns)} ×{' '}
+                    {(shareInCapitalYieldTaxBase * 100).toFixed(2)}% = <strong>{formatEuro(incomeFromSavingsAndInvestments)}</strong>
+                  </span>
+                </li>
+                <li>
+                  <span className="tax-result__math">
+                    Estimated tax = income × Box 3 tax rate = {formatEuro(incomeFromSavingsAndInvestments)} ×{' '}
+                    <strong>{(actualTaxRate * 100).toFixed(0)}%</strong> = <strong>{formatEuro(summary.estimatedTax)}</strong>
                   </span>
                 </li>
               </ol>

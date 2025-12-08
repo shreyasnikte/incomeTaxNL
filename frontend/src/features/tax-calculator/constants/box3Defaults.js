@@ -29,11 +29,11 @@ export const BOX3_DEFAULTS_BY_YEAR = {
       taxFreeAssetsPerIndividual: 57684,
       debtsThresholdPerIndividual: 3800,
     },
-    taxRate: 32 / 100,
+    taxRate: 36 / 100,
     assumedReturnRates: {
-      bankBalance: 0.92 / 100,
-      investmentAssets: 6.17 / 100,
-      debts: 2.46 / 100,
+      bankBalance: 1.44 / 100,
+      investmentAssets: 5.88 / 100,
+      debts: 2.62 / 100,
     },
   },
 }

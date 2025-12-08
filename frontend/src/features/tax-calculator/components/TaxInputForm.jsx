@@ -64,7 +64,7 @@ const FIELD_CONFIG = [
     emptyLabel: 'No debts added yet',
     entryNameLabel: 'Debt name',
     entryNamePlaceholder: 'e.g. Mortgage balance',
-    description: 'List deductible debts, such as mortgages or loans outstanding on 1 January.',
+    description: 'List deductible debts, such as loans outstanding on 1 January.',
   },
 ]
 
