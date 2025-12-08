@@ -31,10 +31,7 @@ function PrimaryLayout({ children }) {
           </a>
         </nav>
       </header>
-      <div className="privacy-banner">
-        <span role="img" aria-label="lock">🔒</span>
-        <span>Your financial data never leaves your computer. All calculations happen locally in your browser.</span>
-      </div>
+      {/* Banner removed as requested */}
       <main className="app-main">{children}</main>
       <footer className="app-footer">
         <small>Educational use only — not official advice.</small>

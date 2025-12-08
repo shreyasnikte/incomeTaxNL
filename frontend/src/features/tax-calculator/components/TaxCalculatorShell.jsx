@@ -227,7 +227,7 @@ function TaxCalculatorShell() {
     <section className="calculator-shell">
       <header className="calculator-shell__header">
         <div className="calculator-shell__title-row">
-          <h1 className="calculator-shell__title">{title}</h1>
+          {/* Title removed as requested */}
           {boxType === 'box1' ? (
             <button
               className="calculator-shell__switch-btn"
@@ -247,10 +247,7 @@ function TaxCalculatorShell() {
           )}
         </div>
         <div className="calculator-shell__tool-desc">
-          {boxType === 'box1'
-            ? <span>Calculate your Dutch net salary, taxes, and deductions for Box 1 (income from work).</span>
-            : <span>Estimate your Dutch capital gains tax for Box 3 (savings and investments).</span>
-          }
+          {/* Description removed as requested */}
         </div>
       </header>
       <div className="calculator-shell__content">

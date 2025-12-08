@@ -37,7 +37,7 @@
 }
 
 .tax-form__year-select .MuiInputBase-root {
-  font-weight: 600;
+  font-weight: normal;
   font-size: 0.9rem;
 }
 
@@ -87,7 +87,7 @@
 
 .tax-form__accordion {
   border: 1px solid #e3e7ee;
-  border-radius: 16px !important;
+  border-radius: 4px !important;
   background: var(--brand-surface-alt);
   box-shadow: none;
   transition: background 0.2s ease;

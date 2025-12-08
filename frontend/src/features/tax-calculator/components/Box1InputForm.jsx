@@ -74,30 +74,13 @@ function Box1InputForm({ values, onChange, year, onYearChange, onReset }) {
   return (
     <form className="box1-form" onSubmit={(e) => e.preventDefault()} noValidate>
       <header className="box1-form__header">
-        <h2>Income Details</h2>
-        <p>Calculate your Dutch income tax (Box 1) — employment income, tax credits, and deductions.</p>
+        <h2>Dutch Salary Calculator (Box 1)</h2>
+        {/* Description removed as requested */}
       </header>
 
-      <div className="box1-form__year-row">
-        <TextField
-          select
-          size="small"
-          label="Tax year"
-          value={year}
-          onChange={(e) => onYearChange(Number(e.target.value))}
-          className="box1-form__year-select"
-          aria-label="Tax year"
-        >
-          {BOX1_AVAILABLE_YEARS.map((y) => (
-            <MenuItem key={y} value={y}>
-              {y}
-            </MenuItem>
-          ))}
-        </TextField>
-      </div>
 
       <Stack spacing={3} component={Box} className="box1-form__fields">
-        {/* Income and Period Row */}
+        {/* Income, Period, and Year Row */}
         <div className="box1-form__income-row">
           <TextField
             label={getIncomeLabel()}
@@ -122,6 +105,21 @@ function Box1InputForm({ values, onChange, year, onYearChange, onReset }) {
             {INCOME_PERIODS.map((p) => (
               <MenuItem key={p.value} value={p.value}>
                 {p.label}
+              </MenuItem>
+            ))}
+          </TextField>
+          <TextField
+            select
+            size="small"
+            label="Tax year"
+            value={year}
+            onChange={(e) => onYearChange(Number(e.target.value))}
+            className="box1-form__year-select"
+            aria-label="Tax year"
+          >
+            {BOX1_AVAILABLE_YEARS.map((y) => (
+              <MenuItem key={y} value={y}>
+                {y}
               </MenuItem>
             ))}
           </TextField>

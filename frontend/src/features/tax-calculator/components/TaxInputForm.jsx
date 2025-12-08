@@ -368,13 +368,10 @@ function TaxInputForm({ values, onChange, year, onYearChange, onReset, configMen
     <form className="tax-form" onSubmit={(event) => event.preventDefault()} noValidate>
       <header className="tax-form__header">
         <div className="tax-form__header-row">
-          <h2>Financial inputs</h2>
+          <h2>Capital Gains Calculator (Box 3)</h2>
           {configMenu && <div className="tax-form__config-menu">{configMenu}</div>}
         </div>
-        <p>Understand your Box 3 income story — balances, debts, and all—without any data leaving your browser.</p>
-        <Suspense fallback={null}>
-          <JaaropgaveGuide />
-        </Suspense>
+        {/* Description removed as requested */}
       </header>
 
       <div className="tax-form__year-row">
@@ -421,23 +418,19 @@ function TaxInputForm({ values, onChange, year, onYearChange, onReset, configMen
                 <div className="tax-form__summary-content">
                   <div className="tax-form__summary-info">
                     <div className="tax-form__summary-heading">
-                      <Typography variant="subtitle1" fontWeight={600} color="text.primary">
+                      <Typography variant="subtitle1" fontWeight="normal" color="text.primary">
                         {field.label}
                       </Typography>
-                      {detail && <span className="tax-form__summary-count">{detail}</span>}
                     </div>
                     <div className="tax-form__summary-values">
                       <span className="tax-form__summary-amount">{amount}</span>
+                      {/* Account count removed as requested */}
                     </div>
                   </div>
                 </div>
               </AccordionSummary>
               <AccordionDetails className="tax-form__accordion-details" id={`${panelId}-content`}>
-                {field.description && (
-                  <Typography variant="body2" color="text.secondary">
-                    {field.description}
-                  </Typography>
-                )}
+                {/* Description removed as requested */}
                 {secondaryContent && (
                   <div className="tax-form__section-summary">{secondaryContent}</div>
                 )}
@@ -459,7 +452,7 @@ function TaxInputForm({ values, onChange, year, onYearChange, onReset, configMen
       </Stack>
 
       <Box className="tax-form__partner-section">
-        <Typography variant="body1" fontWeight={600} color="text.primary">
+        <Typography variant="body1" fontWeight="normal" color="text.primary">
           I have a tax partner
         </Typography>
         <ToggleButtonGroup
