@@ -208,17 +208,18 @@
   font-weight: 600;
 }
 
+
 .tax-result__info {
   flex-shrink: 0;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 1.4rem;
-  height: 1.4rem;
-  border-radius: 999px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
   background: rgba(0, 48, 130, 0.12);
   color: var(--brand-primary);
-  font-size: 0.85rem;
+  font-size: 0.65rem;
   font-weight: 700;
   cursor: help;
   position: relative;
@@ -234,18 +235,20 @@
 .tax-result__info::after {
   content: attr(data-tooltip);
   position: absolute;
-  bottom: calc(100% + 0.4rem);
-  left: 50%;
-  transform: translate(-50%, 4px);
-  background: var(--brand-primary);
-  color: #ffffff;
+  bottom: calc(100% + 6px);
+  right: 0;
+  transform: translateY(4px);
+  padding: 0.5rem 0.75rem;
+  background: var(--brand-text);
+  color: #fff;
   font-size: 0.75rem;
   line-height: 1.35;
-  padding: 0.4rem 0.6rem;
   border-radius: 6px;
+  min-width: 140px;
+  max-width: min(260px, calc(100% - 1rem));
   white-space: normal;
-  width: max-content;
-  max-width: 220px;
+  text-align: left;
+  overflow-wrap: anywhere;
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.18s ease, transform 0.18s ease;
@@ -268,7 +271,7 @@
 .tax-result__info:focus-visible::after,
 .tax-result__info:hover::after {
   opacity: 1;
-  transform: translate(-50%, 0);
+  transform: translateY(0);
 }
 
 .tax-result__explain-text {

@@ -183,11 +183,10 @@ function JaaropgaveGuide() {
       <Button
         variant="text"
         size="small"
-        startIcon={<HelpOutlineIcon fontSize="small" />}
         onClick={handleOpen}
         className="jaaropgave-guide__trigger"
       >
-        Jaaropgave guide
+        Where can I find this information?
       </Button>
 
       <Dialog open={open} onClose={handleClose} fullWidth maxWidth="md">

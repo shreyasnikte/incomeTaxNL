@@ -1,15 +1,18 @@
 .jaaropgave-guide__trigger {
   text-transform: none;
   font-weight: 500;
-  font-size: 0.75rem;
-  padding: 0.25rem 0.5rem;
+  font-size: 0.85rem;
+  padding: 0;
   min-width: 0;
-  color: var(--brand-text-muted);
+  color: var(--brand-primary);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
 }
 
 .jaaropgave-guide__trigger:hover {
-  color: var(--brand-primary);
-  background: rgba(0, 123, 199, 0.06);
+  color: #003082;
+  background: transparent;
 }
 
 .jaaropgave-guide__title {

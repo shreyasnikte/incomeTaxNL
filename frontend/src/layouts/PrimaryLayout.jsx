@@ -41,7 +41,7 @@ function PrimaryLayout({ children }) {
       </div>
       <main className="app-main">{children}</main>
       <footer className="app-footer">
-        <small>Educational use only — not official advice.</small>
+        <small>Only for educational & informational purposes. Consult Belastingdienst or qualified consultant for official advice.</small>
       </footer>
       {showPrivacy && (
         <div className="privacy-modal__backdrop" onClick={() => setShowPrivacy(false)}>

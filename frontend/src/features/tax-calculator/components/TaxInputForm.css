@@ -198,6 +198,21 @@
   font-weight: 600;
 }
 
+.tax-form__actions-grid {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.tax-form__helper-link {
+  text-align: center;
+  font-size: 0.85rem;
+  color: var(--brand-text-muted);
+  margin-top: -0.25rem;
+}
+
 .tax-form__summary-list {
   margin: 0;
   padding-left: 1.1rem;

@@ -30,6 +30,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import RestartAltIcon from '@mui/icons-material/RestartAlt'
 import { AVAILABLE_YEARS } from '../constants/box3Defaults.js'
 import { formatEuro } from '../../../utils/formatters.js'
+import JaaropgaveGuide from './JaaropgaveGuide.jsx'
 import './TaxInputForm.css'
 
 const FIELD_CONFIG = [
@@ -500,6 +501,10 @@ function TaxInputForm({ values, onChange, year, onYearChange, onReset, configMen
           Reset
         </Button>
         {configMenu && <div className="tax-form__config-menu">{configMenu}</div>}
+      </Box>
+
+      <Box className="tax-form__helper-link">
+        <JaaropgaveGuide />
       </Box>
 
       {/* Reset confirmation dialog */}
