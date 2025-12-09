@@ -1,5 +1,6 @@
 import { useState, useMemo, memo, useCallback } from 'react'
 import PropTypes from 'prop-types'
+import { box1InputsPropType, box1SummaryPropType } from '../../../utils/propTypes.js'
 import { formatEuro } from '../../../utils/formatters.js'
 import './Box1ResultPanel.css'
 
@@ -299,23 +300,8 @@ function Box1ResultPanel({ inputs, summary, year }) {
 }
 
 Box1ResultPanel.propTypes = {
-  inputs: PropTypes.shape({
-    grossIncome: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-    period: PropTypes.string,
-    hoursPerWeek: PropTypes.number,
-    holidayAllowanceIncluded: PropTypes.bool,
-    older: PropTypes.bool,
-    ruling30Enabled: PropTypes.bool,
-    ruling30Category: PropTypes.string,
-    socialSecurity: PropTypes.bool,
-  }).isRequired,
-  summary: PropTypes.shape({
-    taxableBase: PropTypes.number,
-    estimatedTax: PropTypes.number,
-    netIncome: PropTypes.number,
-    breakdown: PropTypes.arrayOf(PropTypes.object),
-    details: PropTypes.object,
-  }).isRequired,
+  inputs: box1InputsPropType.isRequired,
+  summary: box1SummaryPropType.isRequired,
   year: PropTypes.number.isRequired,
 }
 

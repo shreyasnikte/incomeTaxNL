@@ -1,5 +1,6 @@
 import { useState, useMemo, memo } from 'react'
 import PropTypes from 'prop-types'
+import { box3InputsPropType, box3SummaryPropType, box3ConfigPropType } from '../../../utils/propTypes.js'
 import { formatEuro } from '../../../utils/formatters.js'
 import './TaxResultPanel.css'
 
@@ -231,31 +232,9 @@ function TaxResultPanel({ inputs, summary, config }) {
 }
 
 TaxResultPanel.propTypes = {
-  inputs: PropTypes.shape({
-    bankBalance: PropTypes.number.isRequired,
-    investmentAssets: PropTypes.number.isRequired,
-    debts: PropTypes.number.isRequired,
-    hasTaxPartner: PropTypes.bool.isRequired,
-  }).isRequired,
-  summary: PropTypes.shape({
-    taxableBase: PropTypes.number.isRequired,
-    estimatedTax: PropTypes.number.isRequired,
-    breakdown: PropTypes.arrayOf(PropTypes.object).isRequired,
-    box3RatePercentage: PropTypes.number,
-  }).isRequired,
-  config: PropTypes.shape({
-    year: PropTypes.number,
-    thresholds: PropTypes.shape({
-      taxFreeAssetsPerIndividual: PropTypes.number,
-      debtsThresholdPerIndividual: PropTypes.number,
-    }),
-    taxRate: PropTypes.number,
-    assumedReturnRates: PropTypes.shape({
-      bankBalance: PropTypes.number,
-      investmentAssets: PropTypes.number,
-      debts: PropTypes.number,
-    }),
-  }),
+  inputs: box3InputsPropType.isRequired,
+  summary: box3SummaryPropType.isRequired,
+  config: box3ConfigPropType,
 }
 
 export default TaxResultPanel

@@ -1,5 +1,6 @@
 import { useMemo, useState, lazy, Suspense } from 'react'
 import PropTypes from 'prop-types'
+import { monetaryEntryPropType } from '../../../utils/propTypes.js'
 import {
   Box,
   Dialog,
@@ -69,10 +70,6 @@ const FIELD_CONFIG = [
   },
 ]
 
-const monetaryEntryPropType = PropTypes.shape({
-  name: PropTypes.string,
-  amount: PropTypes.number.isRequired,
-})
 
 function TaxInputForm({ values, onChange, year, onYearChange, onReset, configMenu }) {
   const [modalState, setModalState] = useState(null)
@@ -388,7 +385,7 @@ function TaxInputForm({ values, onChange, year, onYearChange, onReset, configMen
 
       <Stack spacing={0} component={Box} className="tax-form__fields">
         {FIELD_CONFIG.map((field) => {
-          const { amount, detail } = getPrimaryValueParts(field.name)
+          const { amount } = getPrimaryValueParts(field.name)
           const secondaryContent = renderSecondaryValue(field.name)
           const isExpanded = expandedPanel === field.name
           const panelId = `panel-${field.name}`

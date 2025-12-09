@@ -222,8 +222,6 @@ function TaxCalculatorShell() {
 
   const box1Summary = useBox1Calculator(box1CalculatorInputs, box1SelectedYear)
 
-  // Determine title based on box type
-  const title = boxType === 'box1' ? 'Dutch Salary Calculator' : 'Dutch Capital Gains Tax (Box 3) Calculator'
 
   return (
     <section className="calculator-shell">

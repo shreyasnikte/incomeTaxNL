@@ -6,17 +6,22 @@ import './PrimaryLayout.css'
 
 function PrimaryLayout({ children }) {
   const [showPrivacy, setShowPrivacy] = useState(false)
+  const [showInfo, setShowInfo] = useState(false)
   return (
     <div className="app-shell">
       <header className="app-header">
         <h1>incomeTaxNL</h1>
         <nav className="app-header__nav">
           <button
-            className="app-header__privacy-link"
-            onClick={() => setShowPrivacy(true)}
-            aria-label="Show privacy information"
+            type="button"
+            className="app-header__icon-button"
+            onClick={() => setShowInfo(true)}
+            aria-label="Learn about incomeTaxNL"
+            aria-haspopup="dialog"
           >
-            Privacy by design
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false">
+              <path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm0 4.75a1.25 1.25 0 1 1 0 2.5 1.25 1.25 0 0 1 0-2.5Zm1.5 11.25h-3v-2h1v-3h-1v-2h2a1 1 0 0 1 1 1v4h1v2Z"/>
+            </svg>
           </button>
           <a 
             href="https://github.com/shreyasnikte/Dutch_Tax" 
@@ -31,7 +36,9 @@ function PrimaryLayout({ children }) {
           </a>
         </nav>
       </header>
-      {/* Banner removed as requested */}
+      <div className="app-notice">
+        Built with ❤️ for privacy — <button onClick={() => setShowPrivacy(true)} className="app-notice__link">your data never leaves your device</button>
+      </div>
       <main className="app-main">{children}</main>
       <footer className="app-footer">
         <small>Educational use only — not official advice.</small>
@@ -47,6 +54,50 @@ function PrimaryLayout({ children }) {
               <li>No tracking, no uploads, no analytics: you stay in control of your data.</li>
               <li>Use incomeTaxNL with confidence for salary and capital gains calculations, knowing your privacy is protected.</li>
             </ul>
+          </div>
+        </div>
+      )}
+      {showInfo && (
+        <div className="info-modal__backdrop" onClick={() => setShowInfo(false)}>
+          <div
+            className="info-modal"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="about-incometaxnl-title"
+            onClick={e => e.stopPropagation()}
+          >
+            <button
+              type="button"
+              className="info-modal__close"
+              onClick={() => setShowInfo(false)}
+              aria-label="Close about dialog"
+            >
+              ×
+            </button>
+            <h2 id="about-incometaxnl-title">About incomeTaxNL</h2>
+            <p>
+              incomeTaxNL helps you estimate Dutch Box 1 salary tax and Box 3 wealth tax with a
+              privacy-first approach. All calculations run locally, so your data never leaves your
+              browser.
+            </p>
+            <section className="info-modal__section">
+              <h3>How to use</h3>
+              <ol>
+                <li>Select Box 1 or Box 3 using the toggle at the top of the calculator.</li>
+                <li>Enter your income, savings, investments, and debts in the left-side forms.</li>
+                <li>Open the settings gear to tweak thresholds, return assumptions, or tax year.</li>
+                <li>Review the results panel for a breakdown of taxable bases and estimated taxes.</li>
+              </ol>
+            </section>
+            <section className="info-modal__section">
+              <h3>Origin story</h3>
+              <p>
+                Navigating Dutch taxes used to be confusing for me. I built an elaborate
+                spreadsheet to make sense of the rules, but it was too complex for friends and
+                colleagues. This app is the friendlier version—same clarity, with explanations that
+                anyone can follow.
+              </p>
+            </section>
           </div>
         </div>
       )}
