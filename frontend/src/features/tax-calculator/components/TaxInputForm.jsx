@@ -366,13 +366,7 @@ function TaxInputForm({ values, onChange, year, onYearChange, onReset, configMen
 
   return (
     <form className="tax-form" onSubmit={(event) => event.preventDefault()} noValidate>
-      <header className="tax-form__header">
-        <div className="tax-form__header-row">
-          <h2>Capital Gains Calculator (Box 3)</h2>
-          {configMenu && <div className="tax-form__config-menu">{configMenu}</div>}
-        </div>
-        {/* Description removed as requested */}
-      </header>
+      {/* Header removed as requested */}
 
       <div className="tax-form__year-row">
         <TextField
@@ -471,7 +465,7 @@ function TaxInputForm({ values, onChange, year, onYearChange, onReset, configMen
         </ToggleButtonGroup>
       </Box>
 
-      <Box className="tax-form__reset-section">
+      <Box className="tax-form__actions-grid" display="flex" gap={2} alignItems="center" justifyContent="flex-end" mt={2}>
         <Button
           size="small"
           color="error"
@@ -482,6 +476,7 @@ function TaxInputForm({ values, onChange, year, onYearChange, onReset, configMen
         >
           Reset
         </Button>
+        {configMenu && <div className="tax-form__config-menu">{configMenu}</div>}
       </Box>
 
       {/* Reset confirmation dialog */}

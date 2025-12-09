@@ -74,10 +74,6 @@ function Box1InputForm({ values, onChange, year, onYearChange, onReset }) {
 
   return (
     <form className="box1-form" onSubmit={(e) => e.preventDefault()} noValidate>
-      <header className="box1-form__header">
-        <h2>Dutch Salary Calculator (Box 1)</h2>
-        {/* Description removed as requested */}
-      </header>
 
       {/* Income, Period, and Advanced Options Switch Row */}
       <div
@@ -254,20 +250,21 @@ function Box1InputForm({ values, onChange, year, onYearChange, onReset }) {
             />
           </Box>
         </Stack>
-
-        <Box className="box1-form__reset-section">
-          <Button
-            size="small"
-            color="error"
-            onClick={() => setShowResetConfirm(true)}
-            className="box1-form__reset-button"
-            startIcon={<RestartAltIcon fontSize="small" />}
-            aria-label="Reset all values"
-          >
-            Reset
-          </Button>
-        </Box>
       </Collapse>
+
+      {/* Reset button always visible below advanced options */}
+      <Box className="box1-form__reset-section">
+        <Button
+          size="small"
+          color="error"
+          onClick={() => setShowResetConfirm(true)}
+          className="box1-form__reset-button"
+          startIcon={<RestartAltIcon fontSize="small" />}
+          aria-label="Reset all values"
+        >
+          Reset
+        </Button>
+      </Box>
 
       {/* Reset confirmation dialog */}
       <Dialog open={showResetConfirm} onClose={() => setShowResetConfirm(false)} maxWidth="xs">

@@ -1,0 +1,16 @@
+.calculator-toggle-switch {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+/* Style selected toggle button with theme blue */
+.calculator-toggle-switch .MuiToggleButton-root.Mui-selected {
+  background-color: var(--brand-primary) !important;
+  color: #fff !important;
+  border-color: var(--brand-primary-light) !important;
+}
+
+.calculator-toggle-switch .MuiToggleButton-root {
+  transition: background 0.2s;
+}

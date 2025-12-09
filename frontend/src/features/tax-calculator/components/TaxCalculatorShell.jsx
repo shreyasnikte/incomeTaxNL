@@ -2,12 +2,14 @@ import { useState, useMemo, useCallback, useEffect, lazy, Suspense } from 'react
 import { ToggleButton, ToggleButtonGroup } from '@mui/material'
 import TaxInputForm from './TaxInputForm.jsx'
 import Box1InputForm from './Box1InputForm.jsx'
+import CalculatorToggleSwitch from './CalculatorToggleSwitch.jsx'
 import { useBox3Calculator } from '../hooks/useBox3Calculator.js'
 import { BOX1_EMPTY_FORM } from '../constants/box1Defaults.js'
 import { useBox1Calculator, BOX1_AVAILABLE_YEARS } from '../hooks/useBox1Calculator.js'
 import { BOX3_DEFAULTS, DEFAULT_YEAR, getDefaultsForYear } from '../constants/box3Defaults.js'
 import { storage, STORAGE_KEYS } from '../../../utils/storage.js'
 import './TaxCalculatorShell.css'
+import './CalculatorToggleSwitch.css'
 
 // Lazy load components for better initial bundle size
 const ConfigurationMenu = lazy(() => import('./ConfigurationMenu.jsx'))
@@ -235,6 +237,8 @@ function TaxCalculatorShell() {
       </header>
       <div className="calculator-shell__content">
         <div className="calculator-panel">
+          {/* Toggle switch above the input panel */}
+          <CalculatorToggleSwitch value={boxType} onChange={handleBoxTypeChange} />
           {boxType === 'box1' ? (
             <Box1InputForm
               values={box1FormValues}
@@ -276,25 +280,7 @@ function TaxCalculatorShell() {
           </Suspense>
         </div>
       </div>
-      <footer className="calculator-shell__footer">
-        {boxType === 'box1' ? (
-          <button
-            className="calculator-shell__switch-btn"
-            onClick={() => setBoxType('box3')}
-            aria-label="Switch to Box 3 calculator"
-          >
-            Switch to Capital Gains Calculator (Box 3)
-          </button>
-        ) : (
-          <button
-            className="calculator-shell__switch-btn"
-            onClick={() => setBoxType('box1')}
-            aria-label="Switch to Box 1 calculator"
-          >
-            Switch to Salary Calculator (Box 1)
-          </button>
-        )}
-      </footer>
+      {/* Remove old footer switch buttons, toggle is now above input panel */}
     </section>
   )
 }
