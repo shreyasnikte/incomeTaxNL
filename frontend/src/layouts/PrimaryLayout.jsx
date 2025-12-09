@@ -9,10 +9,7 @@ function PrimaryLayout({ children }) {
   return (
     <div className="app-shell">
       <header className="app-header">
-        <h1 style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-          <img src="/favicon.svg" alt="incomeTaxNL logo" style={{ width: 32, height: 32, verticalAlign: 'middle' }} />
-          incomeTaxNL
-        </h1>
+        <h1>incomeTaxNL</h1>
         <nav className="app-header__nav">
           <button
             className="app-header__privacy-link"
