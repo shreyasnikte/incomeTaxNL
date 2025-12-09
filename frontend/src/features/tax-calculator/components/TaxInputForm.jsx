@@ -1,4 +1,4 @@
-import { useMemo, useState, lazy, Suspense } from 'react'
+import { useMemo, useState } from 'react'
 import PropTypes from 'prop-types'
 import { monetaryEntryPropType } from '../../../utils/propTypes.js'
 import {
@@ -21,6 +21,7 @@ import {
   ToggleButton,
   ToggleButtonGroup,
   MenuItem,
+  useMediaQuery,
 } from '@mui/material'
 import AddCircleIcon from '@mui/icons-material/AddCircle'
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline'
@@ -30,9 +31,6 @@ import RestartAltIcon from '@mui/icons-material/RestartAlt'
 import { AVAILABLE_YEARS } from '../constants/box3Defaults.js'
 import { formatEuro } from '../../../utils/formatters.js'
 import './TaxInputForm.css'
-
-// Lazy load modal-based guide component
-const JaaropgaveGuide = lazy(() => import('./JaaropgaveGuide.jsx'))
 
 const FIELD_CONFIG = [
   {
@@ -70,6 +68,31 @@ const FIELD_CONFIG = [
   },
 ]
 
+const normalizeEntryList = (rawList) => {
+  const source = Array.isArray(rawList) ? rawList : []
+  return source
+    .map((entry) => {
+      if (entry && typeof entry === 'object') {
+        const amount = Number(entry.amount)
+        const isAmountValid = Number.isFinite(amount) && amount >= 0
+        return {
+          name: typeof entry.name === 'string' ? entry.name.trim() : '',
+          amount: isAmountValid ? amount : 0,
+          valid: isAmountValid,
+        }
+      }
+      const amount = Number(entry)
+      const isAmountValid = Number.isFinite(amount) && amount >= 0
+      return {
+        name: '',
+        amount: isAmountValid ? amount : 0,
+        valid: isAmountValid,
+      }
+    })
+    .filter((entry) => entry.valid)
+    .map(({ name, amount }) => ({ name, amount }))
+}
+
 
 function TaxInputForm({ values, onChange, year, onYearChange, onReset, configMenu }) {
   const [modalState, setModalState] = useState(null)
@@ -78,6 +101,7 @@ function TaxInputForm({ values, onChange, year, onYearChange, onReset, configMen
   const [amountError, setAmountError] = useState('')
   const [showCloseWarning, setShowCloseWarning] = useState(false)
   const [showResetConfirm, setShowResetConfirm] = useState(false)
+  const isCompactViewport = useMediaQuery('(max-width: 640px)')
 
   const fieldLookup = useMemo(() => {
     const map = new Map()
@@ -85,30 +109,22 @@ function TaxInputForm({ values, onChange, year, onYearChange, onReset, configMen
     return map
   }, [])
 
-  const getNormalizedEntries = (fieldName) => {
-    const rawList = Array.isArray(values[fieldName]) ? values[fieldName] : []
-    return rawList
-      .map((entry) => {
-        if (entry && typeof entry === 'object') {
-          const amount = Number(entry.amount)
-          const isAmountValid = Number.isFinite(amount) && amount >= 0
-          return {
-            name: typeof entry.name === 'string' ? entry.name.trim() : '',
-            amount: isAmountValid ? amount : 0,
-            valid: isAmountValid,
-          }
-        }
-        const amount = Number(entry)
-        const isAmountValid = Number.isFinite(amount) && amount >= 0
-        return {
-          name: '',
-          amount: isAmountValid ? amount : 0,
-          valid: isAmountValid,
-        }
-      })
-      .filter((entry) => entry.valid)
-      .map(({ name, amount }) => ({ name, amount }))
-  }
+  const {
+    bankAccounts = [],
+    investmentAccounts = [],
+    debts = [],
+  } = values
+
+  const normalizedEntryMap = useMemo(
+    () => ({
+      bankAccounts: normalizeEntryList(bankAccounts),
+      investmentAccounts: normalizeEntryList(investmentAccounts),
+      debts: normalizeEntryList(debts),
+    }),
+    [bankAccounts, investmentAccounts, debts],
+  )
+
+  const getNormalizedEntries = (fieldName) => normalizedEntryMap[fieldName] ?? []
 
   const getPrimaryValueParts = (fieldName) => {
     const field = fieldLookup.get(fieldName)
@@ -244,10 +260,17 @@ function TaxInputForm({ values, onChange, year, onYearChange, onReset, configMen
   }
 
   const handleKeyDown = (event) => {
-    if (event.key === 'Enter' && !isAddDisabled()) {
-      event.preventDefault()
-      handleAddEntry()
+    if (event.key !== 'Enter') return
+    event.preventDefault()
+    if (isAddDisabled()) return
+
+    if (typeof event.currentTarget?.blur === 'function') {
+      event.currentTarget.blur()
+    } else if (typeof document !== 'undefined' && document.activeElement instanceof HTMLElement) {
+      document.activeElement.blur()
     }
+
+    handleAddEntry()
   }
 
   const handleAddEntry = () => {
@@ -360,6 +383,9 @@ function TaxInputForm({ values, onChange, year, onYearChange, onReset, configMen
   }
 
   const modalTotals = getModalTotals()
+  const entryDialogPaperClass = isCompactViewport
+    ? 'tax-form__entry-dialog-paper tax-form__entry-dialog-paper--mobile'
+    : 'tax-form__entry-dialog-paper'
 
   return (
     <form className="tax-form" onSubmit={(event) => event.preventDefault()} noValidate>
@@ -503,7 +529,15 @@ function TaxInputForm({ values, onChange, year, onYearChange, onReset, configMen
 
       {modalState && (
         <>
-          <Dialog open onClose={() => closeDialog()} fullWidth maxWidth="sm">
+          <Dialog
+            open
+            onClose={() => closeDialog()}
+            fullWidth
+            maxWidth="sm"
+            fullScreen={isCompactViewport}
+            scroll="paper"
+            PaperProps={{ className: entryDialogPaperClass }}
+          >
             <DialogTitle className="tax-form__modal-title">
               <span>{activeField?.label}</span>
               <div className="tax-form__modal-stats">

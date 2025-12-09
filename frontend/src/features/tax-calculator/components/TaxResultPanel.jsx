@@ -19,6 +19,15 @@ InfoIcon.propTypes = {
 function TaxResultPanel({ inputs, summary, config }) {
   const [isBreakdownOpen, setIsBreakdownOpen] = useState(false)
 
+  const breakdownLookup = useMemo(() => {
+    return summary.breakdown.reduce((acc, item) => {
+      if (item?.description) {
+        acc[item.description] = item.amount ?? 0
+      }
+      return acc
+    }, {})
+  }, [summary.breakdown])
+
   // Memoize derived calculations
   const derivedValues = useMemo(() => {
     const totalAssets = inputs.bankBalance + inputs.investmentAssets
@@ -29,13 +38,10 @@ function TaxResultPanel({ inputs, summary, config }) {
     const debtsThresholdApplied =
       (config?.thresholds?.debtsThresholdPerIndividual ?? 0) * allowanceMultiplier
 
-    // Extract values from breakdown for display
-    const incomeFromSavingsAndInvestments = 
-      summary.breakdown.find(item => item.description === 'Income from savings and investments')?.amount ?? 0
-    const taxableReturns = 
-      summary.breakdown.find(item => item.description === 'Taxable returns')?.amount ?? 0
-    const capitalYieldTaxBase = 
-      summary.breakdown.find(item => item.description === 'Capital yield tax base')?.amount ?? 0
+    // Extract values from breakdown for display via lookup map
+    const incomeFromSavingsAndInvestments = breakdownLookup['Income from savings and investments'] ?? 0
+    const taxableReturns = breakdownLookup['Taxable returns'] ?? 0
+    const capitalYieldTaxBase = breakdownLookup['Capital yield tax base'] ?? 0
     
     // Calculate share in capital yield tax base
     const shareInCapitalYieldTaxBase = 
@@ -55,7 +61,7 @@ function TaxResultPanel({ inputs, summary, config }) {
       shareInCapitalYieldTaxBase,
       actualTaxRate,
     }
-  }, [inputs, summary, config])
+  }, [inputs, summary, config, breakdownLookup])
 
   const { 
     totalAssets, 

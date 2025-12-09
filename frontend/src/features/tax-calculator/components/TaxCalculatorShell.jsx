@@ -1,5 +1,4 @@
 import { useState, useMemo, useCallback, useEffect, lazy, Suspense } from 'react'
-import { ToggleButton, ToggleButtonGroup } from '@mui/material'
 import TaxInputForm from './TaxInputForm.jsx'
 import Box1InputForm from './Box1InputForm.jsx'
 import CalculatorToggleSwitch from './CalculatorToggleSwitch.jsx'
@@ -70,18 +69,35 @@ const getInitialBox1FormValues = () => {
 /**
  * Load initial year from localStorage, falling back to default.
  */
-const getInitialYear = () => {
-  const saved = storage.get(STORAGE_KEYS.SELECTED_YEAR)
+const getInitialBox3Year = () => {
+  const saved = storage.get(STORAGE_KEYS.BOX3_SELECTED_YEAR)
   return typeof saved === 'number' ? saved : DEFAULT_YEAR
+}
+
+const getInitialBox1Year = () => {
+  const saved = storage.get(STORAGE_KEYS.BOX1_SELECTED_YEAR)
+  if (typeof saved === 'number' && BOX1_AVAILABLE_YEARS.includes(saved)) {
+    return saved
+  }
+  return BOX1_AVAILABLE_YEARS[0]
 }
 
 /**
  * Load initial box3 config from localStorage, falling back to defaults.
  */
 const getInitialBox3Config = () => {
-  const savedYear = getInitialYear()
+  const savedYear = getInitialBox3Year()
   const yearDefaults = getDefaultsForYear(savedYear)
   return { year: savedYear, ...yearDefaults }
+}
+
+const useDebouncedStorage = (key, value, delay = 250) => {
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      storage.set(key, value)
+    }, delay)
+    return () => clearTimeout(handler)
+  }, [key, value, delay])
 }
 
 function TaxCalculatorShell() {
@@ -90,39 +106,18 @@ function TaxCalculatorShell() {
   
   // Box 3 state
   const [box3FormValues, setBox3FormValues] = useState(getInitialBox3FormValues)
-  const [box3SelectedYear, setBox3SelectedYear] = useState(getInitialYear)
+  const [box3SelectedYear, setBox3SelectedYear] = useState(getInitialBox3Year)
   const [box3Config, setBox3Config] = useState(getInitialBox3Config)
   
   // Box 1 state
   const [box1FormValues, setBox1FormValues] = useState(getInitialBox1FormValues)
-  const [box1SelectedYear, setBox1SelectedYear] = useState(() => {
-    const saved = storage.get(STORAGE_KEYS.SELECTED_YEAR)
-    // Ensure the year is valid for Box 1
-    if (typeof saved === 'number' && BOX1_AVAILABLE_YEARS.includes(saved)) {
-      return saved
-    }
-    return BOX1_AVAILABLE_YEARS[0] // Default to most recent year
-  })
+  const [box1SelectedYear, setBox1SelectedYear] = useState(getInitialBox1Year)
 
-  // Persist box type to localStorage
-  useEffect(() => {
-    storage.set(STORAGE_KEYS.SELECTED_BOX_TYPE, boxType)
-  }, [boxType])
-
-  // Persist Box 3 form values to localStorage whenever they change
-  useEffect(() => {
-    storage.set(STORAGE_KEYS.FORM_VALUES, box3FormValues)
-  }, [box3FormValues])
-
-  // Persist Box 1 form values to localStorage whenever they change
-  useEffect(() => {
-    storage.set(STORAGE_KEYS.BOX1_FORM_VALUES, box1FormValues)
-  }, [box1FormValues])
-
-  // Box 3: Persist selected year to localStorage whenever it changes
-  useEffect(() => {
-    storage.set(STORAGE_KEYS.SELECTED_YEAR, box3SelectedYear)
-  }, [box3SelectedYear])
+  useDebouncedStorage(STORAGE_KEYS.SELECTED_BOX_TYPE, boxType)
+  useDebouncedStorage(STORAGE_KEYS.FORM_VALUES, box3FormValues)
+  useDebouncedStorage(STORAGE_KEYS.BOX1_FORM_VALUES, box1FormValues)
+  useDebouncedStorage(STORAGE_KEYS.BOX3_SELECTED_YEAR, box3SelectedYear)
+  useDebouncedStorage(STORAGE_KEYS.BOX1_SELECTED_YEAR, box1SelectedYear)
 
   // Box type change handler
   const handleBoxTypeChange = useCallback((_event, newBoxType) => {
