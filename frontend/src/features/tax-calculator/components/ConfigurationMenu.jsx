@@ -16,7 +16,7 @@ import {
 } from '@mui/material'
 import SettingsIcon from '@mui/icons-material/Settings'
 import RestoreIcon from '@mui/icons-material/Restore'
-import { BOX3_DEFAULTS, BOX3_DEFAULTS_BY_YEAR, AVAILABLE_YEARS, getDefaultsForYear } from '../constants/box3Defaults.js'
+import { BOX3_DEFAULTS, BOX3_DEFAULTS_BY_YEAR, AVAILABLE_YEARS, getDefaultsForYear } from 'dutch-tax-box3-calculator'
 import './ConfigurationMenu.css'
 
 function ConfigurationMenu({ config, onConfigChange }) {

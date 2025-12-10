@@ -32,20 +32,16 @@ function Box3ResultPanel({ inputs, summary, config }) {
   const derivedValues = useMemo(() => {
     const totalAssets = inputs.bankBalance + inputs.investmentAssets
     const netWorth = totalAssets - inputs.debts
-    const allowanceMultiplier = inputs.hasTaxPartner ? 2 : 1
-    const taxFreeAllowanceApplied =
-      (config?.thresholds?.taxFreeAssetsPerIndividual ?? 0) * allowanceMultiplier
-    const debtsThresholdApplied =
-      (config?.thresholds?.debtsThresholdPerIndividual ?? 0) * allowanceMultiplier
+    const taxFreeAllowanceApplied = summary.totalTaxFreeAllowance ?? 0
+    const debtsThresholdApplied = summary.totalDebtsThreshold ?? 0
 
     // Extract values from breakdown for display via lookup map
-    const incomeFromSavingsAndInvestments = breakdownLookup['Income from savings and investments'] ?? 0
-    const taxableReturns = breakdownLookup['Taxable returns'] ?? 0
-    const capitalYieldTaxBase = breakdownLookup['Capital yield tax base'] ?? 0
+    const incomeFromSavingsAndInvestments = breakdownLookup['Step 5: Income from savings & investments = taxable returns x share = '] ?? 0
+    const taxableReturns = breakdownLookup['Step 1: Total assets = bank savings + investments = '] ?? 0
+    const capitalYieldTaxBase = breakdownLookup['Step 2: Capital yield tax base = total assets - deductible debts = '] ?? 0
     
     // Calculate share in capital yield tax base
-    const shareInCapitalYieldTaxBase = 
-      capitalYieldTaxBase > 0 ? summary.taxableBase / capitalYieldTaxBase : 0
+    const shareInCapitalYieldTaxBase = breakdownLookup['Step 4: Share in capital yield tax base = basis / capital yield tax base = '] ?? 0
 
     // Get actual tax rate from config
     const actualTaxRate = config?.taxRate ?? 0
@@ -73,7 +69,7 @@ function Box3ResultPanel({ inputs, summary, config }) {
     shareInCapitalYieldTaxBase,
     actualTaxRate,
   } = derivedValues
-  const partnerLabel = inputs.hasTaxPartner ? 'With tax partner' : 'Without tax partner'
+  const partnerLabel = inputs.hasTaxPartner ? 'Combined tax with partner' : 'Individual tax'
 
   const primaryHighlight = {
     label: 'Estimated tax',

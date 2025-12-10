@@ -1,6 +1,5 @@
 import { useMemo } from 'react'
-import { BOX3_DEFAULTS, getDefaultsForYear } from '../constants/box3Defaults.js'
-import { computeBox3Summary } from '../utils/box3.js'
+import { BOX3_DEFAULTS, getDefaultsForYear, calculateBox3Tax } from 'dutch-tax-box3-calculator'
 
 /**
  * Custom hook for calculating Box 3 tax summary
@@ -23,7 +22,7 @@ export function useBox3Calculator(inputs, config = BOX3_DEFAULTS) {
     // If config has a year, merge with year-specific defaults as base
     const yearDefaults = configYear ? getDefaultsForYear(configYear) : {}
     const mergedConfig = { ...yearDefaults, ...config }
-    return computeBox3Summary(
+    return calculateBox3Tax(
       { bankBalance, investmentAssets, debts, hasTaxPartner },
       mergedConfig,
     )
