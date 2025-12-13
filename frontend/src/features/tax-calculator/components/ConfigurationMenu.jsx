@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import PropTypes from 'prop-types'
 import {
   IconButton,
@@ -20,6 +21,7 @@ import { BOX3_DEFAULTS, BOX3_DEFAULTS_BY_YEAR, AVAILABLE_YEARS, getDefaultsForYe
 import './ConfigurationMenu.css'
 
 function ConfigurationMenu({ config, onConfigChange }) {
+  const { t } = useTranslation()
   const [open, setOpen] = useState(false)
   const [localConfig, setLocalConfig] = useState(config)
   const [errors, setErrors] = useState({})
@@ -37,13 +39,13 @@ function ConfigurationMenu({ config, onConfigChange }) {
   const validateField = (path, value) => {
     const numValue = Number(value)
     if (value === '' || Number.isNaN(numValue)) {
-      return 'Please enter a valid number'
+      return t('calculator.config.validation.invalidNumber')
     }
     if (path.includes('Rate') && (numValue < 0 || numValue > 100)) {
-      return 'Rate must be between 0 and 100'
+      return t('calculator.config.validation.rateRange')
     }
     if (!path.includes('Rate') && numValue < 0) {
-      return 'Value cannot be negative'
+      return t('calculator.config.validation.negative')
     }
     return ''
   }
@@ -51,7 +53,7 @@ function ConfigurationMenu({ config, onConfigChange }) {
   const handleFieldChange = (section, field, value) => {
     const path = `${section}.${field}`
     const error = validateField(path, value)
-    
+
     setErrors((prev) => ({
       ...prev,
       [path]: error,
@@ -117,8 +119,8 @@ function ConfigurationMenu({ config, onConfigChange }) {
     ...localConfig,
     taxRate: typeof localConfig.taxRate === 'number' ? localConfig.taxRate * 100 : localConfig.taxRate,
     assumedReturnRates: {
-      bankBalance: typeof localConfig.assumedReturnRates?.bankBalance === 'number' 
-        ? localConfig.assumedReturnRates.bankBalance * 100 
+      bankBalance: typeof localConfig.assumedReturnRates?.bankBalance === 'number'
+        ? localConfig.assumedReturnRates.bankBalance * 100
         : localConfig.assumedReturnRates?.bankBalance,
       investmentAssets: typeof localConfig.assumedReturnRates?.investmentAssets === 'number'
         ? localConfig.assumedReturnRates.investmentAssets * 100
@@ -131,7 +133,7 @@ function ConfigurationMenu({ config, onConfigChange }) {
 
   return (
     <>
-      <Tooltip title="Tax configuration">
+      <Tooltip title={t('calculator.config.tooltip')}>
         <IconButton
           onClick={handleOpen}
           className="config-menu__trigger"
@@ -143,8 +145,8 @@ function ConfigurationMenu({ config, onConfigChange }) {
 
       <Dialog open={open} onClose={handleClose} fullWidth maxWidth="sm">
         <DialogTitle className="config-menu__title">
-          <span>Box 3 Tax Configuration</span>
-          <Tooltip title="Reset to defaults">
+          <span>{t('calculator.config.title')}</span>
+          <Tooltip title={t('calculator.config.resetTooltip')}>
             <IconButton onClick={handleResetDefaults} size="small" aria-label="Reset to default values">
               <RestoreIcon />
             </IconButton>
@@ -155,11 +157,11 @@ function ConfigurationMenu({ config, onConfigChange }) {
             {/* Year */}
             <TextField
               select
-              label="Tax year"
+              label={t('calculator.config.yearLabel')}
               size="small"
               value={displayConfig.year}
               onChange={(e) => handleYearChange(e.target.value)}
-              helperText="Selecting a year loads its official defaults"
+              helperText={t('calculator.config.yearHelper')}
             >
               {AVAILABLE_YEARS.map((year) => (
                 <MenuItem key={year} value={year}>
@@ -171,11 +173,11 @@ function ConfigurationMenu({ config, onConfigChange }) {
             {/* Thresholds Section */}
             <div>
               <Typography variant="subtitle2" className="config-menu__section-title">
-                Thresholds (EUR)
+                {t('calculator.config.thresholdsTitle')}
               </Typography>
               <Stack spacing={2}>
                 <TextField
-                  label="Tax-free assets per individual"
+                  label={t('calculator.config.taxFreeAssets')}
                   type="number"
                   size="small"
                   value={displayConfig.thresholds?.taxFreeAssetsPerIndividual ?? ''}
@@ -185,7 +187,7 @@ function ConfigurationMenu({ config, onConfigChange }) {
                   fullWidth
                 />
                 <TextField
-                  label="Debts threshold per individual"
+                  label={t('calculator.config.debtsThreshold')}
                   type="number"
                   size="small"
                   value={displayConfig.thresholds?.debtsThresholdPerIndividual ?? ''}
@@ -201,13 +203,13 @@ function ConfigurationMenu({ config, onConfigChange }) {
 
             {/* Tax Rate */}
             <TextField
-              label="Tax rate (%)"
+              label={t('calculator.config.taxRateLabel')}
               type="number"
               size="small"
               value={displayConfig.taxRate ?? ''}
               onChange={(e) => handleFieldChange('root', 'taxRate', e.target.value)}
               error={!!errors['root.taxRate']}
-              helperText={errors['root.taxRate'] || 'Box 3 income tax rate'}
+              helperText={errors['root.taxRate'] || t('calculator.config.taxRateHelper')}
               inputProps={{ min: 0, max: 100, step: 0.01 }}
             />
 
@@ -216,14 +218,14 @@ function ConfigurationMenu({ config, onConfigChange }) {
             {/* Assumed Return Rates */}
             <div>
               <Typography variant="subtitle2" className="config-menu__section-title">
-                Assumed Return Rates (%)
+                {t('calculator.config.ratesTitle')}
               </Typography>
               <Typography variant="caption" color="text.secondary" className="config-menu__section-description">
-                Forfaitaire rendementen set by the Dutch Tax Authority
+                {t('calculator.config.ratesDescription')}
               </Typography>
               <Stack spacing={2} sx={{ mt: 1 }}>
                 <TextField
-                  label="Bank balance return rate"
+                  label={t('calculator.config.bankBalanceRate')}
                   type="number"
                   size="small"
                   value={displayConfig.assumedReturnRates?.bankBalance ?? ''}
@@ -234,7 +236,7 @@ function ConfigurationMenu({ config, onConfigChange }) {
                   fullWidth
                 />
                 <TextField
-                  label="Investment assets return rate"
+                  label={t('calculator.config.investmentsRate')}
                   type="number"
                   size="small"
                   value={displayConfig.assumedReturnRates?.investmentAssets ?? ''}
@@ -245,7 +247,7 @@ function ConfigurationMenu({ config, onConfigChange }) {
                   fullWidth
                 />
                 <TextField
-                  label="Debts return rate"
+                  label={t('calculator.config.debtsRate')}
                   type="number"
                   size="small"
                   value={displayConfig.assumedReturnRates?.debts ?? ''}
@@ -261,10 +263,10 @@ function ConfigurationMenu({ config, onConfigChange }) {
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose} color="inherit">
-            Cancel
+            {t('calculator.config.cancel')}
           </Button>
           <Button onClick={handleSave} variant="contained" disabled={hasErrors}>
-            Save
+            {t('calculator.config.save')}
           </Button>
         </DialogActions>
       </Dialog>

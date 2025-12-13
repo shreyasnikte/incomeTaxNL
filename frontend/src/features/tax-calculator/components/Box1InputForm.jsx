@@ -1,4 +1,5 @@
 import { useState, useCallback } from 'react'
+import { useTranslation } from 'react-i18next'
 import PropTypes from 'prop-types'
 import {
   Box,
@@ -32,6 +33,7 @@ import {
 import './Box1InputForm.css'
 
 function Box1InputForm({ values, onChange, year, onYearChange, onReset }) {
+  const { t } = useTranslation()
   const [showResetConfirm, setShowResetConfirm] = useState(false)
   const [showAdvanced, setShowAdvanced] = useState(false)
 
@@ -63,13 +65,13 @@ function Box1InputForm({ values, onChange, year, onYearChange, onReset }) {
   // Get income label based on period
   const getIncomeLabel = () => {
     const periodLabels = {
-      yearly: 'Annual gross income',
-      monthly: 'Monthly gross income',
-      weekly: 'Weekly gross income',
-      daily: 'Daily gross income',
-      hourly: 'Hourly gross income',
+      yearly: t('box1.form.income.label.yearly'),
+      monthly: t('box1.form.income.label.monthly'),
+      weekly: t('box1.form.income.label.weekly'),
+      daily: t('box1.form.income.label.daily'),
+      hourly: t('box1.form.income.label.hourly'),
     }
-    return periodLabels[values.period] || 'Gross income'
+    return periodLabels[values.period] || t('box1.form.income.label.default')
   }
 
   return (
@@ -85,7 +87,7 @@ function Box1InputForm({ values, onChange, year, onYearChange, onReset }) {
           type="number"
           value={values.grossIncome}
           onChange={handleNumberChange('grossIncome')}
-          placeholder="e.g. 50000"
+          placeholder={t('box1.form.income.placeholder')}
           className="box1-form__income-input"
           InputProps={{
             startAdornment: <InputAdornment position="start">€</InputAdornment>,
@@ -94,11 +96,11 @@ function Box1InputForm({ values, onChange, year, onYearChange, onReset }) {
         <TextField
           select
           size="small"
-          label="Period"
+          label={t('box1.form.income.periodLabel')}
           value={values.period}
           onChange={handleSelectChange('period')}
           className="box1-form__period-select"
-          aria-label="Income period"
+          aria-label={t('box1.form.income.periodLabel')}
         >
           {INCOME_PERIODS.map((p) => (
             <MenuItem key={p.value} value={p.value}>
@@ -115,7 +117,7 @@ function Box1InputForm({ values, onChange, year, onYearChange, onReset }) {
               color="primary"
             />
           }
-          label="Advanced options"
+          label={t('box1.form.advanced')}
           className="box1-form__advanced-switch"
         />
       </div>
@@ -127,11 +129,11 @@ function Box1InputForm({ values, onChange, year, onYearChange, onReset }) {
             <TextField
               select
               size="small"
-              label="Tax year"
+              label={t('box1.form.yearLabel')}
               value={year}
               onChange={(e) => onYearChange(Number(e.target.value))}
               className="box1-form__year-select"
-              aria-label="Tax year"
+              aria-label={t('box1.form.yearLabel')}
             >
               {BOX1_AVAILABLE_YEARS.map((y) => (
                 <MenuItem key={y} value={y}>
@@ -142,16 +144,16 @@ function Box1InputForm({ values, onChange, year, onYearChange, onReset }) {
           </div>
           {values.period === 'hourly' && (
             <TextField
-              label="Hours per week"
+              label={t('box1.form.hours.label')}
               type="number"
               value={values.hoursPerWeek}
               onChange={handleNumberChange('hoursPerWeek')}
               placeholder="40"
               fullWidth
               InputProps={{
-                endAdornment: <InputAdornment position="end">hrs</InputAdornment>,
+                endAdornment: <InputAdornment position="end">{t('box1.form.hours.unit')}</InputAdornment>,
               }}
-              helperText="Used to calculate annual income from hourly rate"
+              helperText={t('box1.form.hours.helper')}
             />
           )}
 
@@ -165,8 +167,8 @@ function Box1InputForm({ values, onChange, year, onYearChange, onReset }) {
               }
               label={
                 <Stack direction="row" alignItems="center" spacing={0.5}>
-                  <span>Holiday allowance included</span>
-                  <Tooltip title="If enabled, your gross income already includes the 8% holiday allowance. If disabled, it will be added separately.">
+                  <span>{t('box1.form.toggles.holidayAllowance.label')}</span>
+                  <Tooltip title={t('box1.form.toggles.holidayAllowance.tooltip')}>
                     <InfoOutlinedIcon fontSize="small" color="action" />
                   </Tooltip>
                 </Stack>
@@ -182,8 +184,8 @@ function Box1InputForm({ values, onChange, year, onYearChange, onReset }) {
               }
               label={
                 <Stack direction="row" alignItems="center" spacing={0.5}>
-                  <span>66 years or older</span>
-                  <Tooltip title="Check if you are at or above state pension age (AOW). Different tax rates and no AOW premium apply.">
+                  <span>{t('box1.form.toggles.older.label')}</span>
+                  <Tooltip title={t('box1.form.toggles.older.tooltip')}>
                     <InfoOutlinedIcon fontSize="small" color="action" />
                   </Tooltip>
                 </Stack>
@@ -201,8 +203,8 @@ function Box1InputForm({ values, onChange, year, onYearChange, onReset }) {
                 }
                 label={
                   <Stack direction="row" alignItems="center" spacing={0.5}>
-                    <span>30% ruling</span>
-                    <Tooltip title="Tax-free allowance for skilled migrants. 30% of your salary becomes tax-free. Different income thresholds apply based on category.">
+                    <span>{t('box1.form.toggles.ruling30.label')}</span>
+                    <Tooltip title={t('box1.form.toggles.ruling30.tooltip')}>
                       <InfoOutlinedIcon fontSize="small" color="action" />
                     </Tooltip>
                   </Stack>
@@ -211,7 +213,7 @@ function Box1InputForm({ values, onChange, year, onYearChange, onReset }) {
               <Collapse in={values.ruling30Enabled}>
                 <FormControl component="fieldset" className="box1-form__ruling-options">
                   <FormLabel component="legend" className="box1-form__ruling-legend">
-                    Category
+                    {t('box1.form.toggles.ruling30.categoryLabel')}
                   </FormLabel>
                   <RadioGroup
                     value={values.ruling30Category}
@@ -241,8 +243,8 @@ function Box1InputForm({ values, onChange, year, onYearChange, onReset }) {
               }
               label={
                 <Stack direction="row" alignItems="center" spacing={0.5}>
-                  <span>Social security</span>
-                  <Tooltip title="Include Dutch social security contributions (AOW, ANW, WLZ). Most employees pay these unless exempt.">
+                  <span>{t('box1.form.toggles.socialSecurity.label')}</span>
+                  <Tooltip title={t('box1.form.toggles.socialSecurity.tooltip')}>
                     <InfoOutlinedIcon fontSize="small" color="action" />
                   </Tooltip>
                 </Stack>
@@ -260,23 +262,23 @@ function Box1InputForm({ values, onChange, year, onYearChange, onReset }) {
           onClick={() => setShowResetConfirm(true)}
           className="box1-form__reset-button"
           startIcon={<RestartAltIcon fontSize="small" />}
-          aria-label="Reset all values"
+          aria-label={t('box1.form.reset.ariaLabel')}
         >
-          Reset
+          {t('box1.form.reset.button')}
         </Button>
       </Box>
 
       {/* Reset confirmation dialog */}
       <Dialog open={showResetConfirm} onClose={() => setShowResetConfirm(false)} maxWidth="xs">
-        <DialogTitle>Reset all values?</DialogTitle>
+        <DialogTitle>{t('box1.form.reset.dialog.title')}</DialogTitle>
         <DialogContent>
           <Typography variant="body2">
-            This will clear all your entered data including income, hours, and tax settings. This action cannot be undone.
+            {t('box1.form.reset.dialog.content')}
           </Typography>
         </DialogContent>
         <DialogActions>
           <Button onClick={() => setShowResetConfirm(false)} color="inherit">
-            Cancel
+            {t('box1.form.reset.dialog.cancel')}
           </Button>
           <Button
             onClick={() => {
@@ -286,7 +288,7 @@ function Box1InputForm({ values, onChange, year, onYearChange, onReset }) {
             variant="contained"
             color="error"
           >
-            Reset
+            {t('box1.form.reset.dialog.confirm')}
           </Button>
         </DialogActions>
       </Dialog>

@@ -1,0 +1,491 @@
+{
+    "app": {
+        "title": "incomeTaxNL",
+        "description": "Privacy-gerichte Nederlandse inkomstenbelasting calculator"
+    },
+    "layout": {
+        "header": {
+            "infoLabel": "Meer over incomeTaxNL",
+            "helpdeskLabel": "Neem contact op via X (Twitter)",
+            "helpdeskTitle": "Hulp nodig? Stuur me een bericht op X",
+            "githubLabel": "Bekijk op GitHub"
+        },
+        "notice": {
+            "builtWith": "Gemaakt met ❤️ voor privacy — ",
+            "link": "uw gegevens verlaten uw apparaat nooit"
+        },
+        "footer": {
+            "disclaimer": "<0>Disclaimer:</0> Deze tool is uitsluitend bedoeld voor educatieve en informatieve doeleinden. Belastingberekeningen zijn schattingen en geven mogelijk niet uw werkelijke belastingverplichting weer. Raadpleeg voor officieel advies altijd de <2>Belastingdienst</2> of een gekwalificeerde belastingadviseur.",
+            "viewOnGithub": "Bekijk op GitHub",
+            "reportIssue": "Meld een probleem",
+            "credits": "Credits",
+            "terms": "Gebruiksvoorwaarden"
+        },
+        "modals": {
+            "privacy": {
+                "title": "Privacy-first ontwerp",
+                "description": "<0>Uw financiële gegevens zijn uw zaken.</0> incomeTaxNL is een privacygerichte, gratis en open source tool om de Nederlandse Box 1 en Box 3 belastingen te schatten. Alle gegevens die u invoert, worden alleen lokaal in uw browser opgeslagen. Alle berekeningen worden voor 100% lokaal in uw browser uitgevoerd — uw persoonlijke financiële gegevens worden om geen enkele reden verzonden, opgeslagen of verzameld door deze app.",
+                "list": {
+                    "item1": "Geen risico op lekken, hacks of misbruik: uw gevoelige informatie verlaat uw apparaat nooit.",
+                    "item2": "Geen tracking, geen uploads, geen analytics: u houdt controle over uw data.",
+                    "item3": "Gebruik incomeTaxNL met vertrouwen voor salaris- en vermogensberekeningen, wetende dat uw privacy beschermd is."
+                },
+                "closeLabel": "Sluit privacy informatie"
+            },
+            "info": {
+                "title": "Over incomeTaxNL",
+                "description": "incomeTaxNL helpt u bij het schatten van de Nederlandse Box 1 inkomstenbelasting en Box 3 vermogensbelasting met een privacy-first aanpak. Alle berekeningen worden lokaal uitgevoerd, dus uw gegevens verlaten uw browser nooit.",
+                "howToUse": {
+                    "title": "Hoe te gebruiken",
+                    "step1": "Selecteer Box 1 of Box 3 met de schakelaar bovenaan de calculator.",
+                    "step2": "Voer uw inkomen, spaargeld, beleggingen en schulden in via de formulieren aan de linkerkant.",
+                    "step3": "Open het instellingenwiel om drempelwaarden, rendementsveronderstellingen of het belastingjaar aan te passen.",
+                    "step4": "Bekijk het resultatenpaneel voor een overzicht van de belastbare grondslagen en geschatte belastingen."
+                },
+                "origin": {
+                    "title": "Oorsprongsverhaal",
+                    "description": "Het navigeren door de Nederlandse belastingen was voor mij verwarrend. Ik bouwde een uitgebreide spreadsheet om de regels te begrijpen, maar die was te complex voor vrienden en collega's. Deze app is de vriendelijkere versie — dezelfde duidelijkheid, met uitleg die iedereen kan volgen."
+                },
+                "closeLabel": "Sluit over dialoog"
+            },
+            "credits": {
+                "title": "Credits",
+                "description": "incomeTaxNL is een open-source project gemaakt door <1>@shreyasnikte</1> om mensen te helpen de Nederlandse belastingen te begrijpen.",
+                "specialThanks": {
+                    "title": "Speciale dank",
+                    "item1": "Salarisberekeningen mogelijk gemaakt door de <1>dutch-tax-income-calculator</1> bibliotheek — <3>door Stepan Suvorov</3>",
+                    "item2": "Bedankt aan iedereen die feedback heeft gegeven om deze tool te verbeteren."
+                },
+                "closeLabel": "Sluit credits dialoog"
+            },
+            "terms": {
+                "title": "Gebruiksvoorwaarden",
+                "effectiveDate": "<0>Ingangsdatum:</0> 13 december 2025",
+                "sections": {
+                    "1": {
+                        "title": "1. Acceptatie van Voorwaarden",
+                        "content": "Door incomeTaxNL te gebruiken, gaat u akkoord met deze Gebruiksvoorwaarden. Als u niet akkoord gaat, stop dan onmiddellijk met het gebruik van deze tool."
+                    },
+                    "2": {
+                        "title": "2. Alleen voor Educatieve Doeleinden",
+                        "content": "incomeTaxNL wordt uitsluitend aangeboden voor educatieve en informatieve doeleinden. Het is ontworpen om gebruikers te helpen de Nederlandse inkomstenbelastingberekeningen te begrijpen en te schatten. Deze tool vormt GEEN professioneel belastingadvies, juridisch advies of financiële planningsdienst."
+                    },
+                    "3": {
+                        "title": "3. Geen Garantie",
+                        "content": "Alle berekeningen en informatie worden 'as is' geleverd zonder enige garantie van nauwkeurigheid, volledigheid of geschiktheid voor een bepaald doel. Belastingwetten, tarieven en regelgeving kunnen veranderen en deze tool geeft mogelijk niet de meest actuele informatie weer. Gebruikers zijn verantwoordelijk voor het verifiëren van alle resultaten bij officiële bronnen."
+                    },
+                    "4": {
+                        "title": "4. Beperking van Aansprakelijkheid",
+                        "content": "De maker en bijdragers van incomeTaxNL zijn niet aansprakelijk voor enige schade, verliezen of belastingverplichtingen die voortvloeien uit het gebruik of misbruik van deze tool. Gebruikers nemen alle risico's op zich die gepaard gaan met het gebruik van de verstrekte schattingen."
+                    },
+                    "5": {
+                        "title": "5. Professioneel Consult Vereist",
+                        "content": "Voor officiële belastingberekeningen, aangifte of advies moeten gebruikers de <a href='https://www.belastingdienst.nl' target='_blank' rel='noopener noreferrer'>Belastingdienst</a> of een gekwalificeerde belastingprofessional raadplegen."
+                    },
+                    "6": {
+                        "title": "6. Privacy en Gegevens",
+                        "content": "Alle gegevens die in incomeTaxNL worden ingevoerd, worden lokaal in uw browser opgeslagen en nooit naar een server verzonden. Wij verzamelen, bewaren of delen uw persoonlijke of financiële informatie niet. Zie ons Privacybeleid voor meer details."
+                    },
+                    "7": {
+                        "title": "7. Open Source Licentie",
+                        "content": "incomeTaxNL is open source software beschikbaar op <a href='https://github.com/shreyasnikte/Dutch_Tax' target='_blank' rel='noopener noreferrer'>GitHub</a>. U mag het gebruiken, wijzigen en verspreiden volgens de voorwaarden van de licentie."
+                    },
+                    "8": {
+                        "title": "8. Wijzigingen in Voorwaarden",
+                        "content": "Deze voorwaarden kunnen van tijd tot tijd worden bijgewerkt. Voortgezet gebruik van incomeTaxNL na wijzigingen betekent acceptatie van de herziene voorwaarden."
+                    },
+                    "9": {
+                        "title": "9. Contact",
+                        "content": "Voor vragen of opmerkingen kunt u contact met ons opnemen via <a href='https://github.com/shreyasnikte/Dutch_Tax/issues' target='_blank' rel='noopener noreferrer'>GitHub Issues</a> of <a href='https://twitter.com/messages/compose?recipient_id=718363377798615041' target='_blank' rel='noopener noreferrer'>direct bericht op X</a>."
+                    }
+                },
+                "closeLabel": "Sluit gebruiksvoorwaarden dialoog"
+            }
+        }
+    },
+    "calculator": {
+        "toggle": {
+            "box1": "Salaris (Box 1)",
+            "box3": "Vermogen (Box 3)"
+        },
+        "shell": {
+            "loading": "Resultaten laden...",
+            "goToTop": "Naar boven",
+            "seeResults": "Bekijk resultaten",
+            "goToTopLabel": "Naar boven",
+            "seeResultsLabel": "Bekijk resultaten"
+        },
+        "config": {
+            "tooltip": "Belastingconfiguratie",
+            "title": "Box 3 Belastingconfiguratie",
+            "resetTooltip": "Herstel naar standaardwaarden",
+            "yearLabel": "Belastingjaar",
+            "yearHelper": "Selecteer een jaar om de officiële standaardwaarden te laden",
+            "thresholdsTitle": "Drempelwaarden (EUR)",
+            "taxFreeAssets": "Heffingsvrij vermogen per persoon",
+            "debtsThreshold": "Schuldendrempel per persoon",
+            "taxRateLabel": "Belastingtarief (%)",
+            "taxRateHelper": "Box 3 inkomstenbelastingtarief",
+            "ratesTitle": "Forfaitaire Rendementspercentages (%)",
+            "ratesDescription": "Forfaitaire rendementen vastgesteld door de Belastingdienst",
+            "bankBalanceRate": "Rendement banktegoeden",
+            "investmentsRate": "Rendement beleggingen",
+            "debtsRate": "Rendement schulden",
+            "cancel": "Annuleren",
+            "save": "Opslaan",
+            "validation": {
+                "invalidNumber": "Voer een geldig getal in",
+                "rateRange": "Percentage moet tussen 0 en 100 liggen",
+                "negative": "Waarde mag niet negatief zijn"
+            }
+        }
+    },
+    "box1": {
+        "form": {
+            "income": {
+                "label": {
+                    "yearly": "Jaarlijks bruto inkomen",
+                    "monthly": "Maandelijks bruto inkomen",
+                    "weekly": "Wekelijks bruto inkomen",
+                    "daily": "Dagelijks bruto inkomen",
+                    "hourly": "Uurlijks bruto inkomen",
+                    "default": "Bruto inkomen"
+                },
+                "periodLabel": "Periode",
+                "placeholder": "bijv. 50000"
+            },
+            "advanced": "Geavanceerde opties",
+            "yearLabel": "Belastingjaar",
+            "hours": {
+                "label": "Uren per week",
+                "unit": "uur",
+                "helper": "Gebruikt om jaarinkomen te berekenen op basis van uurtarief"
+            },
+            "toggles": {
+                "holidayAllowance": {
+                    "label": "Vakantiegeld inbegrepen",
+                    "tooltip": "Indien ingeschakeld, bevat uw bruto inkomen al de 8% vakantiegeld. Indien uitgeschakeld wordt dit apart toegevoegd."
+                },
+                "older": {
+                    "label": "66 jaar of ouder",
+                    "tooltip": "Vink aan als u de AOW-leeftijd heeft bereikt. Er gelden andere belastingtarieven en u betaalt geen AOW-premie."
+                },
+                "ruling30": {
+                    "label": "30% regeling",
+                    "tooltip": "Belastingvrije vergoeding voor kenniswerkers. 30% van uw salaris wordt belastingvrij. Er gelden inkomensdrempels per categorie.",
+                    "categoryLabel": "Categorie"
+                },
+                "socialSecurity": {
+                    "label": "Sociale zekerheid",
+                    "tooltip": "Inclusief sociale premies (AOW, ANW, WLZ). De meeste werknemers betalen deze tenzij vrijgesteld."
+                }
+            },
+            "reset": {
+                "button": "Reset",
+                "ariaLabel": "Reset alle waarden",
+                "dialog": {
+                    "title": "Alle waarden resetten?",
+                    "content": "Dit wist al uw ingevoerde gegevens inclusief inkomen, uren en instellingen. Deze actie kan niet ongedaan worden gemaakt.",
+                    "cancel": "Annuleren",
+                    "confirm": "Reset"
+                }
+            }
+        },
+        "result": {
+            "periods": {
+                "weekly": "Wekelijks",
+                "monthly": "Maandelijks",
+                "yearly": "Jaarlijks",
+                "perWeek": "per week",
+                "perMonth": "per maand",
+                "perYear": "per jaar"
+            },
+            "categories": {
+                "income": "Inkomen",
+                "taxes": "Belastingen",
+                "credits": "Heffingskortingen",
+                "deductions": "Aftrekposten"
+            },
+            "title": "Resultaten",
+            "badges": {
+                "year": "Belastingjaar {{year}}",
+                "rulingOn": "Met 30% regeling",
+                "rulingOff": "Zonder 30% regeling",
+                "socialOn": "Incl. sociale zekerheid",
+                "socialOff": "Excl. sociale zekerheid"
+            },
+            "metrics": {
+                "gross": {
+                    "label": "Bruto Inkomen",
+                    "info": "Uw totale inkomen vóór eventuele aftrekposten."
+                },
+                "net": {
+                    "label": "Netto Inkomen",
+                    "info": "Uw besteedbaar inkomen na alle belastingen en inhoudingen."
+                },
+                "tax": {
+                    "label": "Belasting",
+                    "info": "Totale inkomstenbelasting inclusief loonheffing en sociale premies, min heffingskortingen.",
+                    "effectiveRate": "effectief"
+                }
+            },
+            "breakdown": {
+                "title": "Berekeningsspecificatie",
+                "show": "Specificatie",
+                "hide": "Verberg",
+                "table": {
+                    "component": "Component",
+                    "amount": "Bedrag"
+                },
+                "items": {
+                    "gross": {
+                        "label": "Bruto Inkomen",
+                        "info": "Uw totale jaarinkomen vóór eventuele aftrekposten."
+                    },
+                    "taxFree": {
+                        "label": "30% Regeling Vrij",
+                        "info": "Belastingvrije vergoeding onder de 30% regeling."
+                    },
+                    "taxable": {
+                        "label": "Belastbaar Inkomen",
+                        "info": "Inkomen waarover belasting wordt geheven (na eventuele 30% regeling)."
+                    },
+                    "payroll": {
+                        "label": "Loonheffing",
+                        "info": "Inkomstenbelasting ingehouden op uw salaris."
+                    },
+                    "social": {
+                        "label": "Sociale Zekerheid",
+                        "info": "Premies voor AOW, ANW en WLZ."
+                    },
+                    "generalCredit": {
+                        "label": "Alg. heffingskorting",
+                        "info": "Basiskorting op de inkomstenbelasting voor iedereen."
+                    },
+                    "labourCredit": {
+                        "label": "Arbeidskorting",
+                        "info": "Korting voor werkenden."
+                    },
+                    "net": {
+                        "label": "Netto Inkomen",
+                        "info": "Uw besteedbaar inkomen na alle belastingen en inhoudingen."
+                    }
+                }
+            }
+        }
+    },
+    "box3": {
+        "form": {
+            "fields": {
+                "bankAccounts": {
+                    "label": "Bankrekeningen",
+                    "detail": "rekening",
+                    "detailPlural": "rekeningen",
+                    "empty": "Geen rekening",
+                    "nameLabel": "Naam",
+                    "placeholder": "bijv. ING spaarrekening",
+                    "description": "Voeg de saldo's van uw Nederlandse betaal- en spaarrekeningen op 1 januari toe."
+                },
+                "investmentAccounts": {
+                    "label": "Beleggingen",
+                    "detail": "rekening",
+                    "detailPlural": "rekeningen",
+                    "empty": "Geen rekening",
+                    "nameLabel": "Naam",
+                    "placeholder": "bijv. DEGIRO",
+                    "description": "Neem de marktwaarde van uw beleggingsportefeuilles op 1 januari op."
+                },
+                "debts": {
+                    "label": "Schulden",
+                    "detail": "schuld",
+                    "detailPlural": "schulden",
+                    "empty": "Geen schuld",
+                    "nameLabel": "Naam",
+                    "placeholder": "bijv. Hypotheek",
+                    "description": "Vermeld aftrekbare schulden, zoals leningen die openstonden op 1 januari."
+                }
+            },
+            "actions": {
+                "manage": "Beheer",
+                "unnamed": "Naamloos",
+                "unnamedWithLabel": "Naamloze {{label}}"
+            },
+            "partner": {
+                "label": "Fiscaal partner?",
+                "yes": "Ja",
+                "no": "Nee"
+            },
+            "modal": {
+                "edit": "Bewerken",
+                "add": "Toevoegen",
+                "amount": "Bedrag (€)",
+                "cancel": "Annuleren",
+                "update": "Opslaan",
+                "addBtn": "Toevoegen",
+                "save": "Opslaan",
+                "warning": {
+                    "title": "Wissen?",
+                    "content": "Niet opgeslagen wijzigingen. Wissen?",
+                    "keep": "Verder",
+                    "discard": "Wissen"
+                },
+                "errors": {
+                    "invalidNumber": "Ongeldig getal",
+                    "negative": "Mag niet negatief zijn"
+                }
+            },
+            "reset": {
+                "button": "Reset",
+                "ariaLabel": "Reset alle waarden",
+                "dialog": {
+                    "title": "Resetten?",
+                    "content": "Dit wist alle gegevens.",
+                    "cancel": "Annuleren",
+                    "confirm": "Reset"
+                }
+            }
+        },
+        "result": {
+            "title": "Resultaten",
+            "badges": {
+                "year": "{{year}}",
+                "partner": "Met partner",
+                "individual": "Individueel"
+            },
+            "highlights": {
+                "tax": {
+                    "label": "Belasting",
+                    "sublabel": "Box 3 geschat",
+                    "info": "Verwachte Box 3 belasting voor het geselecteerde jaar met huidige aannames."
+                },
+                "netWorth": {
+                    "label": "Netto vermogen",
+                    "sublabel": "Bezittingen - schulden",
+                    "info": "Uw spaargeld en beleggingen na aftrek van aftrekbare schulden."
+                },
+                "taxableBase": {
+                    "label": "Grondslag Box 3",
+                    "sublabel": "Na heffingsvrij",
+                    "info": "Bedrag dat overblijft nadat het heffingsvrij vermogen is toegepast."
+                }
+            },
+            "rows": {
+                "assets": {
+                    "label": "Bezittingen",
+                    "info": "Gecombineerde saldo's van uw bank- en beleggingsrekeningen."
+                },
+                "debts": {
+                    "label": "Schulden",
+                    "info": "Aftrekbare schulden meegenomen in de Box 3 berekening."
+                },
+                "allowance": {
+                    "label": "Heffingsvrij vermogen",
+                    "info": "Standaard heffingsvrij vermogen toegepast op uw Box 3 bezittingen."
+                }
+            },
+            "breakdown": {
+                "title": "Berekeningsspecificatie",
+                "show": "Toon specificatie",
+                "hide": "Verberg specificatie",
+                "intro": "Hier is de berekening stap voor stap uitgelegd:",
+                "steps": {
+                    "1": {
+                        "math": "<strong>Totaal bezittingen</strong> = banktegoeden + beleggingen = {{bank}} + {{investments}} = <strong>{{total}}</strong>",
+                        "explain": "Dit is al het geld dat u op de bank en in beleggingen heeft, bij elkaar opgeteld."
+                    },
+                    "2": {
+                        "math": "<strong>Rendementsgrondslag</strong> = totaal bezittingen − aftrekbare schulden = {{assets}} − {{debts}} = <strong>{{base}}</strong>",
+                        "explain": "We trekken de aftrekbare schulden af van uw totale vermogen. Dit geeft het bedrag waar de belastingdienst naar kijkt."
+                    },
+                    "3": {
+                        "math": "<strong>Grondslag sparen en beleggen</strong> = rendementsgrondslag − heffingsvrij vermogen = {{base}} − {{allowance}} = <strong>{{taxable}}</strong>",
+                        "explain": "U krijgt een heffingsvrij vermogen. Dit trekken we af van het bedrag hierboven. Alleen de rest wordt belast."
+                    },
+                    "4": {
+                        "math": "<strong>Aandeel in rendementsgrondslag</strong> = grondslag / rendementsgrondslag = {{basis}} / {{base}} = <strong>{{share}}%</strong>",
+                        "explain": "Dit toont welk deel van uw vermogen belast wordt na de vrijstelling."
+                    },
+                    "5": {
+                        "math": "<strong>Inkomen uit sparen en beleggen</strong> = belastbaar rendement × aandeel = {{returns}} × {{share}}% = <strong>{{income}}</strong>",
+                        "explain": "Dit is het bedrag dat de belastingdienst denkt dat u verdient met uw spaargeld en beleggingen, gebaseerd op regels."
+                    },
+                    "6": {
+                        "math": "<strong>Geschatte belasting</strong> = inkomen × Box 3 tarief = {{income}} × <strong>{{rate}}%</strong> = <strong>{{tax}}</strong>",
+                        "explain": "Dit is de uiteindelijke belasting die u betaalt. Het is een percentage van het bedrag hierboven."
+                    }
+                }
+            }
+        }
+    },
+    "guide": {
+        "trigger": "Waar kan ik deze informatie vinden?",
+        "title": "Uw Jaaropgave Lezen",
+        "intro": "Een jaaropgave is het jaaroverzicht van uw bank of broker met uw saldo's voor belastingdoeleinden. Hier vindt u de waarden die u nodig heeft voor Box 3.",
+        "gotIt": "Begrepen",
+        "labels": {
+            "whatToLookFor": "Waar op te letten",
+            "commonBanks": "Veelvoorkomende banken",
+            "commonPlatforms": "Veelvoorkomende platforms",
+            "tips": "Tips"
+        },
+        "bank": {
+            "title": "Bankrekeningen (Jaaropgave)",
+            "description": "Uw bank stuurt in januari of februari een jaaropgave met uw saldo op 1 januari.",
+            "items": {
+                "look1": "\"Saldo per 1 januari\" of \"Stand per 1 januari\" — dit is het saldo dat u nodig heeft",
+                "look2": "\"Vermogen op peildatum\" — betekent vermogen op de peildatum",
+                "look3": "Het document omvat meestal alle rekeningen bij die bank",
+                "bank1": "ING — Kijk in \"Jaaroverzicht\" onder \"Spaargeld\"",
+                "bank2": "Rabobank — \"Jaaropgave\" sectie \"Vermogen\"",
+                "bank3": "ABN AMRO — \"Jaaroverzicht sparen en beleggen\"",
+                "bank4": "ASN/RegioBank/SNS — \"Jaaropgave\" via de Volksbank",
+                "bank5": "Bunq — Check de app of web voor \"Jaaroverzicht\"",
+                "tip1": "Voeg elke rekening apart toe voor duidelijkheid, of combineer indien eenvoudiger",
+                "tip2": "Neem alle spaarrekeningen mee, niet alleen betaalrekeningen",
+                "tip3": "Buitenlandse bankrekeningen aangehouden in Nederland tellen ook mee"
+            }
+        },
+        "investments": {
+            "title": "Beleggingsrekeningen (Beleggingen)",
+            "description": "Brokers en investeringsplatforms bieden een jaaroverzicht met de marktwaarde van uw portefeuille op 1 januari.",
+            "items": {
+                "look1": "\"Waarde per 1 januari\" of \"Portefeuillewaarde\" — totale portefeuillewaarde",
+                "look2": "\"Marktwaarde\" — marktwaarde van bezittingen",
+                "look3": "Kijk naar de waarde op 1 januari, niet 31 december",
+                "plat1": "DEGIRO — \"Jaaroverzicht\" PDF in uw account",
+                "plat2": "Meesman — Jaaropgave via e-mail of portaal",
+                "plat3": "ABN AMRO Zelf Beleggen — Onderdeel van \"Jaaroverzicht\"",
+                "plat4": "Rabobank Beleggen — \"Jaaropgave beleggingen\"",
+                "plat5": "Brand New Day — \"Jaaropgave\" in uw dashboard",
+                "plat6": "Binck/Saxo — \"Jaaroverzicht\" of \"Jaarverslag\"",
+                "plat7": "Trading 212 / Interactive Brokers — Eindejaarsoverzicht",
+                "tip1": "Gebruik de totale marktwaarde, niet de aankoopprijs",
+                "tip2": "Neem aandelen, ETF's, obligaties en fondsen mee",
+                "tip3": "Pensioenrekeningen zijn meestal vrijgesteld — check bij uw aanbieder",
+                "tip4": "Crypto bezittingen worden belast in Box 3 — gebruik waarde op 1 januari"
+            }
+        },
+        "general": {
+            "title": "Algemene Informatie",
+            "description": "Belangrijke datums en concepten voor Box 3 belasting.",
+            "dateTitle": "Peildatum: 1 januari",
+            "assetsTitle": "Wat telt als bezittingen",
+            "debtsTitle": "Aftrekbare schulden",
+            "items": {
+                "date1": "Box 3 belasting is gebaseerd op uw vermogen op 1 januari van het belastingjaar",
+                "date2": "Voor belastingjaar 2025 gebruikt u saldo's van 1 januari 2025",
+                "date3": "Dit wordt de \"peildatum\" genoemd",
+                "asset1": "Banktegoeden (spaarrekeningen, betaalrekeningen)",
+                "asset2": "Beleggingen (aandelen, obligaties, ETF's)",
+                "asset3": "Cryptovaluta",
+                "asset4": "Uitgeleend geld",
+                "asset5": "Tweede woningen (niet uw hoofdverblijf)",
+                "debt1": "Hypotheek op tweede woning of beleggingspand",
+                "debt2": "Persoonlijke leningen en kredieten",
+                "debt3": "Schulden voor beleggingen",
+                "debt4": "Let op: Hypotheek voor eigen woning is NIET aftrekbaar in Box 3",
+                "debt5": "Drempel: Eerste €3.400 per persoon is niet aftrekbaar"
+            }
+        }
+    }
+}

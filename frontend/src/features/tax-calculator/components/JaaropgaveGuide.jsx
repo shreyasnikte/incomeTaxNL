@@ -1,4 +1,5 @@
-import { useState } from 'react'
+import { useState, useMemo } from 'react'
+import { useTranslation } from 'react-i18next'
 import {
   Button,
   Dialog,
@@ -21,115 +22,120 @@ import TrendingUpIcon from '@mui/icons-material/TrendingUp'
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined'
 import './JaaropgaveGuide.css'
 
-const BANK_GUIDE = {
-  title: 'Bank Accounts (Jaaropgave)',
+const getBankGuide = (t) => ({
+  title: t('guide.bank.title'),
   icon: <AccountBalanceIcon />,
-  description: 'Your bank sends a jaaropgave (annual statement) in January or February showing your balance on 1 January.',
+  description: t('guide.bank.description'),
   sections: [
     {
-      heading: 'What to look for',
+      heading: t('guide.labels.whatToLookFor'),
       items: [
-        '"Saldo per 1 januari" or "Stand per 1 januari" — this is the balance you need',
-        '"Vermogen op peildatum" — means wealth on reference date',
-        'The document usually covers all accounts at that bank',
+        t('guide.bank.items.look1'),
+        t('guide.bank.items.look2'),
+        t('guide.bank.items.look3'),
       ],
     },
     {
-      heading: 'Common Dutch banks',
+      heading: t('guide.labels.commonBanks'),
       items: [
-        'ING — Look in "Jaaroverzicht" under "Spaargeld"',
-        'Rabobank — "Jaaropgave" section "Vermogen"',
-        'ABN AMRO — "Jaaroverzicht sparen en beleggen"',
-        'ASN/RegioBank/SNS — "Jaaropgave" via de Volksbank',
-        'Bunq — Check the app or web for "Year overview"',
+        t('guide.bank.items.bank1'),
+        t('guide.bank.items.bank2'),
+        t('guide.bank.items.bank3'),
+        t('guide.bank.items.bank4'),
+        t('guide.bank.items.bank5'),
       ],
     },
     {
-      heading: 'Tips',
+      heading: t('guide.labels.tips'),
       items: [
-        'Add each account separately for clarity, or combine if simpler',
-        'Include all savings accounts, not just checking',
-        'Foreign bank accounts held in the Netherlands count too',
+        t('guide.bank.items.tip1'),
+        t('guide.bank.items.tip2'),
+        t('guide.bank.items.tip3'),
       ],
     },
   ],
-}
+})
 
-const INVESTMENT_GUIDE = {
-  title: 'Investment Accounts (Beleggingen)',
+const getInvestmentGuide = (t) => ({
+  title: t('guide.investments.title'),
   icon: <TrendingUpIcon />,
-  description: 'Brokers and investment platforms provide an annual overview showing the market value of your portfolio on 1 January.',
+  description: t('guide.investments.description'),
   sections: [
     {
-      heading: 'What to look for',
+      heading: t('guide.labels.whatToLookFor'),
       items: [
-        '"Waarde per 1 januari" or "Portefeuillewaarde" — total portfolio value',
-        '"Marktwaarde" — market value of holdings',
-        'Look for the value on 1 January, not 31 December',
+        t('guide.investments.items.look1'),
+        t('guide.investments.items.look2'),
+        t('guide.investments.items.look3'),
       ],
     },
     {
-      heading: 'Common platforms',
+      heading: t('guide.labels.commonPlatforms'),
       items: [
-        'DEGIRO — "Jaaroverzicht" PDF in your account',
-        'Meesman — Annual statement via email or portal',
-        'ABN AMRO Zelf Beleggen — Part of "Jaaroverzicht"',
-        'Rabobank Beleggen — "Jaaropgave beleggingen"',
-        'Brand New Day — "Jaaropgave" in your dashboard',
-        'Binck/Saxo — "Annual overview" or "Jaarverslag"',
-        'Trading 212 / Interactive Brokers — Year-end statement',
+        t('guide.investments.items.plat1'),
+        t('guide.investments.items.plat2'),
+        t('guide.investments.items.plat3'),
+        t('guide.investments.items.plat4'),
+        t('guide.investments.items.plat5'),
+        t('guide.investments.items.plat6'),
+        t('guide.investments.items.plat7'),
       ],
     },
     {
-      heading: 'Tips',
+      heading: t('guide.labels.tips'),
       items: [
-        'Use the total market value, not purchase price',
-        'Include stocks, ETFs, bonds, and funds',
-        'Pension accounts (pensioen) are usually exempt — check with your provider',
-        'Crypto holdings are taxed in Box 3 — use value on 1 January',
+        t('guide.investments.items.tip1'),
+        t('guide.investments.items.tip2'),
+        t('guide.investments.items.tip3'),
+        t('guide.investments.items.tip4'),
       ],
     },
   ],
-}
+})
 
-const GENERAL_INFO = {
-  title: 'General Information',
+const getGeneralInfo = (t) => ({
+  title: t('guide.general.title'),
   icon: <InfoOutlinedIcon />,
-  description: 'Important dates and concepts for Box 3 tax.',
+  description: t('guide.general.description'),
   sections: [
     {
-      heading: 'Key date: 1 January (Peildatum)',
+      heading: t('guide.general.dateTitle'),
       items: [
-        'Box 3 tax is based on your wealth on 1 January of the tax year',
-        'For 2025 taxes, use balances from 1 January 2025',
-        'This is called the "peildatum" (reference date)',
+        t('guide.general.items.date1'),
+        t('guide.general.items.date2'),
+        t('guide.general.items.date3'),
       ],
     },
     {
-      heading: 'What counts as assets',
+      heading: t('guide.general.assetsTitle'),
       items: [
-        'Bank balances (spaarrekeningen, betaalrekeningen)',
-        'Investments (aandelen, obligaties, ETFs)',
-        'Crypto currencies',
-        'Loans you gave to others',
-        'Second homes (not your primary residence)',
+        t('guide.general.items.asset1'),
+        t('guide.general.items.asset2'),
+        t('guide.general.items.asset3'),
+        t('guide.general.items.asset4'),
+        t('guide.general.items.asset5'),
       ],
     },
     {
-      heading: 'Deductible debts (Schulden)',
+      heading: t('guide.general.debtsTitle'),
       items: [
-        'Mortgage on second home or investment property',
-        'Personal loans and credit',
-        'Debts for investments',
-        'Note: Primary home mortgage is NOT deductible in Box 3',
-        'Threshold: First €3,400 per person is not deductible',
+        t('guide.general.items.debt1'),
+        t('guide.general.items.debt2'),
+        t('guide.general.items.debt3'),
+        t('guide.general.items.debt4'),
+        t('guide.general.items.debt5'),
       ],
     },
   ],
-}
+})
 
 function JaaropgaveGuide() {
+  const { t } = useTranslation()
   const [open, setOpen] = useState(false)
+
+  const bankGuide = useMemo(() => getBankGuide(t), [t])
+  const investmentGuide = useMemo(() => getInvestmentGuide(t), [t])
+  const generalInfo = useMemo(() => getGeneralInfo(t), [t])
   const [expanded, setExpanded] = useState('panel-bank')
 
   const handleOpen = () => setOpen(true)
@@ -186,32 +192,31 @@ function JaaropgaveGuide() {
         onClick={handleOpen}
         className="jaaropgave-guide__trigger"
       >
-        Where can I find this information?
+        {t('guide.trigger')}
       </Button>
 
       <Dialog open={open} onClose={handleClose} fullWidth maxWidth="md">
         <DialogTitle className="jaaropgave-guide__title">
           <Stack direction="row" spacing={1} alignItems="center">
             <HelpOutlineIcon color="primary" />
-            <span>Reading Your Jaaropgave (Annual Statement)</span>
+            <span>{t('guide.title')}</span>
           </Stack>
           <Chip label="Box 3" size="small" color="primary" variant="outlined" />
         </DialogTitle>
         <DialogContent dividers className="jaaropgave-guide__content">
           <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
-            A jaaropgave is the annual statement from your bank or broker showing your balances for tax purposes.
-            Here's how to find the values you need for Box 3.
+            {t('guide.intro')}
           </Typography>
           <Divider sx={{ mb: 2 }} />
           <Stack spacing={1}>
-            {renderGuideSection(BANK_GUIDE, 'panel-bank')}
-            {renderGuideSection(INVESTMENT_GUIDE, 'panel-investment')}
-            {renderGuideSection(GENERAL_INFO, 'panel-general')}
+            {renderGuideSection(bankGuide, 'panel-bank')}
+            {renderGuideSection(investmentGuide, 'panel-investment')}
+            {renderGuideSection(generalInfo, 'panel-general')}
           </Stack>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose} variant="contained">
-            Got it
+            {t('guide.gotIt')}
           </Button>
         </DialogActions>
       </Dialog>

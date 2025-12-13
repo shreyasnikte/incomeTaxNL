@@ -1,0 +1,31 @@
+.language-switcher {
+  display: flex;
+  align-items: center;
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  margin-left: 1rem;
+}
+
+.language-switcher__button {
+  background: none;
+  border: none;
+  color: inherit;
+  cursor: pointer;
+  padding: 0.25rem;
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+.language-switcher__button:hover {
+  color: var(--primary-color);
+}
+
+.language-switcher__button.active {
+  color: var(--primary-color);
+  font-weight: 700;
+}
+
+.language-switcher__separator {
+  margin: 0 0.25rem;
+  opacity: 0.5;
+}
