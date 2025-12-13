@@ -1,24 +1,37 @@
-
 import PropTypes from 'prop-types'
 import { useState } from 'react'
+import { useTranslation, Trans } from 'react-i18next'
 import './PrimaryLayout.css'
 
 
 function PrimaryLayout({ children }) {
+  const { t, i18n } = useTranslation()
   const [showPrivacy, setShowPrivacy] = useState(false)
   const [showInfo, setShowInfo] = useState(false)
   const [showCredits, setShowCredits] = useState(false)
   const [showTerms, setShowTerms] = useState(false)
+
+  const toggleLanguage = () => {
+    i18n.changeLanguage(i18n.language.startsWith('en') ? 'nl' : 'en')
+  }
+
   return (
     <div className="app-shell">
       <header className="app-header">
-        <h1>incomeTaxNL</h1>
+        <h1>{t('layout.header.title')}</h1>
         <nav className="app-header__nav">
+          <button 
+            onClick={toggleLanguage} 
+            className="app-header__lang-switch" 
+            aria-label="Switch language"
+          >
+            {i18n.language.startsWith('en') ? 'NL' : 'EN'}
+          </button>
           <button
             type="button"
             className="app-header__icon-button"
             onClick={() => setShowInfo(true)}
-            aria-label="Learn about incomeTaxNL"
+            aria-label={t('layout.header.icon_label')}
             aria-haspopup="dialog"
           >
             <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false">
@@ -30,8 +43,8 @@ function PrimaryLayout({ children }) {
             target="_blank"
             rel="noopener noreferrer"
             className="app-header__helpdesk-link"
-            aria-label="Contact me on X (Twitter)"
-            title="Need help? Message me on X"
+            aria-label={t('layout.header.help_label')}
+            title={t('layout.header.help_title')}
           >
             <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false">
               <path d="M12 2C6.48 2 2 5.58 2 10c0 2.03 1.01 3.87 2.64 5.24-.17 1.89-1.05 3.47-1.07 3.5a.5.5 0 0 0 .42.76c2.31 0 4.13-1.06 5.24-1.88.57.1 1.16.16 1.77.16 5.52 0 10-3.58 10-8S17.52 2 12 2Zm-3 9.5a1.25 1.25 0 1 1 0-2.5 1.25 1.25 0 0 1 0 2.5Zm3 0a1.25 1.25 0 1 1 0-2.5 1.25 1.25 0 0 1 0 2.5Zm3 0a1.25 1.25 0 1 1 0-2.5 1.25 1.25 0 0 1 0 2.5Z"/>
@@ -42,7 +55,7 @@ function PrimaryLayout({ children }) {
             target="_blank" 
             rel="noopener noreferrer"
             className="app-header__github-link"
-            aria-label="View on GitHub"
+            aria-label={t('layout.header.github_label')}
           >
             <svg height="24" width="24" viewBox="0 0 16 16" fill="currentColor">
               <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/>
@@ -51,15 +64,17 @@ function PrimaryLayout({ children }) {
         </nav>
       </header>
       <div className="app-notice">
-        Built with ❤️ for privacy — <button onClick={() => setShowPrivacy(true)} className="app-notice__link">your data never leaves your device</button>
+        {t('layout.privacy.notice')} <button onClick={() => setShowPrivacy(true)} className="app-notice__link">{t('layout.privacy.link')}</button>
       </div>
       <main className="app-main">{children}</main>
       <footer className="app-footer">
         <div className="app-footer__disclaimer">
           <p>
-            <strong>Disclaimer:</strong> This tool is provided for educational and informational purposes only. 
-            Tax calculations are estimates and may not reflect your actual tax liability. 
-            For official advice, always consult the <a href="https://www.belastingdienst.nl" target="_blank" rel="noopener noreferrer">Belastingdienst</a> or a qualified tax consultant.
+            <Trans i18nKey="layout.footer.disclaimer">
+              Disclaimer: This tool is provided for educational and informational purposes only. 
+              Tax calculations are estimates and may not reflect your actual tax liability. 
+              For official advice, always consult the <a href="https://www.belastingdienst.nl" target="_blank" rel="noopener noreferrer">Belastingdienst</a> or a qualified tax consultant.
+            </Trans>
           </p>
         </div>
         <div className="app-footer__links">
@@ -67,32 +82,32 @@ function PrimaryLayout({ children }) {
             <svg height="16" width="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
               <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/>
             </svg>
-            View on GitHub
+            {t('layout.footer.view_on_github')}
           </a>
           <span className="app-footer__separator">•</span>
           <a href="https://github.com/shreyasnikte/Dutch_Tax/issues" target="_blank" rel="noopener noreferrer">
-            Report an Issue
+            {t('layout.footer.report_issue')}
           </a>
           <span className="app-footer__separator">•</span>
           <button onClick={() => setShowCredits(true)} className="app-footer__link-button">
-            Credits
+            {t('layout.footer.credits')}
           </button>
           <span className="app-footer__separator">•</span>
           <button onClick={() => setShowTerms(true)} className="app-footer__link-button">
-            Terms of Use
+            {t('layout.footer.terms')}
           </button>
         </div>
       </footer>
       {showPrivacy && (
         <div className="privacy-modal__backdrop" onClick={() => setShowPrivacy(false)}>
           <div className="privacy-modal" onClick={e => e.stopPropagation()} role="dialog" aria-modal="true" aria-label="Privacy Information">
-            <button className="privacy-modal__close" onClick={() => setShowPrivacy(false)} aria-label="Close privacy information">×</button>
-            <h2>Privacy-first by design</h2>
-            <p><strong>Your financial data is your business.</strong> incomeTaxNL is a privacy-focused free and open source tool to estimate Dutch Box 1 and Box 3 taxes. Any data you enter is only stored locally in your browser. All calculations run 100% locally in your browser — your personal financial data is never sent, stored, or collected by this app for any reason.</p>
+            <button className="privacy-modal__close" onClick={() => setShowPrivacy(false)} aria-label={t('layout.privacy.modal.close')}>×</button>
+            <h2>{t('layout.privacy.modal.title')}</h2>
+            <p><strong>{t('layout.privacy.modal.intro')}</strong></p>
             <ul>
-              <li>No risk of leaks, hacks, or misuse: your sensitive information never leaves your device.</li>
-              <li>No tracking, no uploads, no analytics: you stay in control of your data.</li>
-              <li>Use incomeTaxNL with confidence for salary and capital gains calculations, knowing your privacy is protected.</li>
+              <li>{t('layout.privacy.modal.list.1')}</li>
+              <li>{t('layout.privacy.modal.list.2')}</li>
+              <li>{t('layout.privacy.modal.list.3')}</li>
             </ul>
           </div>
         </div>
@@ -110,32 +125,27 @@ function PrimaryLayout({ children }) {
               type="button"
               className="info-modal__close"
               onClick={() => setShowInfo(false)}
-              aria-label="Close about dialog"
+              aria-label={t('layout.info.modal.close')}
             >
               ×
             </button>
-            <h2 id="about-incometaxnl-title">About incomeTaxNL</h2>
+            <h2 id="about-incometaxnl-title">{t('layout.info.modal.title')}</h2>
             <p>
-              incomeTaxNL helps you estimate Dutch Box 1 salary tax and Box 3 wealth tax with a
-              privacy-first approach. All calculations run locally, so your data never leaves your
-              browser.
+              {t('layout.info.modal.intro')}
             </p>
             <section className="info-modal__section">
-              <h3>How to use</h3>
+              <h3>{t('layout.info.modal.how_to_use.title')}</h3>
               <ol>
-                <li>Select Box 1 or Box 3 using the toggle at the top of the calculator.</li>
-                <li>Enter your income, savings, investments, and debts in the left-side forms.</li>
-                <li>Open the settings gear to tweak thresholds, return assumptions, or tax year.</li>
-                <li>Review the results panel for a breakdown of taxable bases and estimated taxes.</li>
+                <li>{t('layout.info.modal.how_to_use.step1')}</li>
+                <li>{t('layout.info.modal.how_to_use.step2')}</li>
+                <li>{t('layout.info.modal.how_to_use.step3')}</li>
+                <li>{t('layout.info.modal.how_to_use.step4')}</li>
               </ol>
             </section>
             <section className="info-modal__section">
-              <h3>Origin story</h3>
+              <h3>{t('layout.info.modal.origin.title')}</h3>
               <p>
-                Navigating Dutch taxes used to be confusing for me. I built an elaborate
-                spreadsheet to make sense of the rules, but it was too complex for friends and
-                colleagues. This app is the friendlier version—same clarity, with explanations that
-                anyone can follow.
+                {t('layout.info.modal.origin.content')}
               </p>
             </section>
           </div>
@@ -154,21 +164,25 @@ function PrimaryLayout({ children }) {
               type="button"
               className="credits-modal__close"
               onClick={() => setShowCredits(false)}
-              aria-label="Close credits dialog"
+              aria-label={t('layout.credits.modal.close')}
             >
               ×
             </button>
-            <h2 id="credits-modal-title">Credits</h2>
+            <h2 id="credits-modal-title">{t('layout.credits.modal.title')}</h2>
             <p>
-              incomeTaxNL is an open-source project created by <a href="https://github.com/shreyasnikte" target="_blank" rel="noopener noreferrer">@shreyasnikte</a> to help people understand Dutch taxes.
+              <Trans i18nKey="layout.credits.modal.intro">
+                incomeTaxNL is an open-source project created by <a href="https://github.com/shreyasnikte" target="_blank" rel="noopener noreferrer">@shreyasnikte</a> to help people understand Dutch taxes.
+              </Trans>
             </p>
             <section className="credits-modal__section">
-              <h3>Special thanks</h3>
+              <h3>{t('layout.credits.modal.special_thanks.title')}</h3>
               <p>
-                Salary calculations powered by the <a href="https://github.com/stevermeister/dutch-tax-income-calculator-npm" target="_blank" rel="noopener noreferrer">dutch-tax-income-calculator</a> library — <a href="https://buymeacoffee.com/stevermeister" target="_blank" rel="noopener noreferrer">by Stepan Suvorov</a>
+                <Trans i18nKey="layout.credits.modal.special_thanks.p1">
+                  Salary calculations powered by the <a href="https://github.com/stevermeister/dutch-tax-income-calculator-npm" target="_blank" rel="noopener noreferrer">dutch-tax-income-calculator</a> library — <a href="https://buymeacoffee.com/stevermeister" target="_blank" rel="noopener noreferrer">by Stepan Suvorov</a>
+                </Trans>
               </p>
               <p>
-                Thanks to everyone who provided feedback to improve this tool.
+                {t('layout.credits.modal.special_thanks.p2')}
               </p>
             </section>
           </div>
@@ -187,102 +201,23 @@ function PrimaryLayout({ children }) {
               type="button"
               className="terms-modal__close"
               onClick={() => setShowTerms(false)}
-              aria-label="Close terms of use dialog"
+              aria-label={t('layout.terms.modal.close')}
             >
               ×
             </button>
-            <h2 id="terms-modal-title">Terms of Use</h2>
-            <p><strong>Effective Date:</strong> December 13, 2025</p>
+            <h2 id="terms-modal-title">{t('layout.terms.modal.title')}</h2>
+            <p><strong>{t('layout.terms.modal.effective_date')}</strong></p>
             
-            <section className="terms-modal__section">
-              <h3>1. Acceptance of Terms</h3>
-              <p>
-                By using incomeTaxNL, you agree to these Terms of Use. If you do not agree, 
-                please discontinue use of this tool immediately.
-              </p>
-            </section>
-
-            <section className="terms-modal__section">
-              <h3>2. Educational Purpose Only</h3>
-              <p>
-                incomeTaxNL is provided solely for educational and informational purposes. 
-                It is designed to help users understand and estimate Dutch income tax calculations. 
-                This tool does NOT constitute professional tax advice, legal advice, or financial planning services.
-              </p>
-            </section>
-
-            <section className="terms-modal__section">
-              <h3>3. No Warranty or Guarantee</h3>
-              <p>
-                All calculations and information are provided "as is" without any warranty of accuracy, 
-                completeness, or fitness for a particular purpose. Tax laws, rates, and regulations may 
-                change, and this tool may not reflect the most current information. Users are responsible 
-                for verifying all results with official sources.
-              </p>
-            </section>
-
-            <section className="terms-modal__section">
-              <h3>4. Limitation of Liability</h3>
-              <p>
-                The creator and contributors of incomeTaxNL shall not be liable for any damages, losses, 
-                or tax liabilities arising from the use or misuse of this tool. Users assume all risks 
-                associated with using the estimates provided.
-              </p>
-            </section>
-
-            <section className="terms-modal__section">
-              <h3>5. Professional Consultation Required</h3>
-              <p>
-                For official tax calculations, filing, or advice, users must consult the{' '}
-                <a href="https://www.belastingdienst.nl" target="_blank" rel="noopener noreferrer">
-                  Belastingdienst
-                </a>{' '}
-                (Dutch Tax and Customs Administration) or a qualified tax professional.
-              </p>
-            </section>
-
-            <section className="terms-modal__section">
-              <h3>6. Privacy and Data</h3>
-              <p>
-                All data entered into incomeTaxNL is stored locally in your browser and never transmitted 
-                to any server. We do not collect, store, or share your personal or financial information. 
-                See our Privacy Policy for more details.
-              </p>
-            </section>
-
-            <section className="terms-modal__section">
-              <h3>7. Open Source License</h3>
-              <p>
-                incomeTaxNL is open source software available on{' '}
-                <a href="https://github.com/shreyasnikte/Dutch_Tax" target="_blank" rel="noopener noreferrer">
-                  GitHub
-                </a>
-                . You may use, modify, and distribute it according to the terms of its license.
-              </p>
-            </section>
-
-            <section className="terms-modal__section">
-              <h3>8. Changes to Terms</h3>
-              <p>
-                These terms may be updated from time to time. Continued use of incomeTaxNL after 
-                changes constitutes acceptance of the revised terms.
-              </p>
-            </section>
-
-            <section className="terms-modal__section">
-              <h3>9. Contact</h3>
-              <p>
-                For questions or concerns, please contact us via{' '}
-                <a href="https://github.com/shreyasnikte/Dutch_Tax/issues" target="_blank" rel="noopener noreferrer">
-                  GitHub Issues
-                </a>{' '}
-                or{' '}
-                <a href="https://twitter.com/messages/compose?recipient_id=718363377798615041" target="_blank" rel="noopener noreferrer">
-                  direct message on X
-                </a>
-                .
-              </p>
-            </section>
+            {[1, 2, 3, 4, 5, 6, 7, 8, 9].map(i => (
+              <section className="terms-modal__section" key={i}>
+                <h3>{t(`layout.terms.modal.sections.${i}.title`)}</h3>
+                <p>
+                  <Trans i18nKey={`layout.terms.modal.sections.${i}.content`}>
+                    Content with <a href="#">links</a>.
+                  </Trans>
+                </p>
+              </section>
+            ))}
           </div>
         </div>
       )}

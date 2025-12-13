@@ -1,4 +1,5 @@
 import { useState, useMemo, useCallback, useEffect, useRef, lazy, Suspense } from 'react'
+import { useTranslation } from 'react-i18next'
 import Box3InputForm from './Box3InputForm.jsx'
 import Box1InputForm from './Box1InputForm.jsx'
 import CalculatorToggleSwitch from './CalculatorToggleSwitch.jsx'
@@ -101,6 +102,7 @@ const useDebouncedStorage = (key, value, delay = 250) => {
 }
 
 function TaxCalculatorShell() {
+  const { t } = useTranslation()
   // Refs for scroll navigation
   const inputPanelRef = useRef(null)
   const resultsPanelRef = useRef(null)
@@ -289,7 +291,7 @@ function TaxCalculatorShell() {
           )}
         </div>
         <div className="calculator-panel calculator-panel--results" ref={resultsPanelRef}>
-          <Suspense fallback={<div className="results-panel-placeholder">Loading results...</div>}>
+          <Suspense fallback={<div className="results-panel-placeholder">{t('shell.loading_results')}</div>}>
             {boxType === 'box1' ? (
               <Box1ResultPanel
                 inputs={box1CalculatorInputs}
@@ -312,10 +314,10 @@ function TaxCalculatorShell() {
       <button
         className={`floating-nav-btn ${showGoToTop ? 'floating-nav-btn--top' : 'floating-nav-btn--results'}`}
         onClick={showGoToTop ? scrollToTop : scrollToResults}
-        aria-label={showGoToTop ? 'Go to top' : 'Go to results'}
+        aria-label={showGoToTop ? t('shell.nav.go_to_top') : t('shell.nav.see_results')}
       >
         <span className="floating-nav-btn__icon">{showGoToTop ? '↑' : '↓'}</span>
-        <span className="floating-nav-btn__text">{showGoToTop ? 'Go to Top' : 'See Results'}</span>
+        <span className="floating-nav-btn__text">{showGoToTop ? t('shell.nav.go_to_top') : t('shell.nav.see_results')}</span>
       </button>
     </section>
   )

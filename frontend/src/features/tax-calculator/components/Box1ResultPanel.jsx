@@ -1,20 +1,15 @@
 import { useState, useMemo, memo, useCallback } from 'react'
 import PropTypes from 'prop-types'
+import { useTranslation } from 'react-i18next'
 import { box1InputsPropType, box1SummaryPropType } from '../../../utils/propTypes.js'
 import { formatEuro } from '../../../utils/formatters.js'
 import './Box1ResultPanel.css'
 
-const PERIOD_OPTIONS = [
-  { key: 'weekly', label: 'Weekly', divisor: 52 },
-  { key: 'monthly', label: 'Monthly', divisor: 12 },
-  { key: 'yearly', label: 'Yearly', divisor: 1 },
-]
-
-const COMPONENT_CATEGORIES = {
-  income: { label: 'Income', default: true },
-  taxes: { label: 'Taxes', default: true },
-  credits: { label: 'Tax Credits', default: true },
-  deductions: { label: 'Deductions', default: true },
+const CATEGORY_DEFAULTS = {
+  income: true,
+  taxes: true,
+  credits: true,
+  deductions: true,
 }
 
 const InfoIcon = memo(function InfoIcon({ text }) {
@@ -30,11 +25,23 @@ InfoIcon.propTypes = {
 }
 
 function Box1ResultPanel({ inputs, summary, year }) {
+  const { t } = useTranslation()
   const [isBreakdownOpen, setIsBreakdownOpen] = useState(false)
   const [viewPeriod, setViewPeriod] = useState('monthly')
-  const [visibleCategories, setVisibleCategories] = useState(() => 
-    Object.fromEntries(Object.entries(COMPONENT_CATEGORIES).map(([key, val]) => [key, val.default]))
-  )
+  const [visibleCategories, setVisibleCategories] = useState(CATEGORY_DEFAULTS)
+
+  const periodOptions = useMemo(() => [
+    { key: 'weekly', label: t('box1.results.period_label.weekly'), divisor: 52 },
+    { key: 'monthly', label: t('box1.results.period_label.monthly'), divisor: 12 },
+    { key: 'yearly', label: t('box1.results.period_label.yearly'), divisor: 1 },
+  ], [t])
+
+  const categoryLabels = useMemo(() => ({
+    income: t('box1.results.category.income'),
+    taxes: t('box1.results.category.taxes'),
+    credits: t('box1.results.category.credits'),
+    deductions: t('box1.results.category.deductions'),
+  }), [t])
 
   const toggleCategory = useCallback((category) => {
     setVisibleCategories(prev => ({ ...prev, [category]: !prev[category] }))
@@ -77,118 +84,121 @@ function Box1ResultPanel({ inputs, summary, year }) {
   } = derivedValues
 
   const periodDivisor = useMemo(() => 
-    PERIOD_OPTIONS.find(p => p.key === viewPeriod)?.divisor ?? 1
-  , [viewPeriod])
+    periodOptions.find(p => p.key === viewPeriod)?.divisor ?? 1
+  , [viewPeriod, periodOptions])
 
   const periodLabel = useMemo(() => {
-    const labels = { weekly: 'per week', monthly: 'per month', yearly: 'per year' }
-    return labels[viewPeriod] ?? 'per year'
-  }, [viewPeriod])
+    return periodOptions.find(p => p.key === viewPeriod)?.label ?? t('box1.results.period_label.yearly')
+  }, [viewPeriod, periodOptions, t])
 
   const formatForPeriod = useCallback((value) => 
     formatEuro(value / periodDivisor)
   , [periodDivisor])
 
-  const allowanceLabel = inputs.ruling30Enabled ? 'With 30% ruling' : 'Without 30% ruling'
-  const socialSecurityLabel = inputs.socialSecurity ? 'Incl. social security' : 'Excl. social security'
+  const allowanceLabel = inputs.ruling30Enabled 
+    ? t('box1.results.badge.ruling_on') 
+    : t('box1.results.badge.ruling_off')
+  const socialSecurityLabel = inputs.socialSecurity 
+    ? t('box1.results.badge.social_on') 
+    : t('box1.results.badge.social_off')
 
   const primaryMetrics = [
     {
       key: 'gross',
-      label: 'Gross Income',
+      label: t('box1.metric.gross_income.label'),
       value: grossIncome,
       sublabel: periodLabel,
       tone: 'neutral',
-      info: 'Your total income before any deductions.',
+      info: t('box1.metric.gross_income.info'),
     },
     {
       key: 'net',
-      label: 'Net Income',
+      label: t('box1.metric.net_income.label'),
       value: netIncome,
       sublabel: periodLabel,
       tone: 'positive',
-      info: 'Your take-home pay after all taxes and deductions.',
+      info: t('box1.metric.net_income.info'),
     },
     {
       key: 'tax',
-      label: 'Total Tax',
+      label: t('box1.metric.total_tax.label'),
       value: Math.abs(incomeTax),
-      sublabel: `${periodLabel} · ${effectiveTaxRate.toFixed(1)}% effective rate`,
+      sublabel: `${periodLabel} · ${t('box1.results.effective_rate', { rate: effectiveTaxRate.toFixed(1) })}`,
       tone: 'negative',
-      info: 'Total income tax including payroll tax, social security, minus credits.',
+      info: t('box1.metric.total_tax.info'),
     },
   ]
 
   const filteredTableRows = useMemo(() => {
     const detailedTableRows = [
       {
-        label: 'Gross Income',
+        label: t('box1.metric.gross_income.label'),
         value: grossIncome,
         category: 'income',
         tone: 'neutral',
-        info: 'Your total annual income before any deductions.',
+        info: t('box1.metric.gross_income.info'),
       },
       {
-        label: '30% Ruling Tax Free',
+        label: t('box1.metric.ruling_free.label'),
         value: taxFree,
         category: 'deductions',
         tone: 'positive',
-        info: 'Tax-free allowance under the 30% ruling.',
+        info: t('box1.metric.ruling_free.info'),
       },
       {
-        label: 'Taxable Income',
+        label: t('box1.metric.taxable_income.label'),
         value: taxableIncome,
         category: 'income',
         tone: 'neutral',
-        info: 'Income subject to taxation (after 30% ruling if applicable).',
+        info: t('box1.metric.taxable_income.info'),
       },
       {
-        label: 'Payroll Tax',
+        label: t('box1.metric.payroll_tax.label'),
         value: payrollTax,
         category: 'taxes',
         tone: 'negative',
-        info: 'Income tax withheld from your salary.',
+        info: t('box1.metric.payroll_tax.info'),
       },
       {
-        label: 'Social Security',
+        label: t('box1.metric.social_security.label'),
         value: socialTax,
         category: 'taxes',
         tone: 'negative',
-        info: 'Contributions for AOW, ANW, and WLZ.',
+        info: t('box1.metric.social_security.info'),
       },
       {
-        label: 'General Tax Credit',
+        label: t('box1.metric.general_credit.label'),
         value: generalCredit,
         category: 'credits',
         tone: 'positive',
-        info: 'Algemene heffingskorting - basic tax credit for all taxpayers.',
+        info: t('box1.metric.general_credit.info'),
       },
       {
-        label: 'Labour Tax Credit',
+        label: t('box1.metric.labour_credit.label'),
         value: labourCredit,
         category: 'credits',
         tone: 'positive',
-        info: 'Arbeidskorting - credit for employed taxpayers.',
+        info: t('box1.metric.labour_credit.info'),
       },
       {
-        label: 'Net Income',
+        label: t('box1.metric.net_income.label'),
         value: netIncome,
         category: 'income',
         tone: 'positive',
-        info: 'Your take-home pay after all taxes and deductions.',
+        info: t('box1.metric.net_income.info'),
       },
     ]
     return detailedTableRows.filter(row => visibleCategories[row.category])
-  }, [visibleCategories, grossIncome, taxableIncome, taxFree, payrollTax, socialTax, generalCredit, labourCredit, netIncome])
+  }, [visibleCategories, grossIncome, taxableIncome, taxFree, payrollTax, socialTax, generalCredit, labourCredit, netIncome, t])
 
   return (
     <div className="box1-result">
       <header className="box1-result__header">
         <div className="box1-result__title-row">
-          <h2>Results</h2>
+          <h2>{t('box1.results.title')}</h2>
         </div>
         <div className="box1-result__meta">
-          <span className="box1-result__badge">Tax year {year}</span>
+          <span className="box1-result__badge">{t('box1.results.tax_year', { year })}</span>
           <span className="box1-result__badge box1-result__badge--neutral">{allowanceLabel}</span>
           <span className="box1-result__badge box1-result__badge--neutral">{socialSecurityLabel}</span>
         </div>
@@ -196,7 +206,7 @@ function Box1ResultPanel({ inputs, summary, year }) {
 
       {/* Period Toggle */}
       <div className="box1-result__period-toggle" role="tablist" aria-label="View period">
-        {PERIOD_OPTIONS.map(option => (
+        {periodOptions.map(option => (
           <button
             key={option.key}
             type="button"
@@ -233,7 +243,7 @@ function Box1ResultPanel({ inputs, summary, year }) {
       {/* Calculation Breakdown Section */}
       <section className="box1-result__breakdown" aria-label="Calculation breakdown">
         <div className="box1-result__breakdown-header">
-          <h3>Calculation breakdown</h3>
+          <h3>{t('box1.results.breakdown.title')}</h3>
           <button
             type="button"
             className="box1-result__toggle"
@@ -241,7 +251,7 @@ function Box1ResultPanel({ inputs, summary, year }) {
             aria-expanded={isBreakdownOpen}
             aria-controls="box1-result-breakdown-content"
           >
-            {isBreakdownOpen ? 'Hide breakdown' : 'Show breakdown'}
+            {isBreakdownOpen ? t('box1.results.breakdown.hide') : t('box1.results.breakdown.show')}
           </button>
         </div>
 
@@ -251,7 +261,7 @@ function Box1ResultPanel({ inputs, summary, year }) {
         >
           <div className="box1-result__breakdown-inner">
             <div className="box1-result__filter-group" role="group" aria-label="Filter components">
-              {Object.entries(COMPONENT_CATEGORIES).map(([key, { label }]) => (
+              {Object.entries(categoryLabels).map(([key, label]) => (
                 <label key={key} className="box1-result__filter-chip">
                   <input
                     type="checkbox"
@@ -267,8 +277,8 @@ function Box1ResultPanel({ inputs, summary, year }) {
               <table className="box1-result__table">
                 <thead>
                   <tr>
-                    <th>Component</th>
-                    <th>{PERIOD_OPTIONS.find(p => p.key === viewPeriod)?.label ?? 'Amount'}</th>
+                    <th>{t('box1.results.table.component')}</th>
+                    <th>{periodOptions.find(p => p.key === viewPeriod)?.label ?? t('box1.results.table.amount')}</th>
                   </tr>
                 </thead>
                 <tbody>
