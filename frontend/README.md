@@ -13,6 +13,9 @@ TaxNL is a privacy-first web app for Dutch tax calculations. It features two sep
 - `npm run dev`
 - Open the local URL printed by Vite (e.g., `http://localhost:5173`)
 
+## Test
+- `npm run test` to run unit tests.
+
 ## Key Paths
 - `src/features/tax-calculator/components/Box3InputForm.jsx` — Box 3 input modal and tax partner toggle
 - `src/features/tax-calculator/components/Box1InputForm.jsx` — Box 1 salary input form
