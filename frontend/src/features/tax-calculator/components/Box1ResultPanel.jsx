@@ -289,12 +289,6 @@ function Box1ResultPanel({ inputs, summary, year }) {
           </div>
         </div>
       </section>
-
-      <footer className="box1-result__footer">
-        <p>
-          Salary calculations powered by the <a href="https://github.com/stevermeister/dutch-tax-income-calculator" target="_blank" rel="noopener noreferrer">dutch-tax-income-calculator</a> library — <a href="https://buymeacoffee.com/stevermeister" target="_blank" rel="noopener noreferrer">buy the author a coffee ☕</a>
-        </p>
-      </footer>
     </div>
   )
 }

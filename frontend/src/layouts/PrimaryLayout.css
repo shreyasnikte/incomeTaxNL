@@ -50,7 +50,9 @@
 }
 
 .privacy-modal__backdrop,
-.info-modal__backdrop {
+.info-modal__backdrop,
+.credits-modal__backdrop,
+.terms-modal__backdrop {
   position: fixed;
   top: 0;
   left: 0;
@@ -65,7 +67,9 @@
 }
 
 .privacy-modal,
-.info-modal {
+.info-modal,
+.credits-modal,
+.terms-modal {
   background: #fff;
   color: var(--brand-text);
   border-radius: 12px;
@@ -85,8 +89,14 @@
   max-width: 520px;
 }
 
+.terms-modal {
+  max-width: 620px;
+}
+
 .privacy-modal__close,
-.info-modal__close {
+.info-modal__close,
+.credits-modal__close,
+.terms-modal__close {
   position: absolute;
   top: 1rem;
   right: 1rem;
@@ -101,40 +111,54 @@
 .privacy-modal__close:hover,
 .privacy-modal__close:focus-visible,
 .info-modal__close:hover,
-.info-modal__close:focus-visible {
+.info-modal__close:focus-visible,
+.credits-modal__close:hover,
+.credits-modal__close:focus-visible,
+.terms-modal__close:hover,
+.terms-modal__close:focus-visible {
   color: var(--brand-primary);
 }
 
 .privacy-modal h2,
-.info-modal h2 {
+.info-modal h2,
+.credits-modal h2,
+.terms-modal h2 {
   margin-top: 0;
   font-size: 1.25rem;
   color: var(--brand-primary);
 }
 .privacy-modal ul,
 .info-modal ul,
-.info-modal ol {
+.info-modal ol,
+.credits-modal ul {
   margin: 1rem 0 0 1.2rem;
   padding: 0;
   color: var(--brand-text-muted);
   font-size: 1rem;
 }
 .privacy-modal li,
-.info-modal li {
+.info-modal li,
+.credits-modal li {
   margin-bottom: 0.5rem;
 }
 
-.info-modal__section {
+.info-modal__section,
+.credits-modal__section,
+.terms-modal__section {
   margin-top: 1.5rem;
 }
 
-.info-modal__section h3 {
+.info-modal__section h3,
+.credits-modal__section h3,
+.terms-modal__section h3 {
   margin: 0 0 0.5rem;
   font-size: 1.05rem;
   color: var(--brand-primary);
 }
 
-.info-modal__section p {
+.info-modal__section p,
+.credits-modal__section p,
+.terms-modal__section p {
   margin: 0;
   color: var(--brand-text-muted);
   line-height: 1.5;
@@ -144,7 +168,9 @@
   list-style: decimal;
 }
 
-.info-modal > p {
+.info-modal > p,
+.credits-modal > p,
+.terms-modal > p {
   margin: 0 0 1rem;
   color: var(--brand-text-muted);
   line-height: 1.5;
@@ -155,6 +181,30 @@
   font-size: 1.3rem;
   font-weight: 600;
   letter-spacing: 0.02em;
+}
+
+.app-header__helpdesk-link {
+  color: #ffffff;
+  opacity: 0.9;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.25rem;
+  border-radius: 999px;
+  transition: opacity 0.2s ease, background 0.2s ease, transform 0.2s ease;
+}
+
+.app-header__helpdesk-link:hover,
+.app-header__helpdesk-link:focus-visible {
+  opacity: 1;
+  background: rgba(255, 255, 255, 0.18);
+  transform: translateY(-1px);
+}
+
+.app-header__helpdesk-link svg {
+  display: block;
+  width: 24px;
+  height: 24px;
 }
 
 .app-header__github-link {
@@ -238,6 +288,23 @@
   user-select: none;
 }
 
+.app-footer__link-button {
+  background: none;
+  border: none;
+  color: var(--brand-text-muted);
+  font-size: inherit;
+  font-family: inherit;
+  cursor: pointer;
+  padding: 0;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.app-footer__link-button:hover,
+.app-footer__link-button:focus {
+  color: var(--brand-primary);
+}
+
 .app-notice {
   background-color: var(--brand-surface-alt);
   color: var(--brand-text-muted);
@@ -275,13 +342,15 @@
 
 @media (max-width: 640px) {
   .privacy-modal__backdrop,
-  .info-modal__backdrop {
+  .info-modal__backdrop,
+  .credits-modal__backdrop {
     padding: 1rem 0.5rem;
     align-items: flex-start;
   }
 
   .privacy-modal,
-  .info-modal {
+  .info-modal,
+  .credits-modal {
     width: 100%;
     border-radius: 10px;
     padding: 1.5rem 1rem 1.25rem 1rem;
