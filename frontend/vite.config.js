@@ -52,4 +52,10 @@ export default defineConfig({
   optimizeDeps: {
     include: ['react', 'react-dom', '@mui/material', '@emotion/react', '@emotion/styled'],
   },
+  test: {
+    globals: true,
+    environment: 'jsdom',
+    setupFiles: './src/setupTests.js',
+    css: true,
+  },
 })

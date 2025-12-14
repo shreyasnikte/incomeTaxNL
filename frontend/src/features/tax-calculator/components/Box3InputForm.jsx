@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react'
 import PropTypes from 'prop-types'
+import { useTranslation } from 'react-i18next'
 import { monetaryEntryPropType } from '../../../utils/propTypes.js'
 import {
   Box,
@@ -33,42 +34,6 @@ import { formatEuro } from '../../../utils/formatters.js'
 import JaaropgaveGuide from './JaaropgaveGuide.jsx'
 import './Box3InputForm.css'
 
-const FIELD_CONFIG = [
-  {
-    name: 'bankAccounts',
-    label: 'Bank accounts',
-    type: 'multiCurrency',
-    detailLabel: 'account',
-    detailLabelPlural: 'accounts',
-    emptyLabel: 'No accounts added yet',
-    entryNameLabel: 'Account name',
-    entryNamePlaceholder: 'e.g. ING savings',
-    description: 'Add the balances of your Dutch checking and savings accounts on 1 January.',
-  },
-  {
-    name: 'investmentAccounts',
-    label: 'Investment accounts',
-    type: 'multiCurrency',
-    detailLabel: 'account',
-    detailLabelPlural: 'accounts',
-    emptyLabel: 'No accounts added yet',
-    entryNameLabel: 'Account name',
-    entryNamePlaceholder: 'e.g. DEGIRO brokerage',
-    description: 'Include the market value of your investment or brokerage portfolios on 1 January.',
-  },
-  {
-    name: 'debts',
-    label: 'Debts',
-    type: 'multiCurrency',
-    detailLabel: 'debt',
-    detailLabelPlural: 'debts',
-    emptyLabel: 'No debts added yet',
-    entryNameLabel: 'Debt name',
-    entryNamePlaceholder: 'e.g. Mortgage balance',
-    description: 'List deductible debts, such as loans outstanding on 1 January.',
-  },
-]
-
 const normalizeEntryList = (rawList) => {
   const source = Array.isArray(rawList) ? rawList : []
   return source
@@ -96,6 +61,7 @@ const normalizeEntryList = (rawList) => {
 
 
 function Box3InputForm({ values, onChange, year, onYearChange, onReset, configMenu }) {
+  const { t } = useTranslation()
   const [modalState, setModalState] = useState(null)
   const [expandedPanel, setExpandedPanel] = useState(null)
   const [editingIndex, setEditingIndex] = useState(null)
@@ -104,11 +70,47 @@ function Box3InputForm({ values, onChange, year, onYearChange, onReset, configMe
   const [showResetConfirm, setShowResetConfirm] = useState(false)
   const isCompactViewport = useMediaQuery('(max-width: 640px)')
 
+  const fieldConfig = useMemo(() => [
+    {
+      name: 'bankAccounts',
+      label: t('box3.field.bank_accounts'),
+      type: 'multiCurrency',
+      detailLabel: t('box3.field.detail.account'),
+      detailLabelPlural: t('box3.field.detail.accounts'),
+      emptyLabel: t('box3.field.empty.bank'),
+      entryNameLabel: t('box3.field.entry_label.account'),
+      entryNamePlaceholder: t('box3.field.placeholder.bank'),
+      description: t('box3.field.desc.bank'),
+    },
+    {
+      name: 'investmentAccounts',
+      label: t('box3.field.investment_accounts'),
+      type: 'multiCurrency',
+      detailLabel: t('box3.field.detail.account'),
+      detailLabelPlural: t('box3.field.detail.accounts'),
+      emptyLabel: t('box3.field.empty.bank'),
+      entryNameLabel: t('box3.field.entry_label.account'),
+      entryNamePlaceholder: t('box3.field.placeholder.investment'),
+      description: t('box3.field.desc.investment'),
+    },
+    {
+      name: 'debts',
+      label: t('box3.field.debts'),
+      type: 'multiCurrency',
+      detailLabel: t('box3.field.detail.debt'),
+      detailLabelPlural: t('box3.field.detail.debts'),
+      emptyLabel: t('box3.field.empty.debts'),
+      entryNameLabel: t('box3.field.entry_label.debt'),
+      entryNamePlaceholder: t('box3.field.placeholder.debts'),
+      description: t('box3.field.desc.debts'),
+    },
+  ], [t])
+
   const fieldLookup = useMemo(() => {
     const map = new Map()
-    FIELD_CONFIG.forEach((field) => map.set(field.name, field))
+    fieldConfig.forEach((field) => map.set(field.name, field))
     return map
-  }, [])
+  }, [fieldConfig])
 
   const {
     bankAccounts = [],
@@ -159,9 +161,9 @@ function Box3InputForm({ values, onChange, year, onYearChange, onReset, configMe
     }
 
     const list = getNormalizedEntries(fieldName)
-    const fallbackLabel = field.detailLabel ? `Unnamed ${field.detailLabel}` : 'Unnamed entry'
+    const fallbackLabel = field.detailLabel ? `${t('box3.modal.unnamed')} ${field.detailLabel}` : t('box3.modal.unnamed')
     if (list.length === 0) {
-      const emptyMessage = field.emptyLabel || 'No amounts added yet'
+      const emptyMessage = field.emptyLabel || t('box3.field.empty.bank')
       return <span className="tax-form__summary-empty">{emptyMessage}</span>
     }
 
@@ -225,9 +227,9 @@ function Box3InputForm({ values, onChange, year, onYearChange, onReset, configMe
       } else {
         const numericValue = Number(trimmed)
         if (Number.isNaN(numericValue) || !Number.isFinite(numericValue)) {
-          setAmountError('Please enter a valid number')
+          setAmountError(t('config.validation.number'))
         } else if (numericValue < 0) {
-          setAmountError('Amount cannot be negative')
+          setAmountError(t('config.validation.negative'))
         } else {
           setAmountError('')
         }
@@ -396,7 +398,7 @@ function Box3InputForm({ values, onChange, year, onYearChange, onReset, configMe
         <TextField
           select
           size="small"
-          label="Tax year"
+          label={t('box1.label.tax_year')}
           value={year}
           onChange={(e) => onYearChange(Number(e.target.value))}
           className="tax-form__year-select"
@@ -411,7 +413,7 @@ function Box3InputForm({ values, onChange, year, onYearChange, onReset, configMe
       </div>
 
       <Stack spacing={0} component={Box} className="tax-form__fields">
-        {FIELD_CONFIG.map((field) => {
+        {fieldConfig.map((field) => {
           const { amount } = getPrimaryValueParts(field.name)
           const secondaryContent = renderSecondaryValue(field.name)
           const isExpanded = expandedPanel === field.name
@@ -460,7 +462,7 @@ function Box3InputForm({ values, onChange, year, onYearChange, onReset, configMe
                     startIcon={<AddCircleIcon />}
                     onClick={() => openDialog(field.name)}
                   >
-                    Manage entries
+                    {t('box3.modal.manage_entries')}
                   </Button>
                 </div>
               </AccordionDetails>
@@ -471,7 +473,7 @@ function Box3InputForm({ values, onChange, year, onYearChange, onReset, configMe
 
       <Box className="tax-form__partner-section">
         <Typography variant="body1" fontWeight="normal" color="text.primary">
-          I have a tax partner
+          {t('box3.label.tax_partner')}
         </Typography>
         <ToggleButtonGroup
           exclusive
@@ -481,10 +483,10 @@ function Box3InputForm({ values, onChange, year, onYearChange, onReset, configMe
           aria-label="Tax partner selection"
         >
           <ToggleButton value="yes" aria-label="Yes">
-            Yes
+            {t('box3.label.yes')}
           </ToggleButton>
           <ToggleButton value="no" aria-label="No">
-            No
+            {t('box3.label.no')}
           </ToggleButton>
         </ToggleButtonGroup>
       </Box>
@@ -498,7 +500,7 @@ function Box3InputForm({ values, onChange, year, onYearChange, onReset, configMe
           startIcon={<RestartAltIcon fontSize="small" />}
           aria-label="Reset all values"
         >
-          Reset
+          {t('common.reset')}
         </Button>
         {configMenu && <div className="tax-form__config-menu">{configMenu}</div>}
       </Box>
@@ -509,15 +511,16 @@ function Box3InputForm({ values, onChange, year, onYearChange, onReset, configMe
 
       {/* Reset confirmation dialog */}
       <Dialog open={showResetConfirm} onClose={() => setShowResetConfirm(false)} maxWidth="xs">
-        <DialogTitle>Reset all values?</DialogTitle>
+        <DialogTitle>{t('dialog.reset.title')}</DialogTitle>
         <DialogContent>
           <Typography variant="body2">
-            This will clear all your entered data including bank accounts, investments, and debts. This action cannot be undone.
+             {/* Using Box 1 reset content for now or add new key for Box 3 specific if needed, but 'clear all data' is generic enough if we use common key */}
+             {t('dialog.reset.content')}
           </Typography>
         </DialogContent>
         <DialogActions>
           <Button onClick={() => setShowResetConfirm(false)} color="inherit">
-            Cancel
+            {t('common.cancel')}
           </Button>
           <Button
             onClick={() => {
@@ -527,7 +530,7 @@ function Box3InputForm({ values, onChange, year, onYearChange, onReset, configMe
             variant="contained"
             color="error"
           >
-            Reset
+            {t('common.reset')}
           </Button>
         </DialogActions>
       </Dialog>
@@ -589,7 +592,7 @@ function Box3InputForm({ values, onChange, year, onYearChange, onReset, configMe
                             primary={
                               entry.name && entry.name.trim() !== ''
                                 ? entry.name
-                                : `Unnamed ${activeField?.detailLabel ?? 'entry'}`
+                                : `${t('box3.modal.unnamed')} ${activeField?.detailLabel ?? 'entry'}`
                             }
                             secondary={`Amount: ${formatEuro(Number(entry.amount) || 0)}`}
                             primaryTypographyProps={{
@@ -603,13 +606,13 @@ function Box3InputForm({ values, onChange, year, onYearChange, onReset, configMe
                     </List>
                   ) : (
                     <Typography className="tax-form__modal-empty" align="center">
-                      {activeField?.emptyLabel || 'No amounts added yet.'}
+                      {activeField?.emptyLabel || t('box3.field.empty.bank')}
                     </Typography>
                   )}
 
                   <div className="tax-form__modal-add-section">
                     <Typography variant="subtitle2" className="tax-form__modal-add-title">
-                      {editingIndex !== null ? 'Edit entry' : 'Add new entry'}
+                      {editingIndex !== null ? t('box3.modal.edit_title') : t('box3.modal.add_title')}
                     </Typography>
                     <div className="tax-form__modal-add-row">
                       <TextField
@@ -632,7 +635,7 @@ function Box3InputForm({ values, onChange, year, onYearChange, onReset, configMe
                         onChange={(event) => handleNewEntryChange('amount', event.target.value)}
                         onKeyDown={handleKeyDown}
                         placeholder="0.00"
-                        label="Amount (EUR)"
+                        label={t('box3.modal.amount')}
                         className="tax-form__modal-field tax-form__modal-field--amount"
                         error={!!amountError}
                         helperText={amountError}
@@ -644,7 +647,7 @@ function Box3InputForm({ values, onChange, year, onYearChange, onReset, configMe
                           color="inherit"
                           size="small"
                         >
-                          Cancel
+                          {t('common.cancel')}
                         </Button>
                       )}
                       <Button
@@ -654,7 +657,7 @@ function Box3InputForm({ values, onChange, year, onYearChange, onReset, configMe
                         color="primary"
                         size="small"
                       >
-                        {editingIndex !== null ? 'Update' : 'Add'}
+                        {editingIndex !== null ? t('box3.modal.update') : t('box3.modal.add')}
                       </Button>
                     </div>
                   </div>
@@ -663,28 +666,28 @@ function Box3InputForm({ values, onChange, year, onYearChange, onReset, configMe
             </DialogContent>
             <DialogActions>
               <Button onClick={() => closeDialog()} color="inherit">
-                Cancel
+                {t('common.cancel')}
               </Button>
               <Button onClick={handleConfirm} disabled={isConfirmDisabled()} variant="contained">
-                Save changes
+                {t('box3.modal.save_changes')}
               </Button>
             </DialogActions>
           </Dialog>
 
           {/* Unsaved changes warning dialog */}
           <Dialog open={showCloseWarning} onClose={() => setShowCloseWarning(false)} maxWidth="xs">
-            <DialogTitle>Discard unsaved entry?</DialogTitle>
+            <DialogTitle>{t('box3.modal.discard_title')}</DialogTitle>
             <DialogContent>
               <Typography variant="body2">
-                You have started entering a new {activeField?.detailLabel || 'entry'} but haven't added it yet. Are you sure you want to discard it?
+                {t('box3.modal.discard_msg', { item: activeField?.detailLabel || 'entry' })}
               </Typography>
             </DialogContent>
             <DialogActions>
               <Button onClick={() => setShowCloseWarning(false)} color="inherit">
-                Keep editing
+                {t('box3.modal.keep_editing')}
               </Button>
               <Button onClick={forceCloseDialog} variant="contained" color="error">
-                Discard
+                {t('box3.modal.discard')}
               </Button>
             </DialogActions>
           </Dialog>

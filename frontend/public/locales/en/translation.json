@@ -1,0 +1,331 @@
+{
+  "common": {
+    "reset": "Reset",
+    "cancel": "Cancel"
+  },
+  "calculator": {
+    "toggle": {
+      "box1": "Salary (Box 1)",
+      "box3": "Capital Gains (Box 3)"
+    }
+  },
+  "shell": {
+    "loading_results": "Loading results...",
+    "nav": {
+      "go_to_top": "Go to Top",
+      "see_results": "See Results"
+    }
+  },
+  "guide": {
+    "trigger": "Where can I find this information?",
+    "title": "Reading Your Jaaropgave (Annual Statement)",
+    "subtitle": "A jaaropgave is the annual statement from your bank or broker showing your balances for tax purposes. Here's how to find the values you need for Box 3.",
+    "close": "Got it",
+    "sections": {
+      "bank": {
+        "title": "Bank Accounts (Jaaropgave)",
+        "description": "Your bank sends a jaaropgave (annual statement) in January or February showing your balance on 1 January.",
+        "content": [
+          { "heading": "What to look for", "items": ["\"Saldo per 1 januari\" or \"Stand per 1 januari\" — this is the balance you need", "\"Vermogen op peildatum\" — means wealth on reference date", "The document usually covers all accounts at that bank"] },
+          { "heading": "Common Dutch banks", "items": ["ING — Look in \"Jaaroverzicht\" under \"Spaargeld\"", "Rabobank — \"Jaaropgave\" section \"Vermogen\"", "ABN AMRO — \"Jaaroverzicht sparen en beleggen\"", "ASN/RegioBank/SNS — \"Jaaropgave\" via de Volksbank", "Bunq — Check the app or web for \"Year overview\""] },
+          { "heading": "Tips", "items": ["Add each account separately for clarity, or combine if simpler", "Include all savings accounts, not just checking", "Foreign bank accounts held in the Netherlands count too"] }
+        ]
+      },
+      "investment": {
+        "title": "Investment Accounts (Beleggingen)",
+        "description": "Brokers and investment platforms provide an annual overview showing the market value of your portfolio on 1 January.",
+        "content": [
+          { "heading": "What to look for", "items": ["\"Waarde per 1 januari\" or \"Portefeuillewaarde\" — total portfolio value", "\"Marktwaarde\" — market value of holdings", "Look for the value on 1 January, not 31 December"] },
+          { "heading": "Common platforms", "items": ["DEGIRO — \"Jaaroverzicht\" PDF in your account", "Meesman — Annual statement via email or portal", "ABN AMRO Zelf Beleggen — Part of \"Jaaroverzicht\"", "Rabobank Beleggen — \"Jaaropgave beleggingen\"", "Brand New Day — \"Jaaropgave\" in your dashboard", "Binck/Saxo — \"Annual overview\" or \"Jaarverslag\"", "Trading 212 / Interactive Brokers — Year-end statement"] },
+          { "heading": "Tips", "items": ["Use the total market value, not purchase price", "Include stocks, ETFs, bonds, and funds", "Pension accounts (pensioen) are usually exempt — check with your provider", "Crypto holdings are taxed in Box 3 — use value on 1 January"] }
+        ]
+      },
+      "general": {
+        "title": "General Information",
+        "description": "Important dates and concepts for Box 3 tax.",
+        "content": [
+          { "heading": "Key date: 1 January (Peildatum)", "items": ["Box 3 tax is based on your wealth on 1 January of the tax year", "For 2025 taxes, use balances from 1 January 2025", "This is called the \"peildatum\" (reference date)"] },
+          { "heading": "What counts as assets", "items": ["Bank balances (spaarrekeningen, betaalrekeningen)", "Investments (aandelen, obligaties, ETFs)", "Crypto currencies", "Loans you gave to others", "Second homes (not your primary residence)"] },
+          { "heading": "Deductible debts (Schulden)", "items": ["Mortgage on second home or investment property", "Personal loans and credit", "Debts for investments", "Note: Primary home mortgage is NOT deductible in Box 3", "Threshold: First €3,400 per person is not deductible"] }
+        ]
+      }
+    }
+  },
+  "config": {
+    "title": "Box 3 Tax Configuration",
+    "tooltip": {
+      "open": "Tax configuration",
+      "reset": "Reset to defaults"
+    },
+    "year": "Tax year",
+    "year_helper": "Selecting a year loads its official defaults",
+    "thresholds": {
+      "title": "Thresholds (EUR)",
+      "tax_free": "Tax-free assets per individual",
+      "debts": "Debts threshold per individual",
+      "tax_free_helper": "Heffingsvrij vermogen",
+      "debts_helper": "Drempel schulden"
+    },
+    "rates": {
+      "title": "Assumed Return Rates (%)",
+      "desc": "Forfaitaire rendementen set by the Dutch Tax Authority",
+      "bank": "Bank balance return rate",
+      "investments": "Investment assets return rate",
+      "debts": "Debts return rate"
+    },
+    "tax_rate": "Tax rate (%)",
+    "tax_rate_helper": "Box 3 income tax rate",
+    "validation": {
+      "number": "Please enter a valid number",
+      "range": "Rate must be between 0 and 100",
+      "negative": "Value cannot be negative"
+    },
+    "save": "Save"
+  },
+  "box3": {
+    "field": {
+      "bank_accounts": "Bank accounts",
+      "investment_accounts": "Investment accounts",
+      "debts": "Debts",
+      "desc": {
+        "bank": "Add the balances of your Dutch checking and savings accounts on 1 January.",
+        "investment": "Include the market value of your investment or brokerage portfolios on 1 January.",
+        "debts": "List deductible debts, such as loans outstanding on 1 January."
+      },
+      "detail": {
+        "account": "account",
+        "accounts": "accounts",
+        "debt": "debt",
+        "debts": "debts"
+      },
+      "empty": {
+        "bank": "No accounts added yet",
+        "debts": "No debts added yet"
+      },
+      "placeholder": {
+        "bank": "e.g. ING savings",
+        "investment": "e.g. DEGIRO brokerage",
+        "debts": "e.g. Mortgage balance"
+      },
+      "entry_label": {
+        "account": "Account name",
+        "debt": "Debt name"
+      }
+    },
+    "label": {
+      "tax_partner": "I have a tax partner",
+      "yes": "Yes",
+      "no": "No"
+    },
+    "modal": {
+      "manage_entries": "Manage entries",
+      "add_title": "Add new entry",
+      "edit_title": "Edit entry",
+      "unnamed": "Unnamed",
+      "amount": "Amount (EUR)",
+      "add": "Add",
+      "update": "Update",
+      "save_changes": "Save changes",
+      "discard_title": "Discard unsaved entry?",
+      "discard_msg": "You have started entering a new {{item}} but haven't added it yet. Are you sure you want to discard it?",
+      "keep_editing": "Keep editing",
+      "discard": "Discard"
+    },
+    "results": {
+      "title": "Results",
+      "partner": {
+        "combined": "Combined tax with partner",
+        "individual": "Individual tax"
+      },
+      "highlight": {
+        "estimated_tax": { "label": "Estimated tax", "sublabel": "Based on current Box 3 rates", "info": "Projected Box 3 tax for the selected year using current assumptions." },
+        "net_assets": { "label": "Net assets", "sublabel": "Assets minus deductible debts", "info": "Your savings and investments after subtracting deductible debts." },
+        "taxable_base": { "label": "Taxable base", "sublabel": "Savings & investments after allowance", "info": "Amount that remains after the tax-free allowance has been applied." }
+      },
+      "row": {
+        "total_assets": { "label": "Total assets", "info": "Combined balances of your bank and investment accounts." },
+        "debts": { "label": "Debts", "info": "Deductible debts included in the Box 3 calculation." },
+        "allowance": { "label": "Allowances applied", "info": "Standard tax-free allowance applied to your Box 3 assets." }
+      },
+      "breakdown": {
+        "intro": "Here is the math spelled out step by step, with simple explanations:",
+        "step1": { "label": "Total assets", "desc": "This is all the money you have in the bank and in investments, added together." },
+        "step2": { "label": "Capital yield tax base", "desc": "We subtract the debts you can deduct from your total money. This gives the amount the tax office looks at." },
+        "step3": { "label": "Basis for savings & investments", "desc": "You get a tax-free allowance. We take this away from the amount above. Only the rest is taxed." },
+        "step4": { "label": "Share in capital yield tax base", "desc": "This shows what part of your money is taxed after the allowance. If you have little money, this part is small." },
+        "step5": { "label": "Income from savings & investments", "desc": "This is the amount the tax office thinks you earn from your savings and investments, based on rules." },
+        "step6": { "label": "Estimated tax", "desc": "This is the final tax you pay. It is a percentage of the amount above." }
+      }
+    }
+  },
+  "constants": {
+    "income_periods": {
+      "yearly": "Yearly",
+      "monthly": "Monthly",
+      "weekly": "Weekly",
+      "daily": "Daily",
+      "hourly": "Hourly"
+    },
+    "ruling_30_categories": {
+      "research_worker": "Scientific research",
+      "young_professional": "Young employee with Master's",
+      "other": "Other"
+    }
+  },
+  "box1": {
+    "label": {
+      "annual_gross_income": "Annual gross income",
+      "monthly_gross_income": "Monthly gross income",
+      "weekly_gross_income": "Weekly gross income",
+      "daily_gross_income": "Daily gross income",
+      "hourly_gross_income": "Hourly gross income",
+      "gross_income": "Gross income",
+      "period": "Period",
+      "advanced_options": "Advanced options",
+      "tax_year": "Tax year",
+      "hours_per_week": "Hours per week",
+      "holiday_allowance_included": "Holiday allowance included",
+      "older": "66 years or older",
+      "ruling_30": "30% ruling",
+      "social_security": "Social security"
+    },
+    "helper": {
+      "hours_per_week": "Used to calculate annual income from hourly rate"
+    },
+    "tooltip": {
+      "holiday_allowance_included": "If enabled, your gross income already includes the 8% holiday allowance. If disabled, it will be added separately.",
+      "older": "Check if you are at or above state pension age (AOW). Different tax rates and no AOW premium apply.",
+      "ruling_30": "Tax-free allowance for skilled migrants. 30% of your salary becomes tax-free. Different income thresholds apply based on category.",
+      "social_security": "Include Dutch social security contributions (AOW, ANW, WLZ). Most employees pay these unless exempt."
+    },
+    "legend": {
+      "category": "Category"
+    },
+    "results": {
+      "title": "Results",
+      "tax_year": "Tax year {{year}}",
+      "badge": {
+        "ruling_on": "With 30% ruling",
+        "ruling_off": "Without 30% ruling",
+        "social_on": "Incl. social security",
+        "social_off": "Excl. social security"
+      },
+      "period_label": {
+        "weekly": "per week",
+        "monthly": "per month",
+        "yearly": "per year"
+      },
+      "effective_rate": "{{rate}}% effective rate",
+      "breakdown": {
+        "title": "Calculation breakdown",
+        "show": "Show breakdown",
+        "hide": "Hide breakdown"
+      },
+      "table": {
+        "component": "Component",
+        "amount": "Amount"
+      },
+      "category": {
+        "income": "Income",
+        "taxes": "Taxes",
+        "credits": "Tax Credits",
+        "deductions": "Deductions"
+      }
+    },
+    "metric": {
+      "gross_income": { "label": "Gross Income", "info": "Your total income before any deductions." },
+      "net_income": { "label": "Net Income", "info": "Your take-home pay after all taxes and deductions." },
+      "total_tax": { "label": "Total Tax", "info": "Total income tax including payroll tax, social security, minus credits." },
+      "ruling_free": { "label": "30% Ruling Tax Free", "info": "Tax-free allowance under the 30% ruling." },
+      "taxable_income": { "label": "Taxable Income", "info": "Income subject to taxation (after 30% ruling if applicable)." },
+      "payroll_tax": { "label": "Payroll Tax", "info": "Income tax withheld from your salary." },
+      "social_security": { "label": "Social Security", "info": "Contributions for AOW, ANW, and WLZ." },
+      "general_credit": { "label": "General Tax Credit", "info": "Algemene heffingskorting - basic tax credit for all taxpayers." },
+      "labour_credit": { "label": "Labour Tax Credit", "info": "Arbeidskorting - credit for employed taxpayers." }
+    }
+  },
+  "dialog": {
+    "reset": {
+      "title": "Reset all values?",
+      "content": "This will clear all your entered data including income, hours, and tax settings. This action cannot be undone."
+    }
+  },
+  "layout": {
+    "header": {
+      "title": "incomeTaxNL",
+      "help_label": "Contact me on X (Twitter)",
+      "help_title": "Need help? Message me on X",
+      "github_label": "View on GitHub",
+      "icon_label": "Learn about incomeTaxNL"
+    },
+    "footer": {
+      "disclaimer": "Disclaimer: This tool is provided for educational and informational purposes only. Tax calculations are estimates and may not reflect your actual tax liability. For official advice, always consult the <1>Belastingdienst</1> or a qualified tax consultant.",
+      "view_on_github": "View on GitHub",
+      "report_issue": "Report an Issue",
+      "credits": "Credits",
+      "terms": "Terms of Use"
+    },
+    "privacy": {
+      "notice": "Built with ❤️ for privacy — ",
+      "link": "your data never leaves your device",
+      "modal": {
+        "title": "Privacy-first by design",
+        "intro": "Your financial data is your business. incomeTaxNL is a privacy-focused free and open source tool to estimate Dutch Box 1 and Box 3 taxes. Any data you enter is only stored locally in your browser. All calculations run 100% locally in your browser — your personal financial data is never sent, stored, or collected by this app for any reason.",
+        "list": {
+          "1": "No risk of leaks, hacks, or misuse: your sensitive information never leaves your device.",
+          "2": "No tracking, no uploads, no analytics: you stay in control of your data.",
+          "3": "Use incomeTaxNL with confidence for salary and capital gains calculations, knowing your privacy is protected."
+        },
+        "close": "Close privacy information"
+      }
+    },
+    "info": {
+      "modal": {
+        "close": "Close about dialog",
+        "title": "About incomeTaxNL",
+        "intro": "incomeTaxNL helps you estimate Dutch Box 1 salary tax and Box 3 wealth tax with a privacy-first approach. All calculations run locally, so your data never leaves your browser.",
+        "how_to_use": {
+          "title": "How to use",
+          "step1": "Select Box 1 or Box 3 using the toggle at the top of the calculator.",
+          "step2": "Enter your income, savings, investments, and debts in the left-side forms.",
+          "step3": "Open the settings gear to tweak thresholds, return assumptions, or tax year.",
+          "step4": "Review the results panel for a breakdown of taxable bases and estimated taxes."
+        },
+        "origin": {
+          "title": "Origin story",
+          "content": "Navigating Dutch taxes used to be confusing for me. I built an elaborate spreadsheet to make sense of the rules, but it was too complex for friends and colleagues. This app is the friendlier version—same clarity, with explanations that anyone can follow."
+        }
+      }
+    },
+    "credits": {
+      "modal": {
+        "close": "Close credits dialog",
+        "title": "Credits",
+        "intro": "incomeTaxNL is an open-source project created by <1>@shreyasnikte</1> to help people understand Dutch taxes.",
+        "special_thanks": {
+          "title": "Special thanks",
+          "p1": "Salary calculations powered by the <1>dutch-tax-income-calculator</1> library — <3>by Stepan Suvorov</3>",
+          "p2": "Thanks to everyone who provided feedback to improve this tool."
+        }
+      }
+    },
+    "terms": {
+      "modal": {
+        "close": "Close terms of use dialog",
+        "title": "Terms of Use",
+        "effective_date": "Effective Date: December 13, 2025",
+        "sections": {
+          "1": { "title": "1. Acceptance of Terms", "content": "By using incomeTaxNL, you agree to these Terms of Use. If you do not agree, please discontinue use of this tool immediately." },
+          "2": { "title": "2. Educational Purpose Only", "content": "incomeTaxNL is provided solely for educational and informational purposes. It is designed to help users understand and estimate Dutch income tax calculations. This tool does NOT constitute professional tax advice, legal advice, or financial planning services." },
+          "3": { "title": "3. No Warranty or Guarantee", "content": "All calculations and information are provided \"as is\" without any warranty of accuracy, completeness, or fitness for a particular purpose. Tax laws, rates, and regulations may change, and this tool may not reflect the most current information. Users are responsible for verifying all results with official sources." },
+          "4": { "title": "4. Limitation of Liability", "content": "The creator and contributors of incomeTaxNL shall not be liable for any damages, losses, or tax liabilities arising from the use or misuse of this tool. Users assume all risks associated with using the estimates provided." },
+          "5": { "title": "5. Professional Consultation Required", "content": "For official tax calculations, filing, or advice, users must consult the <1>Belastingdienst</1> (Dutch Tax and Customs Administration) or a qualified tax professional." },
+          "6": { "title": "6. Privacy and Data", "content": "All data entered into incomeTaxNL is stored locally in your browser and never transmitted to any server. We do not collect, store, or share your personal or financial information. See our Privacy Policy for more details." },
+          "7": { "title": "7. Open Source License", "content": "incomeTaxNL is open source software available on <1>GitHub</1>. You may use, modify, and distribute it according to the terms of its license." },
+          "8": { "title": "8. Changes to Terms", "content": "These terms may be updated from time to time. Continued use of incomeTaxNL after changes constitutes acceptance of the revised terms." },
+          "9": { "title": "9. Contact", "content": "For questions or concerns, please contact us via <1>GitHub Issues</1> or <3>direct message on X</3>." }
+        }
+      }
+    }
+  }
+}

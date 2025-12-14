@@ -1,5 +1,6 @@
 import { useState, useMemo, memo } from 'react'
 import PropTypes from 'prop-types'
+import { useTranslation } from 'react-i18next'
 import { box3InputsPropType, box3SummaryPropType, box3ConfigPropType } from '../../../utils/propTypes.js'
 import { formatEuro } from '../../../utils/formatters.js'
 import './Box3ResultPanel.css'
@@ -17,6 +18,7 @@ InfoIcon.propTypes = {
 }
 
 function Box3ResultPanel({ inputs, summary, config }) {
+  const { t } = useTranslation()
   const [isBreakdownOpen, setIsBreakdownOpen] = useState(false)
 
   const breakdownLookup = useMemo(() => {
@@ -69,48 +71,51 @@ function Box3ResultPanel({ inputs, summary, config }) {
     shareInCapitalYieldTaxBase,
     actualTaxRate,
   } = derivedValues
-  const partnerLabel = inputs.hasTaxPartner ? 'Combined tax with partner' : 'Individual tax'
+  
+  const partnerLabel = inputs.hasTaxPartner 
+    ? t('box3.results.partner.combined') 
+    : t('box3.results.partner.individual')
 
   const primaryHighlight = {
-    label: 'Estimated tax',
+    label: t('box3.results.highlight.estimated_tax.label'),
     value: summary.estimatedTax,
-    sublabel: 'Based on current Box 3 rates',
-    info: 'Projected Box 3 tax for the selected year using current assumptions.',
+    sublabel: t('box3.results.highlight.estimated_tax.sublabel'),
+    info: t('box3.results.highlight.estimated_tax.info'),
   }
 
   const supportingHighlights = [
     {
-      label: 'Net assets',
+      label: t('box3.results.highlight.net_assets.label'),
       value: netWorth,
-      sublabel: 'Assets minus deductible debts',
-      info: 'Your savings and investments after subtracting deductible debts.',
+      sublabel: t('box3.results.highlight.net_assets.sublabel'),
+      info: t('box3.results.highlight.net_assets.info'),
     },
     {
-      label: 'Taxable base',
+      label: t('box3.results.highlight.taxable_base.label'),
       value: summary.taxableBase,
-      sublabel: 'Savings & investments after allowance',
-      info: 'Amount that remains after the tax-free allowance has been applied.',
+      sublabel: t('box3.results.highlight.taxable_base.sublabel'),
+      info: t('box3.results.highlight.taxable_base.info'),
     },
   ]
 
   const detailedRows = [
     {
-      label: 'Total assets',
+      label: t('box3.results.row.total_assets.label'),
       value: totalAssets,
       tone: 'secondary',
-      info: 'Combined balances of your bank and investment accounts.',
+      info: t('box3.results.row.total_assets.info'),
     },
     {
-      label: 'Debts',
+      label: t('box3.results.row.debts.label'),
       value: inputs.debts,
       tone: 'secondary',
-      info: 'Deductible debts included in the Box 3 calculation.',
+      info: t('box3.results.row.debts.info'),
     },
     {
-      label: 'Allowances applied',
+      label: t('box3.results.row.allowance.label'),
       value: taxFreeAllowanceApplied,
       tone: 'secondary',
-      info: 'Standard tax-free allowance applied to your Box 3 assets.',
+      info: t('box3.results.row.allowance.info'),
     },
   ]
 
@@ -118,10 +123,10 @@ function Box3ResultPanel({ inputs, summary, config }) {
     <div className="tax-result">
       <header className="tax-result__header">
         <div className="tax-result__title-row">
-          <h2>Results</h2>
+          <h2>{t('box1.results.title')}</h2>
         </div>
         <div className="tax-result__meta">
-          <span className="tax-result__badge">Tax year {config?.year ?? 2025}</span>
+          <span className="tax-result__badge">{t('box1.results.tax_year', { year: config?.year ?? 2025 })}</span>
           <span className="tax-result__badge tax-result__badge--neutral">{partnerLabel}</span>
         </div>
       </header>
@@ -172,7 +177,7 @@ function Box3ResultPanel({ inputs, summary, config }) {
       {summary.breakdown.length > 0 && (
         <section className="tax-result__breakdown" aria-label="Calculation breakdown">
           <div className="tax-result__breakdown-header">
-            <h3>Calculation breakdown</h3>
+            <h3>{t('box1.results.breakdown.title')}</h3>
             <button
               type="button"
               className="tax-result__toggle"
@@ -180,49 +185,49 @@ function Box3ResultPanel({ inputs, summary, config }) {
               aria-expanded={isBreakdownOpen}
               aria-controls="tax-result-breakdown-content"
             >
-              {isBreakdownOpen ? 'Hide breakdown' : 'Show breakdown'}
+              {isBreakdownOpen ? t('box1.results.breakdown.hide') : t('box1.results.breakdown.show')}
             </button>
           </div>
 
           {isBreakdownOpen && (
             <div id="tax-result-breakdown-content">
-                <p className="tax-result__explain-text">Here is the math spelled out step by step, with simple explanations:</p>
+                <p className="tax-result__explain-text">{t('box3.results.breakdown.intro')}</p>
                 <ol className="tax-result__explain-list">
                   <li style={{ marginBottom: '1.5em' }}>
                     <span className="tax-result__math">
-                      <strong>Total assets</strong> = bank savings + investments = {formatEuro(inputs.bankBalance)} + {formatEuro(inputs.investmentAssets)} = <strong>{formatEuro(totalAssets)}</strong>
+                      <strong>{t('box3.results.breakdown.step1.label')}</strong> = bank savings + investments = {formatEuro(inputs.bankBalance)} + {formatEuro(inputs.investmentAssets)} = <strong>{formatEuro(totalAssets)}</strong>
                     </span>
-                    <div className="tax-result__explain-simple">This is all the money you have in the bank and in investments, added together.</div>
+                    <div className="tax-result__explain-simple">{t('box3.results.breakdown.step1.desc')}</div>
                   </li>
                   <li style={{ marginBottom: '1.5em' }}>
                     <span className="tax-result__math">
-                      <strong>Capital yield tax base</strong> = total assets − deductible debts = {formatEuro(totalAssets)} − {formatEuro(totalAssets - capitalYieldTaxBase)} = <strong>{formatEuro(capitalYieldTaxBase)}</strong>
+                      <strong>{t('box3.results.breakdown.step2.label')}</strong> = total assets − deductible debts = {formatEuro(totalAssets)} − {formatEuro(totalAssets - capitalYieldTaxBase)} = <strong>{formatEuro(capitalYieldTaxBase)}</strong>
                     </span>
-                    <div className="tax-result__explain-simple">We subtract the debts you can deduct from your total money. This gives the amount the tax office looks at.</div>
+                    <div className="tax-result__explain-simple">{t('box3.results.breakdown.step2.desc')}</div>
                   </li>
                   <li style={{ marginBottom: '1.5em' }}>
                     <span className="tax-result__math">
-                      <strong>Basis for savings & investments</strong> = capital yield tax base − allowance = {formatEuro(capitalYieldTaxBase)} − {formatEuro(taxFreeAllowanceApplied)} = <strong>{formatEuro(summary.taxableBase)}</strong>
+                      <strong>{t('box3.results.breakdown.step3.label')}</strong> = capital yield tax base − allowance = {formatEuro(capitalYieldTaxBase)} − {formatEuro(taxFreeAllowanceApplied)} = <strong>{formatEuro(summary.taxableBase)}</strong>
                     </span>
-                    <div className="tax-result__explain-simple">You get a tax-free allowance. We take this away from the amount above. Only the rest is taxed.</div>
+                    <div className="tax-result__explain-simple">{t('box3.results.breakdown.step3.desc')}</div>
                   </li>
                   <li style={{ marginBottom: '1.5em' }}>
                     <span className="tax-result__math">
-                      <strong>Share in capital yield tax base</strong> = basis / capital yield tax base = {formatEuro(summary.taxableBase)} / {formatEuro(capitalYieldTaxBase)} = <strong>{(shareInCapitalYieldTaxBase * 100).toFixed(2)}%</strong>
+                      <strong>{t('box3.results.breakdown.step4.label')}</strong> = basis / capital yield tax base = {formatEuro(summary.taxableBase)} / {formatEuro(capitalYieldTaxBase)} = <strong>{(shareInCapitalYieldTaxBase * 100).toFixed(2)}%</strong>
                     </span>
-                    <div className="tax-result__explain-simple">This shows what part of your money is taxed after the allowance. If you have little money, this part is small.</div>
+                    <div className="tax-result__explain-simple">{t('box3.results.breakdown.step4.desc')}</div>
                   </li>
                   <li style={{ marginBottom: '1.5em' }}>
                     <span className="tax-result__math">
-                      <strong>Income from savings & investments</strong> = taxable returns × share = {formatEuro(taxableReturns)} × {(shareInCapitalYieldTaxBase * 100).toFixed(2)}% = <strong>{formatEuro(incomeFromSavingsAndInvestments)}</strong>
+                      <strong>{t('box3.results.breakdown.step5.label')}</strong> = taxable returns × share = {formatEuro(taxableReturns)} × {(shareInCapitalYieldTaxBase * 100).toFixed(2)}% = <strong>{formatEuro(incomeFromSavingsAndInvestments)}</strong>
                     </span>
-                    <div className="tax-result__explain-simple">This is the amount the tax office thinks you earn from your savings and investments, based on rules.</div>
+                    <div className="tax-result__explain-simple">{t('box3.results.breakdown.step5.desc')}</div>
                   </li>
                   <li style={{ marginBottom: '1.5em' }}>
                     <span className="tax-result__math">
-                      <strong>Estimated tax</strong> = income × Box 3 tax rate = {formatEuro(incomeFromSavingsAndInvestments)} × <strong>{(actualTaxRate * 100).toFixed(0)}%</strong> = <strong>{formatEuro(summary.estimatedTax)}</strong>
+                      <strong>{t('box3.results.breakdown.step6.label')}</strong> = income × Box 3 tax rate = {formatEuro(incomeFromSavingsAndInvestments)} × <strong>{(actualTaxRate * 100).toFixed(0)}%</strong> = <strong>{formatEuro(summary.estimatedTax)}</strong>
                     </span>
-                    <div className="tax-result__explain-simple">This is the final tax you pay. It is a percentage of the amount above.</div>
+                    <div className="tax-result__explain-simple">{t('box3.results.breakdown.step6.desc')}</div>
                   </li>
                 </ol>
             </div>

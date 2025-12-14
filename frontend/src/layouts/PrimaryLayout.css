@@ -49,6 +49,25 @@
   height: 24px;
 }
 
+.app-header__lang-switch {
+  background: none;
+  border: none;
+  color: #ffffff;
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 0.9rem;
+  padding: 0.5rem;
+  border-radius: 4px;
+  transition: background 0.2s ease;
+  font-family: inherit;
+  letter-spacing: 0.5px;
+}
+
+.app-header__lang-switch:hover,
+.app-header__lang-switch:focus-visible {
+  background: rgba(255, 255, 255, 0.18);
+}
+
 .privacy-modal__backdrop,
 .info-modal__backdrop,
 .credits-modal__backdrop,

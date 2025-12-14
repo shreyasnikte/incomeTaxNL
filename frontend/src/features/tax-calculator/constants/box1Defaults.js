@@ -2,11 +2,11 @@
  * Income period options for Box 1 calculator
  */
 export const INCOME_PERIODS = [
-  { value: 'yearly', label: 'Yearly' },
-  { value: 'monthly', label: 'Monthly' },
-  { value: 'weekly', label: 'Weekly' },
-  { value: 'daily', label: 'Daily' },
-  { value: 'hourly', label: 'Hourly' },
+  { value: 'yearly', labelKey: 'constants.income_periods.yearly' },
+  { value: 'monthly', labelKey: 'constants.income_periods.monthly' },
+  { value: 'weekly', labelKey: 'constants.income_periods.weekly' },
+  { value: 'daily', labelKey: 'constants.income_periods.daily' },
+  { value: 'hourly', labelKey: 'constants.income_periods.hourly' },
 ]
 
 /**
@@ -16,9 +16,9 @@ export const INCOME_PERIODS = [
  * - other: Other cases
  */
 export const RULING_30_CATEGORIES = [
-  { value: 'researchWorker', label: 'Scientific research' },
-  { value: 'youngProfessional', label: "Young employee with Master's" },
-  { value: 'other', label: 'Other' },
+  { value: 'researchWorker', labelKey: 'constants.ruling_30_categories.research_worker' },
+  { value: 'youngProfessional', labelKey: 'constants.ruling_30_categories.young_professional' },
+  { value: 'other', labelKey: 'constants.ruling_30_categories.other' },
 ]
 
 /**
