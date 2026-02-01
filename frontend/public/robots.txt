@@ -1,0 +1,6 @@
+# Robots.txt for incometax.nl
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://incometax.nl/sitemap.xml

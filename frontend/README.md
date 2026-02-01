@@ -1,6 +1,8 @@
 
 # Dutch Tax Calculator (Frontend)
 
+NOTE: THIS IS A TECHNICAL README. FOR A GENERAL PROJECT README, SEE THE DIRECTORY.
+
 TaxNL is a privacy-first web app for Dutch tax calculations. It features two separate tools:
 
 - **Salary Calculator (Box 1):** Estimate your net salary, taxes, and deductions for income from work.
