@@ -2,6 +2,7 @@ import { useState, useMemo, useCallback, useEffect, useRef, lazy, Suspense } fro
 import Box3InputForm from './Box3InputForm.jsx'
 import Box1InputForm from './Box1InputForm.jsx'
 import CalculatorToggleSwitch from './CalculatorToggleSwitch.jsx'
+import CalculationExplanation from './CalculationExplanation.jsx'
 import { useBox3Calculator } from '../hooks/useBox3Calculator.js'
 import { BOX1_EMPTY_FORM } from '../constants/box1Defaults.js'
 import { useBox1Calculator, BOX1_AVAILABLE_YEARS } from '../hooks/useBox1Calculator.js'
@@ -9,6 +10,7 @@ import { BOX3_DEFAULTS, DEFAULT_YEAR, getDefaultsForYear } from 'dutch-tax-box3-
 import { storage, STORAGE_KEYS } from '../../../utils/storage.js'
 import './TaxCalculatorShell.css'
 import './CalculatorToggleSwitch.css'
+import './CalculationExplanation.css'
 
 // Lazy load components for better initial bundle size
 const ConfigurationMenu = lazy(() => import('./ConfigurationMenu.jsx'))
@@ -306,6 +308,15 @@ function TaxCalculatorShell() {
           </Suspense>
         </div>
       </div>
+      
+      <CalculationExplanation
+        boxType={boxType}
+        box1Inputs={box1CalculatorInputs}
+        box1Summary={box1Summary}
+        box3Inputs={box3CalculatorInputs}
+        box3Summary={box3Summary}
+        box3Config={box3Config}
+      />
       {/* Remove old footer switch buttons, toggle is now above input panel */}
       
       {/* Floating navigation button for mobile */}
