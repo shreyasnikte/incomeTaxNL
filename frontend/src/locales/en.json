@@ -1,6 +1,7 @@
 {
   "app": {
     "title": "incomeTaxNL",
+    "tagline": "Free Dutch Tax Calculator",
     "notice": "Built with ❤️ for privacy —",
     "noticeLink": "your data never leaves your device"
   },
@@ -23,7 +24,9 @@
   "calculator": {
     "box1": "Salary (Box 1)",
     "box3": "Capital Gains (Box 3)",
-    "boxToggleLabel": "Calculator type"
+    "boxToggleLabel": "Calculator type",
+    "heroTitle": "Dutch Tax Calculator",
+    "heroSubtitle": "Calculate your take home pay and gross to net salary in Netherlands"
   },
   "box1Form": {
     "annualGrossIncome": "Annual gross income",
@@ -68,12 +71,12 @@
     "perWeek": "per week",
     "perMonth": "per month",
     "perYear": "per year",
-    "grossIncome": "Gross Income",
-    "grossIncomeInfo": "Your total income before any deductions.",
-    "netIncome": "Net Income",
-    "netIncomeInfo": "Your take-home pay after all taxes and deductions.",
+    "grossIncome": "Gross Salary",
+    "grossIncomeInfo": "Your total gross salary before any deductions.",
+    "netIncome": "Net Income (Take Home Pay)",
+    "netIncomeInfo": "Your take home pay after all Dutch income tax and deductions.",
     "totalTax": "Total Tax",
-    "totalTaxInfo": "Total income tax including payroll tax, social security, minus credits.",
+    "totalTaxInfo": "Total Dutch income tax including payroll tax, social security, minus credits.",
     "effectiveRate": "effective rate",
     "calculationBreakdown": "Calculation breakdown",
     "showBreakdown": "Show breakdown",
@@ -184,17 +187,17 @@
   "modals": {
     "privacyTitle": "Privacy-first by design",
     "privacyIntro": "Your financial data is your business.",
-    "privacyText": "incomeTaxNL is a privacy-focused free and open source tool to estimate Dutch Box 1 and Box 3 taxes. Any data you enter is only stored locally in your browser. All calculations run 100% locally in your browser — your personal financial data is never sent, stored, or collected by this app for any reason.",
+    "privacyText": "incomeTaxNL is a privacy-focused free Dutch income tax calculator for Box 1 and Box 3 taxes. Any data you enter is only stored locally in your browser. All calculations run 100% locally in your browser — your personal financial data is never sent, stored, or collected by this app for any reason.",
     "privacyBullet1": "No risk of leaks, hacks, or misuse: your sensitive information never leaves your device.",
     "privacyBullet2": "No tracking, no uploads, no analytics: you stay in control of your data.",
-    "privacyBullet3": "Use incomeTaxNL with confidence for salary and capital gains calculations, knowing your privacy is protected.",
+    "privacyBullet3": "Use this Netherlands salary calculator with confidence for take home pay and capital gains calculations, knowing your privacy is protected.",
     "aboutTitle": "About incomeTaxNL",
-    "aboutText": "incomeTaxNL helps you estimate Dutch Box 1 salary tax and Box 3 wealth tax with a privacy-first approach. All calculations run locally, so your data never leaves your browser.",
-    "howToUseTitle": "How to use",
-    "howToUse1": "Select Box 1 or Box 3 using the toggle at the top of the calculator.",
-    "howToUse2": "Enter your income, savings, investments, and debts in the left-side forms.",
+    "aboutText": "incomeTaxNL is a free Dutch tax calculator that helps you calculate your take home pay and estimate income after tax. Our Netherlands salary calculator supports Box 1 (gross to net salary) and Box 3 (capital gains) with a privacy-first approach. All calculations run locally in your browser.",
+    "howToUseTitle": "How to use this Dutch income tax calculator",
+    "howToUse1": "Select Box 1 (salary calculator) or Box 3 (capital gains) using the toggle at the top.",
+    "howToUse2": "Enter your gross salary, savings, investments, and debts to calculate net income.",
     "howToUse3": "Open the settings gear to tweak thresholds, return assumptions, or tax year.",
-    "howToUse4": "Review the results panel for a breakdown of taxable bases and estimated taxes.",
+    "howToUse4": "Review the results panel for your take home pay and detailed tax breakdown.",
     "originTitle": "Origin story",
     "originText": "Navigating Dutch taxes used to be confusing for me. I built an elaborate spreadsheet to make sense of the rules, but it was too complex for friends and colleagues. This app is the friendlier version—same clarity, with explanations that anyone can follow.",
     "creditsTitle": "Credits",

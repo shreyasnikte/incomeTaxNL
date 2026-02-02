@@ -1,6 +1,7 @@
 {
   "app": {
     "title": "incomeTaxNL",
+    "tagline": "Gratis Nederlandse Belastingcalculator",
     "notice": "Gemaakt met ❤️ voor privacy —",
     "noticeLink": "je gegevens verlaten nooit je apparaat"
   },
@@ -23,7 +24,9 @@
   "calculator": {
     "box1": "Inkomen (Box 1)",
     "box3": "Vermogen (Box 3)",
-    "boxToggleLabel": "Rekenhulptype"
+    "boxToggleLabel": "Rekenhulptype",
+    "heroTitle": "Nederlandse Belastingcalculator",
+    "heroSubtitle": "Bereken uw nettoloon en bruto naar netto salaris"
   },
   "box1Form": {
     "annualGrossIncome": "Jaarlijks bruto-inkomen",
@@ -68,12 +71,12 @@
     "perWeek": "per week",
     "perMonth": "per maand",
     "perYear": "per jaar",
-    "grossIncome": "Bruto-inkomen",
-    "grossIncomeInfo": "Uw totale inkomen vóór aftrekposten.",
-    "netIncome": "Netto-inkomen",
-    "netIncomeInfo": "Uw nettoloon na alle belastingen en aftrekken.",
+    "grossIncome": "Bruto salaris",
+    "grossIncomeInfo": "Uw totale bruto salaris vóór aftrekposten.",
+    "netIncome": "Netto-inkomen (Nettoloon)",
+    "netIncomeInfo": "Uw nettoloon na alle Nederlandse inkomstenbelasting en aftrekken.",
     "totalTax": "Totale belasting",
-    "totalTaxInfo": "Totale inkomstenbelasting inclusief loonheffing, sociale premies, minus heffingskortingen.",
+    "totalTaxInfo": "Totale Nederlandse inkomstenbelasting inclusief loonheffing, sociale premies, minus heffingskortingen.",
     "effectiveRate": "effectief tarief",
     "calculationBreakdown": "Berekening uitsplitsing",
     "showBreakdown": "Toon uitsplitsing",
@@ -184,17 +187,17 @@
   "modals": {
     "privacyTitle": "Privacy-first by design",
     "privacyIntro": "Uw financiële gegevens zijn uw zaak.",
-    "privacyText": "incomeTaxNL is een privacy-gerichte gratis en open source tool om Nederlandse Box 1 en Box 3 belastingen te schatten. Alle gegevens die u invoert worden alleen lokaal in uw browser opgeslagen. Alle berekeningen worden 100% lokaal in uw browser uitgevoerd — uw persoonlijke financiële gegevens worden nooit verzonden, opgeslagen of verzameld door deze app.",
+    "privacyText": "incomeTaxNL is een gratis privacy-gerichte Nederlandse inkomstenbelastingcalculator voor Box 1 en Box 3 belastingen. Alle gegevens die u invoert worden alleen lokaal in uw browser opgeslagen. Alle berekeningen worden 100% lokaal in uw browser uitgevoerd — uw persoonlijke financiële gegevens worden nooit verzonden, opgeslagen of verzameld door deze app.",
     "privacyBullet1": "Geen risico op lekken, hacks of misbruik: uw gevoelige informatie verlaat nooit uw apparaat.",
     "privacyBullet2": "Geen tracking, geen uploads, geen analytics: u behoudt de controle over uw gegevens.",
-    "privacyBullet3": "Gebruik incomeTaxNL met vertrouwen voor salaris- en vermogensberekeningen, wetende dat uw privacy is beschermd.",
+    "privacyBullet3": "Gebruik deze salariscalculator met vertrouwen voor nettoloon en vermogensberekeningen, wetende dat uw privacy is beschermd.",
     "aboutTitle": "Over incomeTaxNL",
-    "aboutText": "incomeTaxNL helpt u bij het schatten van Nederlandse Box 1 loonbelasting en Box 3 vermogensbelasting met een privacy-first aanpak. Alle berekeningen worden lokaal uitgevoerd, zodat uw gegevens nooit uw browser verlaten.",
-    "howToUseTitle": "Hoe te gebruiken",
-    "howToUse1": "Selecteer Box 1 of Box 3 met de schakelaar bovenaan de rekenhulp.",
-    "howToUse2": "Voer uw inkomen, spaargeld, beleggingen en schulden in de formulieren aan de linkerkant in.",
+    "aboutText": "incomeTaxNL is een gratis Nederlandse belastingcalculator waarmee u uw nettoloon en inkomen na belasting kunt berekenen. Onze salariscalculator ondersteunt Box 1 (bruto naar netto salaris) en Box 3 (vermogensrendement) met een privacy-first aanpak. Alle berekeningen worden lokaal uitgevoerd in uw browser.",
+    "howToUseTitle": "Hoe deze Nederlandse inkomstenbelastingcalculator te gebruiken",
+    "howToUse1": "Selecteer Box 1 (salariscalculator) of Box 3 (vermogen) met de schakelaar bovenaan.",
+    "howToUse2": "Voer uw bruto salaris, spaargeld, beleggingen en schulden in om het netto-inkomen te berekenen.",
     "howToUse3": "Open het tandwiel voor instellingen om drempels, rendementaannames of belastingjaar aan te passen.",
-    "howToUse4": "Bekijk het resultatenpaneel voor een uitsplitsing van belastbare grondslagen en geschatte belastingen.",
+    "howToUse4": "Bekijk het resultatenpaneel voor uw nettoloon en gedetailleerde belastinguitsplitsing.",
     "originTitle": "Oorsprongsverhaal",
     "originText": "Nederlandse belastingen begrijpen was vroeger verwarrend voor mij. Ik bouwde een uitgebreid spreadsheet om de regels te doorgronden, maar het was te complex voor vrienden en collega's. Deze app is de gebruiksvriendelijke versie — dezelfde duidelijkheid, met uitleg die iedereen kan volgen.",
     "creditsTitle": "Credits",
