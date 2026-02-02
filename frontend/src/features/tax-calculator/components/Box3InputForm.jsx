@@ -30,42 +30,43 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import RestartAltIcon from '@mui/icons-material/RestartAlt'
 import { AVAILABLE_YEARS } from 'dutch-tax-box3-calculator'
 import { formatEuro } from '../../../utils/formatters.js'
+import { useLanguage } from '../../../context/LanguageContext.jsx'
 import JaaropgaveGuide from './JaaropgaveGuide.jsx'
 import './Box3InputForm.css'
 
-const FIELD_CONFIG = [
+const FIELD_CONFIG_KEYS = [
   {
     name: 'bankAccounts',
-    label: 'Bank accounts',
+    labelKey: 'box3Form.bankAccounts',
     type: 'multiCurrency',
-    detailLabel: 'account',
-    detailLabelPlural: 'accounts',
-    emptyLabel: 'No accounts added yet',
-    entryNameLabel: 'Account name',
-    entryNamePlaceholder: 'e.g. ING savings',
-    description: 'Add the balances of your Dutch checking and savings accounts on 1 January.',
+    detailLabelKey: 'box3Form.account',
+    detailLabelPluralKey: 'box3Form.accounts',
+    emptyLabelKey: 'box3Form.noAccountsYet',
+    entryNameLabelKey: 'box3Form.accountName',
+    entryNamePlaceholderKey: 'box3Form.accountPlaceholder',
+    descriptionKey: 'box3Form.bankAccountsDesc',
   },
   {
     name: 'investmentAccounts',
-    label: 'Investment accounts',
+    labelKey: 'box3Form.investmentAccounts',
     type: 'multiCurrency',
-    detailLabel: 'account',
-    detailLabelPlural: 'accounts',
-    emptyLabel: 'No accounts added yet',
-    entryNameLabel: 'Account name',
-    entryNamePlaceholder: 'e.g. DEGIRO brokerage',
-    description: 'Include the market value of your investment or brokerage portfolios on 1 January.',
+    detailLabelKey: 'box3Form.account',
+    detailLabelPluralKey: 'box3Form.accounts',
+    emptyLabelKey: 'box3Form.noAccountsYet',
+    entryNameLabelKey: 'box3Form.accountName',
+    entryNamePlaceholderKey: 'box3Form.investmentPlaceholder',
+    descriptionKey: 'box3Form.investmentAccountsDesc',
   },
   {
     name: 'debts',
-    label: 'Debts',
+    labelKey: 'box3Form.debts',
     type: 'multiCurrency',
-    detailLabel: 'debt',
-    detailLabelPlural: 'debts',
-    emptyLabel: 'No debts added yet',
-    entryNameLabel: 'Debt name',
-    entryNamePlaceholder: 'e.g. Mortgage balance',
-    description: 'List deductible debts, such as loans outstanding on 1 January.',
+    detailLabelKey: 'box3Form.debt',
+    detailLabelPluralKey: 'box3Form.debtsPlural',
+    emptyLabelKey: 'box3Form.noDebtsYet',
+    entryNameLabelKey: 'box3Form.debtName',
+    entryNamePlaceholderKey: 'box3Form.debtPlaceholder',
+    descriptionKey: 'box3Form.debtsDesc',
   },
 ]
 
@@ -96,6 +97,7 @@ const normalizeEntryList = (rawList) => {
 
 
 function Box3InputForm({ values, onChange, year, onYearChange, onReset, configMenu }) {
+  const { t, locale, language } = useLanguage()
   const [modalState, setModalState] = useState(null)
   const [expandedPanel, setExpandedPanel] = useState(null)
   const [editingIndex, setEditingIndex] = useState(null)
@@ -104,11 +106,24 @@ function Box3InputForm({ values, onChange, year, onYearChange, onReset, configMe
   const [showResetConfirm, setShowResetConfirm] = useState(false)
   const isCompactViewport = useMediaQuery('(max-width: 640px)')
 
+  // Build translated FIELD_CONFIG
+  const FIELD_CONFIG = useMemo(() => FIELD_CONFIG_KEYS.map(field => ({
+    name: field.name,
+    label: t(field.labelKey),
+    type: field.type,
+    detailLabel: t(field.detailLabelKey),
+    detailLabelPlural: t(field.detailLabelPluralKey),
+    emptyLabel: t(field.emptyLabelKey),
+    entryNameLabel: t(field.entryNameLabelKey),
+    entryNamePlaceholder: t(field.entryNamePlaceholderKey),
+    description: t(field.descriptionKey),
+  })), [t])
+
   const fieldLookup = useMemo(() => {
     const map = new Map()
     FIELD_CONFIG.forEach((field) => map.set(field.name, field))
     return map
-  }, [])
+  }, [FIELD_CONFIG])
 
   const {
     bankAccounts = [],
@@ -140,14 +155,14 @@ function Box3InputForm({ values, onChange, year, onYearChange, onReset, configMe
       const plural = field.detailLabelPlural || `${singular}s`
       const label = list.length === 1 ? singular : plural
       return {
-        amount: formatEuro(total),
+        amount: formatEuro(total, locale),
         detail: `${list.length} ${label}`,
       }
     }
 
     const numericValue = Number(values[fieldName]) || 0
     return {
-      amount: formatEuro(numericValue),
+      amount: formatEuro(numericValue, locale),
       detail: '',
     }
   }
@@ -170,7 +185,7 @@ function Box3InputForm({ values, onChange, year, onYearChange, onReset, configMe
         {list.map((entry, index) => (
           <li key={`${fieldName}-${index}`}>
             {entry.name ? `${entry.name}: ` : `${fallbackLabel}: `}
-            {formatEuro(Number(entry.amount) || 0)}
+            {formatEuro(Number(entry.amount) || 0, locale)}
           </li>
         ))}
       </ul>
@@ -471,20 +486,20 @@ function Box3InputForm({ values, onChange, year, onYearChange, onReset, configMe
 
       <Box className="tax-form__partner-section">
         <Typography variant="body1" fontWeight="normal" color="text.primary">
-          I have a tax partner
+          {t('box3Form.taxPartner')}
         </Typography>
         <ToggleButtonGroup
           exclusive
           value={values.hasTaxPartner ? 'yes' : 'no'}
           onChange={handlePartnerToggle}
           className="tax-form__partner-toggle"
-          aria-label="Tax partner selection"
+          aria-label={t('box3Form.taxPartner')}
         >
           <ToggleButton value="yes" aria-label="Yes">
-            Yes
+            {language === 'nl' ? 'Ja' : 'Yes'}
           </ToggleButton>
           <ToggleButton value="no" aria-label="No">
-            No
+            {language === 'nl' ? 'Nee' : 'No'}
           </ToggleButton>
         </ToggleButtonGroup>
       </Box>
@@ -496,9 +511,9 @@ function Box3InputForm({ values, onChange, year, onYearChange, onReset, configMe
           onClick={() => setShowResetConfirm(true)}
           className="tax-form__reset-button"
           startIcon={<RestartAltIcon fontSize="small" />}
-          aria-label="Reset all values"
+          aria-label={t('box3Form.reset')}
         >
-          Reset
+          {t('box3Form.reset')}
         </Button>
         {configMenu && <div className="tax-form__config-menu">{configMenu}</div>}
       </Box>
@@ -509,15 +524,15 @@ function Box3InputForm({ values, onChange, year, onYearChange, onReset, configMe
 
       {/* Reset confirmation dialog */}
       <Dialog open={showResetConfirm} onClose={() => setShowResetConfirm(false)} maxWidth="xs">
-        <DialogTitle>Reset all values?</DialogTitle>
+        <DialogTitle>{t('box1Form.resetTitle')}</DialogTitle>
         <DialogContent>
           <Typography variant="body2">
-            This will clear all your entered data including bank accounts, investments, and debts. This action cannot be undone.
+            {t('box1Form.resetMessage')}
           </Typography>
         </DialogContent>
         <DialogActions>
           <Button onClick={() => setShowResetConfirm(false)} color="inherit">
-            Cancel
+            {t('box3Form.cancel')}
           </Button>
           <Button
             onClick={() => {
@@ -527,7 +542,7 @@ function Box3InputForm({ values, onChange, year, onYearChange, onReset, configMe
             variant="contained"
             color="error"
           >
-            Reset
+            {t('box3Form.reset')}
           </Button>
         </DialogActions>
       </Dialog>
@@ -550,7 +565,7 @@ function Box3InputForm({ values, onChange, year, onYearChange, onReset, configMe
                   {modalTotals.count} {modalTotals.count === 1 ? activeField?.detailLabel : activeField?.detailLabelPlural}
                 </span>
                 <span className="tax-form__modal-total">
-                  {formatEuro(modalTotals.total)}
+                  {formatEuro(modalTotals.total, locale)}
                 </span>
               </div>
             </DialogTitle>
@@ -569,7 +584,7 @@ function Box3InputForm({ values, onChange, year, onYearChange, onReset, configMe
                               <IconButton
                                 edge="end"
                                 onClick={() => handleEditEntry(index)}
-                                aria-label={`Edit ${entry.name || activeField?.detailLabel || 'entry'}`}
+                                aria-label={`${t('box3Form.edit')} ${entry.name || activeField?.detailLabel || 'entry'}`}
                                 disabled={editingIndex !== null}
                               >
                                 <EditIcon color="primary" />
@@ -577,7 +592,7 @@ function Box3InputForm({ values, onChange, year, onYearChange, onReset, configMe
                               <IconButton
                                 edge="end"
                                 onClick={() => handleRemoveEntry(index)}
-                                aria-label={`Remove ${entry.name || activeField?.detailLabel || 'entry'}`}
+                                aria-label={`${t('box3Form.delete')} ${entry.name || activeField?.detailLabel || 'entry'}`}
                                 disabled={editingIndex !== null}
                               >
                                 <DeleteOutlineIcon color="error" />
@@ -591,7 +606,7 @@ function Box3InputForm({ values, onChange, year, onYearChange, onReset, configMe
                                 ? entry.name
                                 : `Unnamed ${activeField?.detailLabel ?? 'entry'}`
                             }
-                            secondary={`Amount: ${formatEuro(Number(entry.amount) || 0)}`}
+                            secondary={`${t('box3Form.amount')}: ${formatEuro(Number(entry.amount) || 0, locale)}`}
                             primaryTypographyProps={{
                               variant: 'body1',
                               fontWeight: entry.name ? 600 : 500,
@@ -609,14 +624,14 @@ function Box3InputForm({ values, onChange, year, onYearChange, onReset, configMe
 
                   <div className="tax-form__modal-add-section">
                     <Typography variant="subtitle2" className="tax-form__modal-add-title">
-                      {editingIndex !== null ? 'Edit entry' : 'Add new entry'}
+                      {editingIndex !== null ? t('box3Form.edit') : t('box3Form.add')}
                     </Typography>
                     <div className="tax-form__modal-add-row">
                       <TextField
                         variant="outlined"
                         size="small"
-                        label={activeField?.entryNameLabel || 'Account name'}
-                        placeholder={activeField?.entryNamePlaceholder || 'e.g. ING savings'}
+                        label={activeField?.entryNameLabel || t('box3Form.accountName')}
+                        placeholder={activeField?.entryNamePlaceholder || t('box3Form.accountPlaceholder')}
                         value={modalState.newEntry?.name ?? ''}
                         onChange={(event) => handleNewEntryChange('name', event.target.value)}
                         onKeyDown={handleKeyDown}
@@ -632,7 +647,7 @@ function Box3InputForm({ values, onChange, year, onYearChange, onReset, configMe
                         onChange={(event) => handleNewEntryChange('amount', event.target.value)}
                         onKeyDown={handleKeyDown}
                         placeholder="0.00"
-                        label="Amount (EUR)"
+                        label={`${t('box3Form.amount')} (EUR)`}
                         className="tax-form__modal-field tax-form__modal-field--amount"
                         error={!!amountError}
                         helperText={amountError}
@@ -644,7 +659,7 @@ function Box3InputForm({ values, onChange, year, onYearChange, onReset, configMe
                           color="inherit"
                           size="small"
                         >
-                          Cancel
+                          {t('box3Form.cancel')}
                         </Button>
                       )}
                       <Button
@@ -654,7 +669,7 @@ function Box3InputForm({ values, onChange, year, onYearChange, onReset, configMe
                         color="primary"
                         size="small"
                       >
-                        {editingIndex !== null ? 'Update' : 'Add'}
+                        {editingIndex !== null ? t('box3Form.save') : t('box3Form.add')}
                       </Button>
                     </div>
                   </div>
@@ -663,17 +678,17 @@ function Box3InputForm({ values, onChange, year, onYearChange, onReset, configMe
             </DialogContent>
             <DialogActions>
               <Button onClick={() => closeDialog()} color="inherit">
-                Cancel
+                {t('box3Form.cancel')}
               </Button>
               <Button onClick={handleConfirm} disabled={isConfirmDisabled()} variant="contained">
-                Save changes
+                {t('box3Form.save')}
               </Button>
             </DialogActions>
           </Dialog>
 
           {/* Unsaved changes warning dialog */}
           <Dialog open={showCloseWarning} onClose={() => setShowCloseWarning(false)} maxWidth="xs">
-            <DialogTitle>Discard unsaved entry?</DialogTitle>
+            <DialogTitle>{t('box1Form.resetTitle')}</DialogTitle>
             <DialogContent>
               <Typography variant="body2">
                 You have started entering a new {activeField?.detailLabel || 'entry'} but haven't added it yet. Are you sure you want to discard it?
@@ -681,10 +696,10 @@ function Box3InputForm({ values, onChange, year, onYearChange, onReset, configMe
             </DialogContent>
             <DialogActions>
               <Button onClick={() => setShowCloseWarning(false)} color="inherit">
-                Keep editing
+                {t('box3Form.cancel')}
               </Button>
               <Button onClick={forceCloseDialog} variant="contained" color="error">
-                Discard
+                {t('box3Form.delete')}
               </Button>
             </DialogActions>
           </Dialog>

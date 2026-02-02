@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import PropTypes from 'prop-types'
 import { formatEuro } from '../../../utils/formatters.js'
+import { useLanguage } from '../../../context/LanguageContext.jsx'
 import './CalculationExplanation.css'
 
 // Default example values when user hasn't entered anything
@@ -27,7 +28,7 @@ const BOX3_DEFAULTS = {
   estimatedTax: 1961,
 }
 
-function Box1Explanation({ inputs, summary }) {
+function Box1Explanation({ inputs, summary, t }) {
   const hasUserInput = inputs?.grossIncome > 0
   const details = summary?.details || {}
 
@@ -56,27 +57,25 @@ function Box1Explanation({ inputs, summary }) {
     <article className="explanation__article">
       {isExample && (
         <p className="explanation__example-note">
-          The following example uses a yearly salary of <strong>{formatEuro(BOX1_DEFAULTS.grossIncome)}</strong>. Enter your income above to see your personalized calculation.
+          {t('explanation.exampleNoteBox1')} <strong>{formatEuro(BOX1_DEFAULTS.grossIncome)}</strong>. {t('explanation.exampleNoteBox1End')}
         </p>
       )}
 
       <section className="explanation__section">
-        <h4>Understanding Dutch Income Tax (Box 1)</h4>
+        <h4>{t('explanation.understandingBox1Title')}</h4>
         <p>
-          In the Netherlands, income from employment is taxed under Box 1. The calculation starts with your 
-          gross annual income of <strong>{formatEuro(values.grossIncome)}</strong>. This is your total salary 
-          before any taxes or deductions are applied.
+          {t('explanation.understandingBox1Text')} <strong>{formatEuro(values.grossIncome)}</strong>. {t('explanation.understandingBox1TextEnd')}
         </p>
       </section>
 
       {values.grossAllowance > 0 && (
         <section className="explanation__section">
-          <h4>Holiday Allowance</h4>
+          <h4>{t('explanation.holidayAllowanceTitle')}</h4>
           <p>
-            Dutch employees typically receive an 8% holiday allowance (vakantiegeld) on top of their base salary. 
+            {t('explanation.holidayAllowanceText')}
             {hasUserInput 
-              ? ` In your case, this adds ${formatEuro(values.grossAllowance)} to your annual compensation.`
-              : ` For a ${formatEuro(values.grossIncome)} salary, this amounts to ${formatEuro(values.grossAllowance)}.`
+              ? ` ${t('explanation.holidayAllowanceUserText')} ${formatEuro(values.grossAllowance)} ${t('explanation.holidayAllowanceUserTextEnd')}`
+              : ` ${t('explanation.holidayAllowanceExampleText')} ${formatEuro(values.grossIncome)} ${t('explanation.holidayAllowanceExampleTextEnd')} ${formatEuro(values.grossAllowance)}.`
             }
           </p>
         </section>
@@ -84,63 +83,50 @@ function Box1Explanation({ inputs, summary }) {
 
       {values.taxFree > 0 && (
         <section className="explanation__section">
-          <h4>30% Ruling Benefit</h4>
+          <h4>{t('explanation.ruling30Title')}</h4>
           <p>
-            With the 30% ruling for highly skilled migrants, <strong>{formatEuro(values.taxFree)}</strong> of 
-            your income is tax-free. This significantly reduces your taxable base and is one of the most 
-            valuable tax benefits available to expats in the Netherlands.
+            {t('explanation.ruling30Text')} <strong>{formatEuro(values.taxFree)}</strong> {t('explanation.ruling30TextEnd')}
           </p>
         </section>
       )}
 
       <section className="explanation__section">
-        <h4>Taxable Income</h4>
+        <h4>{t('explanation.taxableIncomeTitle')}</h4>
         <p>
-          After applying any exemptions, your taxable income is <strong>{formatEuro(values.taxableYear)}</strong>. 
-          This is the amount on which the Dutch tax authority (Belastingdienst) calculates your income tax.
+          {t('explanation.taxableIncomeText')} <strong>{formatEuro(values.taxableYear)}</strong>. {t('explanation.taxableIncomeTextEnd')}
         </p>
       </section>
 
       <section className="explanation__section">
-        <h4>Tax Brackets and Payroll Tax</h4>
+        <h4>{t('explanation.taxBracketsTitle')}</h4>
         <p>
-          The Netherlands uses a progressive tax system with two main brackets: income up to approximately 
-          75,000 euros is taxed at 36.97%, while income above this threshold is taxed at 49.5%. Based on 
-          your taxable income, the payroll tax (loonheffing) amounts to <strong>{formatEuro(values.payrollTax)}</strong>.
+          {t('explanation.taxBracketsText')} <strong>{formatEuro(values.payrollTax)}</strong>.
         </p>
       </section>
 
       {values.socialTax > 0 && (
         <section className="explanation__section">
-          <h4>Social Security Contributions</h4>
+          <h4>{t('explanation.socialSecurityTitle')}</h4>
           <p>
-            Additionally, you contribute <strong>{formatEuro(values.socialTax)}</strong> towards Dutch social 
-            security programs, including AOW (state pension), ANW (survivor benefits), and WLZ (long-term care). 
-            These contributions provide essential social protections.
+            {t('explanation.socialSecurityText')} <strong>{formatEuro(values.socialTax)}</strong> {t('explanation.socialSecurityTextEnd')}
           </p>
         </section>
       )}
 
       <section className="explanation__section">
-        <h4>Tax Credits Reduce Your Bill</h4>
+        <h4>{t('explanation.taxCreditsTitle')}</h4>
         <p>
-          The Dutch tax system provides valuable credits that directly reduce your tax liability. You receive 
-          a general tax credit (algemene heffingskorting) of <strong>{formatEuro(values.generalCredit)}</strong> and 
-          a labour tax credit (arbeidskorting) of <strong>{formatEuro(values.labourCredit)}</strong>. Together, 
-          these credits save you <strong>{formatEuro(totalCredits)}</strong> in taxes.
+          {t('explanation.taxCreditsText')} <strong>{formatEuro(values.generalCredit)}</strong> {t('explanation.taxCreditsLabourText')} <strong>{formatEuro(values.labourCredit)}</strong>. {t('explanation.taxCreditsTotalText')} <strong>{formatEuro(totalCredits)}</strong> {t('explanation.taxCreditsTotalTextEnd')}
         </p>
       </section>
 
       <section className="explanation__section explanation__section--result">
-        <h4>Your Take-Home Pay</h4>
+        <h4>{t('explanation.takeHomeTitle')}</h4>
         <p>
-          After subtracting taxes and adding back your credits, your net annual income 
-          is <strong className="explanation__highlight">{formatEuro(values.netYear)}</strong>. This means you 
-          keep approximately <strong>{formatEuro(values.netYear / 12)}</strong> per month.
+          {t('explanation.takeHomeText')} <strong className="explanation__highlight">{formatEuro(values.netYear)}</strong>. {t('explanation.takeHomeMonthlyText')} <strong>{formatEuro(values.netYear / 12)}</strong> {t('explanation.takeHomeMonthlyTextEnd')}
         </p>
         <p>
-          Your effective tax rate is <strong>{effectiveRate}%</strong>, which represents the actual 
-          percentage of your gross income that goes to taxes after all credits are applied.
+          {t('explanation.effectiveRateText')} <strong>{effectiveRate}%</strong>, {t('explanation.effectiveRateTextEnd')}
         </p>
       </section>
     </article>
@@ -154,9 +140,10 @@ Box1Explanation.propTypes = {
   summary: PropTypes.shape({
     details: PropTypes.object,
   }),
+  t: PropTypes.func.isRequired,
 }
 
-function Box3Explanation({ inputs, summary, config }) {
+function Box3Explanation({ inputs, summary, config, t }) {
   const hasUserInput = (inputs?.bankBalance > 0 || inputs?.investmentAssets > 0)
   const breakdown = summary?.breakdown || []
 
@@ -187,79 +174,58 @@ function Box3Explanation({ inputs, summary, config }) {
     <article className="explanation__article">
       {isExample && (
         <p className="explanation__example-note">
-          The following example uses <strong>{formatEuro(BOX3_DEFAULTS.bankBalance)}</strong> in savings 
-          and <strong>{formatEuro(BOX3_DEFAULTS.investmentAssets)}</strong> in investments. Enter your assets 
-          above to see your personalized calculation.
+          {t('explanation.exampleNoteBox3Part1')} <strong>{formatEuro(BOX3_DEFAULTS.bankBalance)}</strong> {t('explanation.exampleNoteBox3InSavings')} <strong>{formatEuro(BOX3_DEFAULTS.investmentAssets)}</strong> {t('explanation.exampleNoteBox3InInvestments')}
         </p>
       )}
 
       <section className="explanation__section">
-        <h4>Understanding Dutch Wealth Tax (Box 3)</h4>
+        <h4>{t('explanation.understandingBox3Title')}</h4>
         <p>
-          In the Netherlands, wealth from savings and investments is taxed under Box 3. Unlike income tax, 
-          Box 3 does not tax your actual returns. Instead, the tax authority assumes a fictional return 
-          on your assets and taxes that amount.
+          {t('explanation.understandingBox3Text')}
         </p>
       </section>
 
       <section className="explanation__section">
-        <h4>Calculating Your Total Assets</h4>
+        <h4>{t('explanation.totalAssetsTitle')}</h4>
         <p>
-          Your Box 3 assets are measured as of January 1st of the tax year. 
-          {hasUserInput ? ' Your' : ' In this example, the'} total assets 
-          include <strong>{formatEuro(values.bankBalance)}</strong> in bank savings 
-          and <strong>{formatEuro(values.investmentAssets)}</strong> in investments, 
-          bringing the total to <strong>{formatEuro(values.totalAssets)}</strong>.
+          {t('explanation.totalAssetsText')} {hasUserInput ? t('explanation.totalAssetsUserPrefix') : t('explanation.totalAssetsExamplePrefix')} {t('explanation.totalAssetsInclude')} <strong>{formatEuro(values.bankBalance)}</strong> {t('explanation.totalAssetsInBank')} <strong>{formatEuro(values.investmentAssets)}</strong> {t('explanation.totalAssetsInInvestments')} <strong>{formatEuro(values.totalAssets)}</strong>.
           {values.debts > 0 && (
-            <> After subtracting deductible debts of {formatEuro(values.debts)}, the net 
-            assets amount to <strong>{formatEuro(netAssets)}</strong>.</>
+            <> {t('explanation.totalAssetsDebtsText')} {formatEuro(values.debts)}, {t('explanation.totalAssetsDebtsEnd')} <strong>{formatEuro(netAssets)}</strong>.</>
           )}
         </p>
       </section>
 
       <section className="explanation__section">
-        <h4>Tax-Free Allowance (Heffingsvrij Vermogen)</h4>
+        <h4>{t('explanation.taxFreeAllowanceTitle')}</h4>
         <p>
-          Not all your wealth is taxed. In 2025, the first <strong>{formatEuro(values.taxFreeAllowance)}</strong> of 
-          your assets is exempt from Box 3 tax.
+          {t('explanation.taxFreeAllowanceText')} <strong>{formatEuro(values.taxFreeAllowance)}</strong> {t('explanation.taxFreeAllowanceTextEnd')}
           {values.hasTaxPartner && (
-            <> Since you have a tax partner, this allowance is shared between you, 
-            potentially doubling the household exemption.</>
+            <> {t('explanation.taxFreeAllowancePartnerText')}</>
           )}
         </p>
       </section>
 
       <section className="explanation__section">
-        <h4>Taxable Capital</h4>
+        <h4>{t('explanation.taxableCapitalTitle')}</h4>
         <p>
-          After subtracting the tax-free allowance from your net assets, your taxable capital 
-          (grondslag sparen en beleggen) is <strong>{formatEuro(Math.max(0, values.taxableBase))}</strong>. 
-          This is the base amount used to calculate your fictional return.
+          {t('explanation.taxableCapitalText')} <strong>{formatEuro(Math.max(0, values.taxableBase))}</strong>. {t('explanation.taxableCapitalTextEnd')}
         </p>
       </section>
 
       <section className="explanation__section">
-        <h4>Fictitious Return (Forfaitair Rendement)</h4>
+        <h4>{t('explanation.fictitiousReturnTitle')}</h4>
         <p>
-          The Dutch tax authority calculates a deemed return based on the composition of your assets. 
-          Savings typically have a lower assumed return rate than investments. For your asset mix, 
-          the calculated fictitious return is <strong>{formatEuro(values.fictitiousReturn)}</strong> per year. 
-          This is not your actual return, it is what the government assumes you earned.
+          {t('explanation.fictitiousReturnText')} <strong>{formatEuro(values.fictitiousReturn)}</strong> {t('explanation.fictitiousReturnTextEnd')}
         </p>
       </section>
 
       <section className="explanation__section explanation__section--result">
-        <h4>Your Box 3 Tax</h4>
+        <h4>{t('explanation.box3TaxTitle')}</h4>
         <p>
-          The fictitious return of {formatEuro(values.fictitiousReturn)} is taxed at a flat rate 
-          of {taxRate}%. This results in a Box 3 tax 
-          of <strong className="explanation__highlight">{formatEuro(values.estimatedTax)}</strong> for 
-          the year.
+          {t('explanation.box3TaxText')} {formatEuro(values.fictitiousReturn)} {t('explanation.box3TaxRateText')} {taxRate}%. {t('explanation.box3TaxResultText')} <strong className="explanation__highlight">{formatEuro(values.estimatedTax)}</strong> {t('explanation.box3TaxResultTextEnd')}
         </p>
         <p>
-          Note: If your actual investment returns were lower than the assumed return, you may be paying 
-          tax on income you did not actually receive. Recent court rulings have challenged this system, 
-          and reforms are expected in coming years.
+          {t('explanation.box3TaxNote')}
         </p>
       </section>
     </article>
@@ -282,10 +248,12 @@ Box3Explanation.propTypes = {
     taxFreeAllowance: PropTypes.number,
     taxRate: PropTypes.number,
   }),
+  t: PropTypes.func.isRequired,
 }
 
 function CalculationExplanation({ boxType, box1Inputs, box1Summary, box3Inputs, box3Summary, box3Config }) {
   const [isExpanded, setIsExpanded] = useState(false)
+  const { t } = useLanguage()
 
   return (
     <div className="explanation">
@@ -296,22 +264,22 @@ function CalculationExplanation({ boxType, box1Inputs, box1Summary, box3Inputs, 
       >
         <span className="explanation__toggle-icon">{isExpanded ? '−' : '+'}</span>
         <span className="explanation__toggle-text">
-          {isExpanded ? 'Hide' : 'Show'} Calculation Breakdown
+          {isExpanded ? t('explanation.hideExplanation') : t('explanation.showExplanation')}
         </span>
         <span className="explanation__toggle-hint">
-          {boxType === 'box1' ? 'How is your income tax calculated?' : 'How is your wealth tax calculated?'}
+          {boxType === 'box1' ? t('explanation.box1Hint') : t('explanation.box3Hint')}
         </span>
       </button>
 
       {isExpanded && (
         <div className="explanation__body">
           <h3 className="explanation__title">
-            {boxType === 'box1' ? 'Box 1: Income Tax Calculation' : 'Box 3: Wealth Tax Calculation'}
+            {boxType === 'box1' ? t('explanation.box1Title') : t('explanation.box3Title')}
           </h3>
           {boxType === 'box1' ? (
-            <Box1Explanation inputs={box1Inputs} summary={box1Summary} />
+            <Box1Explanation inputs={box1Inputs} summary={box1Summary} t={t} />
           ) : (
-            <Box3Explanation inputs={box3Inputs} summary={box3Summary} config={box3Config} />
+            <Box3Explanation inputs={box3Inputs} summary={box3Summary} config={box3Config} t={t} />
           )}
         </div>
       )}

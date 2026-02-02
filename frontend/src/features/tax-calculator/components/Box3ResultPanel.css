@@ -344,3 +344,30 @@
   outline: 2px solid rgba(0, 48, 130, 0.35);
   outline-offset: 2px;
 }
+
+/* Disclaimer */
+.tax-result__disclaimer {
+  padding: 0.75rem 1rem;
+  background: rgba(0, 48, 130, 0.04);
+  border-left: 3px solid var(--brand-primary);
+  border-radius: 0 6px 6px 0;
+  font-size: 0.8rem;
+  color: var(--brand-text-muted);
+  line-height: 1.5;
+}
+
+.tax-result__disclaimer p {
+  margin: 0;
+}
+
+.tax-result__disclaimer a {
+  color: var(--brand-primary);
+  text-decoration: none;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.tax-result__disclaimer a:hover,
+.tax-result__disclaimer a:focus {
+  text-decoration: underline;
+}
