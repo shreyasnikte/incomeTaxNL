@@ -1,5 +1,6 @@
 import { useState, useMemo, memo } from 'react'
 import PropTypes from 'prop-types'
+import { DEFAULT_YEAR } from 'dutch-tax-box3-calculator'
 import { box3InputsPropType, box3SummaryPropType, box3ConfigPropType } from '../../../utils/propTypes.js'
 import { formatEuro } from '../../../utils/formatters.js'
 import { useLanguage } from '../../../context/LanguageContext.jsx'
@@ -123,7 +124,7 @@ function Box3ResultPanel({ inputs, summary, config }) {
           <h2>{t('box3Result.results')}</h2>
         </div>
         <div className="tax-result__meta">
-          <span className="tax-result__badge">{t('box3Result.taxYear')} {config?.year ?? 2025}</span>
+          <span className="tax-result__badge">{t('box3Result.taxYear')} {config?.year ?? DEFAULT_YEAR}</span>
           <span className="tax-result__badge tax-result__badge--neutral">{partnerLabel}</span>
         </div>
       </header>
